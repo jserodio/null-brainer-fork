@@ -7,6 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/miglayout15-swing.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="D:/Universidad/Asignaturas_de_tercer_curso/ADSI/Ampliar sudoku/Ultima entrega/ADSI_sudoku_entrega_final_grupal_sidney_calays/BD/mysql-connector-java-5.1.38-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.38-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
