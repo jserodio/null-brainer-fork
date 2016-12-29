@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
+import packExcepciones.ExcepcionConectarBD;
+import packGestores.GestorTablero;
 
 public class IU_CRTablero extends JFrame {
 	private JFrame frame;
@@ -120,6 +125,26 @@ public class IU_CRTablero extends JFrame {
 	private JComboBox getTablero() {
 		if (tablero == null) {
 			tablero = new JComboBox();
+		}
+		String n=(String)nivel.getSelectedItem();
+		int niv=0;
+		if(!n.equals("")){
+			try {
+				ArrayList<String> t=new ArrayList<String>();
+				t=GestorTablero.getGestorTablero().obtenerTableros(n);
+				Iterator<String> it=t.iterator();
+				String aux=null;
+				while(it.hasNext()){
+					aux=it.next();
+					tablero.addItem(aux);
+				}
+			} catch (ExcepcionConectarBD e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 		}
 		return tablero;
 	}
