@@ -5,7 +5,7 @@ public class Usuario {
 	private String nombre;
 	private String clave;
 	private String email;
-	private int numPistas;
+	private int numPistas;//
 	
 	public Usuario(String pCu,String pNom,String pClav,String pEmail,int pNp){
 		this.codUsuario=pCu;
