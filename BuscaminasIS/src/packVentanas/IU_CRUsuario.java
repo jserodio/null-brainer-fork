@@ -59,7 +59,7 @@ public class IU_CRUsuario extends JFrame{
 		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][][][][][][grow][grow][]", "[][][][grow]"));
 		frame.getContentPane().add(getUsuario(), "cell 5 1,growx");
 		frame.getContentPane().add(getLblUsuario(), "cell 4 1,alignx center");
-		frame.getContentPane().add(getBtnNewButton_1(), "cell 4 3");
+		frame.getContentPane().add(getBtnAceptar(), "cell 4 3");
 		frame.getContentPane().add(getBtnAtras(), "flowx,cell 5 3");
 		frame.setVisible(true);
 	}
@@ -76,7 +76,7 @@ public class IU_CRUsuario extends JFrame{
 		}
 		return btnAtras;
 	}
-	private JButton getBtnNewButton_1() {
+	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addMouseListener(new MouseAdapter() {
@@ -120,7 +120,7 @@ public class IU_CRUsuario extends JFrame{
 			usuario = new JComboBox();
 		}
 		usuario.addItem("Nombres de usuarios");
-		/*try {
+		try {
 			ArrayList<Usuario> usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			Iterator<Usuario> it=usuarios.iterator();
 			Usuario u=null;
@@ -131,7 +131,7 @@ public class IU_CRUsuario extends JFrame{
 		} catch (SQLException | ExcepcionConectarBD e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		return usuario;
 	}
 }
