@@ -129,7 +129,7 @@ public class IU_Ranking extends JFrame{
 					this.getTextArea().append("No ha jugado ninguna partida");
 				}
 				else{
-					this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
+					this.getTextArea().append(i+"\t\t"+u.getNombre()+"\t\t"+p.getPuntuacion());
 				}
 			}
 		}

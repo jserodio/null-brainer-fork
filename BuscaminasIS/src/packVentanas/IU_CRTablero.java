@@ -76,9 +76,17 @@ public class IU_CRTablero extends JFrame {
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
-			btnAceptar.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
-					IU_Ranking vCR=new IU_Ranking("codTablero",null,0);
+			btnAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String n=(String)nivel.getSelectedItem();
+					String t=(String)tablero.getSelectedItem();
+					String aux=null;
+					if(t.length()==1){
+						t=aux;
+						t="0";
+						t=t+aux;
+					}
+					IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
 					vCR.setVisible(true);
 					setVisible(false);
 				}

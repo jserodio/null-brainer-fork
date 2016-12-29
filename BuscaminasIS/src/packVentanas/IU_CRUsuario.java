@@ -61,15 +61,15 @@ public class IU_CRUsuario extends JFrame{
 		frame.getContentPane().add(getUsuario(), "cell 5 1,growx");
 		frame.getContentPane().add(getBtnNewButton_1(), "cell 4 3");
 		frame.getContentPane().add(getBtnAtras(), "flowx,cell 6 3");
+
 	}
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
 			btnAtras = new JButton("Atr\u00E1s");
-			btnAtras.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
+			btnAtras.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
-					setVisible(false);
 				}
 			});
 		}

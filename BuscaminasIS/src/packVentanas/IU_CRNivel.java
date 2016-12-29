@@ -60,11 +60,10 @@ public class IU_CRNivel extends JFrame {
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
 			btnAtras = new JButton("Atr\u00E1s");
-			btnAtras.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
+			btnAtras.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
-					setVisible(false);
 				}
 			});
 		}
@@ -73,11 +72,25 @@ public class IU_CRNivel extends JFrame {
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
-			btnAceptar.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
-					IU_Ranking vCR=new IU_Ranking("nivel",null,0);
-					vCR.setVisible(true);
-					setVisible(false);
+			btnAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String nivel=(String)getComboBox().getSelectedItem();
+					if(nivel.equals("Fácil")){
+						IU_Ranking vCR=new IU_Ranking("nivel",null,1);
+						vCR.setVisible(true);
+						setVisible(false);
+					}
+					else if(nivel.equals("Medio")){
+						IU_Ranking vCR=new IU_Ranking("nivel",null,2);
+						vCR.setVisible(true);
+						setVisible(false);
+					}
+					else{
+						IU_Ranking vCR=new IU_Ranking("nivel",null,3);
+						vCR.setVisible(true);
+						setVisible(false);
+					}
+					
 				}
 			});
 		}
@@ -93,6 +106,9 @@ public class IU_CRNivel extends JFrame {
 		if (comboBox == null) {
 			comboBox = new JComboBox();
 		}
+		comboBox.addItem("Fácil");
+		comboBox.addItem("Medio");
+		comboBox.addItem("Dificil");
 		return comboBox;
 	}
 

@@ -58,7 +58,6 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					IU_CRNivel vN=new IU_CRNivel();
 					vN.setVisible(true);
-					setVisible(false);
 				}
 			});
 		}
@@ -71,8 +70,6 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRTablero vT=new IU_CRTablero();
 					vT.setVisible(true);
-					setVisible(false);
-					
 				}
 			});
 		}
@@ -85,7 +82,6 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRUsuario vU=new IU_CRUsuario();
 					vU.setVisible(true);
-					setVisible(false);
 				}
 			});
 		}

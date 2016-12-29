@@ -14,6 +14,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
 
 public class IU_Buscaminas {
@@ -93,6 +94,12 @@ public class IU_Buscaminas {
 		
 		JButton btnConsultarRanking = new JButton("Consultar Ranking");
 		frmMenuBuscaminas.getContentPane().add(btnConsultarRanking, "2, 13");
+		btnConsultarRanking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IU_ConsultarRanking vCR=new IU_ConsultarRanking();
+				vCR.setVisible(true);
+			}
+		});
 		
 		JButton btnJugarContrarreloj = new JButton("Jugar Contrarreloj");
 		btnJugarContrarreloj.addActionListener(new ActionListener() {
