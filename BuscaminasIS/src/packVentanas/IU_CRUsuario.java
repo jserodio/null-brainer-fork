@@ -32,8 +32,8 @@ public class IU_CRUsuario extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IU_CRNivel window = new IU_CRNivel();
-					window.getFrame().setVisible(true);
+					IU_CRUsuario window = new IU_CRUsuario();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,13 +54,13 @@ public class IU_CRUsuario extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(500, 250, 300, 150);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][grow][grow][]", "[][][][grow]"));
-		frame.getContentPane().add(getLblUsuario(), "cell 4 1,alignx trailing");
+		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][][][][][][grow][grow][]", "[][][][grow]"));
 		frame.getContentPane().add(getUsuario(), "cell 5 1,growx");
+		frame.getContentPane().add(getLblUsuario(), "cell 4 1,alignx center");
 		frame.getContentPane().add(getBtnNewButton_1(), "cell 4 3");
-		frame.getContentPane().add(getBtnAtras(), "flowx,cell 6 3");
+		frame.getContentPane().add(getBtnAtras(), "flowx,cell 5 3");
 
 	}
 	private JButton getBtnAtras() {
@@ -119,7 +119,7 @@ public class IU_CRUsuario extends JFrame{
 			usuario = new JComboBox();
 		}
 		usuario.addItem("Nombres de usuarios");
-		try {
+		/*try {
 			ArrayList<Usuario> usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			Iterator<Usuario> it=usuarios.iterator();
 			Usuario u=null;
@@ -130,7 +130,7 @@ public class IU_CRUsuario extends JFrame{
 		} catch (SQLException | ExcepcionConectarBD e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		return usuario;
 	}
 }

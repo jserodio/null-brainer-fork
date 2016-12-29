@@ -28,8 +28,8 @@ public class IU_CRTablero extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IU_CRNivel window = new IU_CRNivel();
-					window.getFrame().setVisible(true);
+					IU_CRTablero window = new IU_CRTablero();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,15 +50,16 @@ public class IU_CRTablero extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(500, 250, 225, 150);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][grow][grow][]", "[][][][grow]"));
-		frame.getContentPane().add(getLblNivel(), "cell 4 1,alignx trailing");
+		frame.getContentPane().add(getLblNivel(), "cell 4 1,alignx center");
 		frame.getContentPane().add(getNivel(), "cell 5 1,growx");
-		frame.getContentPane().add(getLblTablero(), "cell 4 2,alignx trailing");
+		frame.getContentPane().add(getLblTablero(), "cell 4 2,alignx center");
 		frame.getContentPane().add(getTablero(), "cell 5 2,growx");
 		frame.getContentPane().add(getBtnAceptar(), "cell 4 3");
-		frame.getContentPane().add(getBtnAtras(), "flowx,cell 6 3");
+		frame.getContentPane().add(getBtnAtras(), "flowx,cell 5 3");
+		frame.setVisible(true);
 	}
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
@@ -104,6 +105,10 @@ public class IU_CRTablero extends JFrame {
 		if (nivel == null) {
 			nivel = new JComboBox();
 		}
+		nivel.addItem("");
+		nivel.addItem("Fácil");
+		nivel.addItem("Medio");
+		nivel.addItem("Dificil");
 		return nivel;
 	}
 	private JLabel getLblTablero() {

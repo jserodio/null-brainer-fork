@@ -1,5 +1,7 @@
 package packVentanas;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
@@ -48,8 +50,8 @@ public class IU_CRNivel extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setFrame(new JFrame());
-		getFrame().setBounds(100, 100, 450, 300);
+		setFrame(new JFrame()); 
+		getFrame().setBounds(500, 250, 275, 150);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().getContentPane().setLayout(new MigLayout("", "[][][][][][grow][grow][]", "[][][grow]"));
 		getFrame().getContentPane().add(getLblNivel(), "cell 4 1,alignx trailing");
