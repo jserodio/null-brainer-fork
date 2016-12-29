@@ -74,7 +74,7 @@ public class VAyuda extends JFrame {
 		
 		JLabel l1 = new JLabel("");
 		contentPane.add(l1, "cell 0 3,alignx center");
-		l1.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Ayuda.png")));
+		l1.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Ayuda.png")));
 	}
 
 }

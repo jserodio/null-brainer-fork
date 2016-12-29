@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.Stack;
 
-import packVentanas.VBuscaminas;
+import packVentanas.IU_Jugar;
 
 public class Tablero extends Observable{
 	

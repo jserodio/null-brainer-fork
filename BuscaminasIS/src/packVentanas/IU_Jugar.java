@@ -39,7 +39,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 @SuppressWarnings("serial")
-public class VBuscaminas extends JFrame implements ActionListener, Observer{
+public class IU_Jugar extends JFrame implements ActionListener, Observer{
 
 	private JPanel contentPane;
 	private JMenuBar menuBar;
@@ -53,7 +53,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 	private int fil;
 	private int col;
 	private JLabel[] lcasillas;
-	private VBuscaminas vBusca = this;
+	private IU_Jugar vBusca = this;
 	private Boolean juego = true;
 	private Boolean finalizado = false;
 	private Clip clip;
@@ -68,7 +68,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VBuscaminas frame = new VBuscaminas(2);
+					IU_Jugar frame = new IU_Jugar(2);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,7 +80,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 	/**
 	 * Create the frame.
 	 */
-	public VBuscaminas(int nivel) {
+	public IU_Jugar(int nivel) {
 		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
 		setIconImage(icon);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,13 +141,13 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(new Color(255, 255, 0));
 		panel_2.add(lblNewLabel, "cell 3 0,growx");
-		lblNewLabel.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Reset.png")));
+		lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 		
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				Buscaminas.getBuscaminas().reset(vBusca);
-				lblNewLabel.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Reset.png")));
+				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
 		});
 		
@@ -242,7 +242,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 					}
 				}
 					});
-				l1.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Casilla.png")));
+				l1.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Casilla.png")));
 			}
 		}
 	}
@@ -280,7 +280,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 					   for(int i=2; i>=0; i--){
 						   aux = num%10;
 						   num = num/10;
-							Banderas[i].setIcon(new ImageIcon(VBuscaminas.class.getResource("/Crono"+aux+".png")));			
+							Banderas[i].setIcon(new ImageIcon(IU_Jugar.class.getResource("/Crono"+aux+".png")));			
 						}
 				   }
 				   if(p[0]!=null){
@@ -289,7 +289,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 					   for(int i=2; i>=0; i--){
 						   aux = num%10;
 						   num = num/10;
-							Tiempo[i].setIcon(new ImageIcon(VBuscaminas.class.getResource("/Crono"+aux+".png")));			
+							Tiempo[i].setIcon(new ImageIcon(IU_Jugar.class.getResource("/Crono"+aux+".png")));			
 						}
 				   }
 			   }else if(arg instanceof Boolean){
@@ -300,7 +300,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 					   } catch (NoArchivoAudioException e) {
 						   e.printStackTrace();
 					   }
-					   lblNewLabel.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Perder.png")));
+					   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Perder.png")));
 					   JOptionPane.showMessageDialog(null, "OOOHHHHH QUE PENA, HAS ENCONTRADO UNA MINA!!!");
 					   Ranking.getRanking().guardarLista();
 				   }
@@ -313,9 +313,9 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 			   } else if(p.length ==3){
 				   int pos = calcularPosicion(Integer.parseInt(p[0]), Integer.parseInt(p[1]));
 				   if(p[2].toString().equals("PonerBandera")){
-					   lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/CasillaBandera.png")));
+					   lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBandera.png")));
 				   } else {
-					   lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/Casilla.png"))); 
+					   lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/Casilla.png"))); 
 				   } 
 
 			   } else if(arg.equals("FINALIZADO")){
@@ -325,7 +325,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 				   } catch (NoArchivoAudioException e) {
 					   e.printStackTrace();
 				   }
-				   lblNewLabel.setIcon(new ImageIcon(VBuscaminas.class.getResource("/Victoria.png"))); 
+				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
 				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
@@ -335,18 +335,18 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 				if (p.length == 3){
 				int pos = calcularPosicion(Integer.parseInt(p[0]), Integer.parseInt(p[1]));
 				  if(1<=Integer.parseInt(p[2]) && Integer.parseInt(p[2])<=8){
-					  lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/Casilla"+Integer.parseInt(p[2])+".png")));
+					  lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/Casilla"+Integer.parseInt(p[2])+".png")));
 				    }else if(Integer.parseInt(p[2])==0){
-				    	   lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/CasillaVacia.png")));
+				    	   lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaVacia.png")));
 				    }else if(Integer.parseInt(p[2])==10){
 				    	if(bomba == 0){
-				    		 lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/CasillaPrimeraMina.png")));
+				    		 lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaPrimeraMina.png")));
 				    		 bomba++;
 				    	} else {
-				    		 lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/CasillaMina.png")));	  
+				    		 lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaMina.png")));	  
 				    	}
 				    }else if(Integer.parseInt(p[2])==11){
-				    	lcasillas[pos].setIcon(new ImageIcon(VBuscaminas.class.getResource("/CasillaNoMina.png")));
+				    	lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaNoMina.png")));
 				    }
 				}
 			}
@@ -367,7 +367,7 @@ public class VBuscaminas extends JFrame implements ActionListener, Observer{
 	private void habilitarCasillas(){
 		for(int i=0;i<lcasillas.length;i++){
 			lcasillas[i].setEnabled(true);
-			lcasillas[i].setIcon(new ImageIcon(VBuscaminas.class.getResource("/Casilla.png")));
+			lcasillas[i].setIcon(new ImageIcon(IU_Jugar.class.getResource("/Casilla.png")));
 		}
 	}
 	

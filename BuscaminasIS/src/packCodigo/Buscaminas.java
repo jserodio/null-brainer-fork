@@ -5,7 +5,7 @@ import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import packVentanas.VBuscaminas;
+import packVentanas.IU_Jugar;
 
 public class Buscaminas extends Observable implements Observer{
 
@@ -74,7 +74,7 @@ public class Buscaminas extends Observable implements Observer{
 	 * y lCasillasVacias volviendo a calcular el numero de 		*
 	 * minas. El tiempo se resetea.								*												*
 	 ************************************************************/
-	public void reset(VBuscaminas vBuscaminas){
+	public void reset(IU_Jugar vBuscaminas){
 		iniciarTablero(nivel);
 		tablero.addObserver(vBuscaminas);
 		setContMinas();
@@ -186,7 +186,7 @@ public class Buscaminas extends Observable implements Observer{
 	}
 
 
-	public void anadirObservador(VBuscaminas vBuscaminas) {
+	public void anadirObservador(IU_Jugar vBuscaminas) {
 		addObserver(vBuscaminas);
 		tablero.addObserver(vBuscaminas);
 		tablero.addObserver(this);

@@ -142,7 +142,7 @@ public class VLogin extends JFrame {
 						 }else{
 							 Buscaminas.getBuscaminas().establecerNombreJugador(getTextField().getText());
 						 }
-						 VBuscaminas vB = new VBuscaminas(Integer.parseInt(getChoice().getSelectedItem()));
+						 IU_Jugar vB = new IU_Jugar(Integer.parseInt(getChoice().getSelectedItem()));
 						 vB.setVisible(true);
 						 setVisible(false);
 						 clip.stop();
