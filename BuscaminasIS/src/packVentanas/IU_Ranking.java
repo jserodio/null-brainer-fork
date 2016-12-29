@@ -89,14 +89,17 @@ public class IU_Ranking extends JFrame{
 				if(tipo.equals("nivel")){
 					IU_CRNivel vC=new IU_CRNivel();
 					vC.setVisible(true);
+					setVisible(false);
 				}
 				else if(tipo.equals("codUsuario")){
 					IU_CRUsuario vC=new IU_CRUsuario();
 					vC.setVisible(true);
+					setVisible(false);
 				}
 				else if(tipo.equals("codTablero")){
 					IU_CRTablero vC=new IU_CRTablero();
 					vC.setVisible(true);
+					setVisible(false);
 				}	
 			}
 		});

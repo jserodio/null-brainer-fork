@@ -61,7 +61,7 @@ public class IU_CRUsuario extends JFrame{
 		frame.getContentPane().add(getLblUsuario(), "cell 4 1,alignx center");
 		frame.getContentPane().add(getBtnNewButton_1(), "cell 4 3");
 		frame.getContentPane().add(getBtnAtras(), "flowx,cell 5 3");
-
+		frame.setVisible(true);
 	}
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
@@ -70,6 +70,7 @@ public class IU_CRUsuario extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
+					setVisible(false);
 				}
 			});
 		}

@@ -58,6 +58,7 @@ public class IU_CRNivel extends JFrame {
 		getFrame().getContentPane().add(getComboBox(), "cell 5 1,growx");
 		getFrame().getContentPane().add(getBtnAceptar(), "cell 4 2");
 		getFrame().getContentPane().add(getBtnAtras(), "flowx,cell 6 2");
+		frame.setVisible(true);
 	}
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
@@ -66,6 +67,7 @@ public class IU_CRNivel extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
+					setVisible(false);
 				}
 			});
 		}

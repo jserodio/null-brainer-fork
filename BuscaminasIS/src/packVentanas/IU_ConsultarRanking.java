@@ -40,7 +40,7 @@ public class IU_ConsultarRanking extends JFrame {
 	 */
 	public IU_ConsultarRanking() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(500, 250, 250, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -58,6 +58,7 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					IU_CRNivel vN=new IU_CRNivel();
 					vN.setVisible(true);
+					setVisible(false);
 				}
 			});
 		}
@@ -70,6 +71,7 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRTablero vT=new IU_CRTablero();
 					vT.setVisible(true);
+					setVisible(false);
 				}
 			});
 		}
@@ -82,6 +84,7 @@ public class IU_ConsultarRanking extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRUsuario vU=new IU_CRUsuario();
 					vU.setVisible(true);
+					setVisible(false);
 				}
 			});
 		}
