@@ -106,5 +106,9 @@ public class IU_Buscaminas {
 		JButton btnSalir = new JButton("Salir");
 		frmMenuBuscaminas.getContentPane().add(btnSalir, "2, 17");
 	}
+	
+	public void setVisible(boolean pB){
+		frmMenuBuscaminas.setVisible(pB);
+	}
 
 }
