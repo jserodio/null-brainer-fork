@@ -25,7 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import packCodigo.Buscaminas;
+import packCodigo.GestorBuscaminas;
+import packCodigo.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
@@ -146,7 +147,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				Buscaminas.getBuscaminas().reset(vBusca);
+				GestorBuscaminas.getBuscaminas().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
 		});
@@ -164,15 +165,102 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		contentPane.add(panel, "cell 0 1,grow");
 		
 		iniciarCasillas(nivel);
-		Buscaminas.getBuscaminas().inicioJuego(nivel);
-		Buscaminas.getBuscaminas().anadirObservador(this);
-		fil=Buscaminas.getBuscaminas().obtenerNumFilas();
-		col=Buscaminas.getBuscaminas().obtenerNumColumnas();
+		GestorBuscaminas.getBuscaminas().inicioJuego(nivel);
+		GestorBuscaminas.getBuscaminas().anadirObservador(this);
+		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
+		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
 		mostrarTablero();
 		anadirCasillas();
 	}
+	
+	public IU_Jugar() {
+		// contrarreloj, sabemos que el nivel va a ser estático (nunca cambia) y tiene un tiempo límite fijado
+		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
+		setIconImage(icon);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//nivel 1	setBounds(100, 100, 500, 450);
+		setBounds(100, 100, 730, 600); // nivel 2
+		//nivel 3	setBounds(100, 100, 1150, 710);
+		
+		setTitle("Buscaminas Modo Contrarreloj");
+		setResizable(false); 
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		menu1 = new JMenu("Juego");
+		menuBar.add(menu1);
+		
+		menu2 = new JMenu("Ayuda");
+		menuBar.add(menu2);
+		
+		item1 = new JMenuItem("Nuevo");
+		item1.addActionListener(this);
+		menu1.add(item1);
+		
+		item2 = new JMenuItem("Ver");
+		item2.addActionListener(this);
+		menu2.add(item2);
+		
+		item3 = new JMenuItem("Ranking");
+		item3.addActionListener(this);
+		menu1.add(item3);
+		
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.GRAY);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 
-
+		contentPane.setLayout(new MigLayout("", "[200.00]", "[40.00][204.00]"));
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(Color.LIGHT_GRAY);
+		contentPane.add(panel_2, "cell 0 0,grow");
+	
+		panel_2.setLayout(new MigLayout("", "[20.00][20.00][17.00][][20][][]", "[]"));
+		
+		for(int i=0; i<3; i++){
+			JLabel j1 = new JLabel();
+			Banderas[i] = j1;
+			panel_2.add(j1, "cell "+i+" 0, grow");
+			j1.setHorizontalAlignment(SwingConstants.LEFT);
+		}
+		
+		lblNewLabel = new JLabel();
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBackground(new Color(255, 255, 0));
+		panel_2.add(lblNewLabel, "cell 3 0,growx");
+		lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
+		
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				GestorBuscaminas.getBuscaminas().reset(vBusca);
+				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
+			}
+		});
+		
+		for(int i=4; i<7; i++){
+			JLabel j1 = new JLabel();
+			Tiempo[i-4] = j1;
+			panel_2.add(j1, "cell "+i+" 0, grow");
+			j1.setHorizontalAlignment(SwingConstants.RIGHT);
+		}
+		
+		
+		panel = new JPanel();
+		panel.setBackground(Color.LIGHT_GRAY);
+		contentPane.add(panel, "cell 0 1,grow");
+		iniciarCasillas(2);
+		
+		GestorBuscaminas.getBuscaminas().iniciarPartidaContrarreloj();
+		GestorBuscaminas.getBuscaminas().anadirObservador(this);
+		
+		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
+		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
+		mostrarTablero();
+		anadirCasillas();
+	}
 	
 	private void iniciarCasillas(int pNivel) {
 		if(pNivel == 1){
@@ -221,24 +309,24 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 							 int b;
 							 a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							 b=gety(buscarPosCasilla((JLabel)e.getSource()));
-		                     Buscaminas.getBuscaminas().ponerBandera(a,b);
-		                     Buscaminas.getBuscaminas().comprobarJuego();
+		                     GestorBuscaminas.getBuscaminas().ponerBandera(a,b);
+		                     GestorBuscaminas.getBuscaminas().comprobarJuego();
 		                  }
 						 else if(e.getButton() == MouseEvent.BUTTON1 && juego && !finalizado){
 							 int a;
 							 int b;
 							 a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							 b=gety(buscarPosCasilla((JLabel)e.getSource()));
-							 Buscaminas.getBuscaminas().descubrirCasilla(a,b);
-		                     Buscaminas.getBuscaminas().comprobarJuego();
+							 GestorBuscaminas.getBuscaminas().descubrirCasilla(a,b);
+		                     GestorBuscaminas.getBuscaminas().comprobarJuego();
 					} else
 						if(e.getButton() == MouseEvent.BUTTON2 && juego && !finalizado){
 							int a;
 							int b;
 							a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							b=gety(buscarPosCasilla((JLabel)e.getSource()));
-							Buscaminas.getBuscaminas().descubrirTodosLosVecinos(a,b);
-							Buscaminas.getBuscaminas().comprobarJuego();
+							GestorBuscaminas.getBuscaminas().descubrirTodosLosVecinos(a,b);
+							GestorBuscaminas.getBuscaminas().comprobarJuego();
 					}
 				}
 					});
@@ -272,7 +360,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		String[]p = arg.toString().split(",");
-		if(o instanceof Buscaminas){ 
+		if(o instanceof GestorBuscaminas){ 
 			   if(p.length==2){
 				   if(p[1]!=null){
 					   int aux;
@@ -355,7 +443,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource()==item1) {
-        	Buscaminas.getBuscaminas().reset(vBusca);
+        	GestorBuscaminas.getBuscaminas().reset(vBusca);
         } else if (e.getSource() == item2){
         	VAyuda vA = new VAyuda();
 			vA.setVisible(true);
@@ -378,7 +466,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	}
 	
 	private void mostrarRanking(){
-		Buscaminas.getBuscaminas().calcularPuntos();
+		GestorBuscaminas.getBuscaminas().calcularPuntos();
     	VRanking vR = new VRanking();
 		vR.setVisible(true);
 	}

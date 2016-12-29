@@ -544,8 +544,8 @@ public class Tablero extends Observable{
 			casilla.descubrir();
 			setChanged();
 			notifyObservers(pFila+","+pCol+","+10);
-			if(Buscaminas.getBuscaminas().getJuego()){
-				Buscaminas.getBuscaminas().gameOver();
+			if(GestorBuscaminas.getBuscaminas().getJuego()){
+				GestorBuscaminas.getBuscaminas().gameOver();
 			}
 		}else if(casilla instanceof CasillaNumero&&!casilla.estaDesvelada()&&!casilla.tieneBandera()){
 			int num=((CasillaNumero)casilla).obtenerNumero();

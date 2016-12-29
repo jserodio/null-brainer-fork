@@ -38,7 +38,7 @@ public abstract class Casilla {
 	
 	public void cambioBandera(){
 		if(!desvelada){
-			if (!bandera && Buscaminas.getBuscaminas().obtenerBanderas() != 0){
+			if (!bandera && GestorBuscaminas.getBuscaminas().obtenerBanderas() != 0){
 				bandera = true;
 			} else if(bandera == true){
 				bandera = false;

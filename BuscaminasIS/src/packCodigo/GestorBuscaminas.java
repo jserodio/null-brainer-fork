@@ -7,16 +7,12 @@ import java.util.TimerTask;
 
 import packVentanas.IU_Jugar;
 
-public class Buscaminas extends Observable implements Observer{
+public class GestorBuscaminas extends Observable implements Observer{
 
-	private static Buscaminas miBuscaminas = new Buscaminas();
-	private Tablero tablero;
+	private static GestorBuscaminas miBuscaminas = new GestorBuscaminas();
 	private int nivel;
 	private int contMinas;
-	private Timer timer=new Timer();//Aqui va el tiempo
 	private boolean juego;
-	private float tiempoTrans;
-	private int contBanderas=0;
 	private int puntuacion;
 	private boolean finalizado = false;
 	private Jugador j;
@@ -24,14 +20,14 @@ public class Buscaminas extends Observable implements Observer{
 	/****************
 	 * CONSTRUCTORA	*
 	 ****************/
-	private Buscaminas(){
+	private GestorBuscaminas(){
 	}
 	
 	/************************
 	 * Singleton.			*
 	 * @return miBuscaminas	*
 	 ************************/
-	public static Buscaminas getBuscaminas(){
+	public static GestorBuscaminas getBuscaminas(){
 		return miBuscaminas;
 	}
 	
@@ -41,31 +37,34 @@ public class Buscaminas extends Observable implements Observer{
 	 * @return 				*
 	 ************************/
 	private void setContMinas(){
-		contMinas = tablero.minas().size();
+		contMinas = GestorSesion.getSesion().getTablero().minas().size();
 	}
 
 	/**Iniciamos el juego**/
 	public void inicioJuego(int pNivel){
 		setNivel(pNivel);
 		setJuego(true);
-		iniciarTablero(pNivel);
+		GestorSesion.getSesion().iniciarTablero(pNivel);
 		setContMinas();
-		contBanderas = contMinas;
-		crono();
+		GestorSesion.getSesion().setContBanderas(contMinas);
+		GestorSesion.getSesion().crono();
 	}
 	
-	/**Iniciar el tablero**/
-	
-	private void iniciarTablero(int pNivel){
-		if(pNivel == 1){
-			tablero = TableroBuilderN1.getTableroBuilderN1().asignarTablero();
-		} else if (pNivel == 2){
-			tablero = TableroBuilderN2.getTableroBuilderN2().asignarTablero();
-			
-		} else if (pNivel == 3){
-			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
-		}
+	/**Iniciamos partica contrarreloj**/
+	public void iniciarPartidaContrarreloj(){
+		setNivel(2);
+		setJuego(true);
+		
+		// set tipo contrarreloj
+		GestorSesion.getSesion().setTipo("contrarreloj");
+		GestorSesion.getSesion().iniciarTablero(2);
+		setContMinas();
+		GestorSesion.getSesion().setContBanderas(contMinas);
+		// iniciarCrono()
+		GestorSesion.getSesion().iniciarCrono();
 	}
+	
+	
 
 	
 	/************************************************************
@@ -75,14 +74,14 @@ public class Buscaminas extends Observable implements Observer{
 	 * minas. El tiempo se resetea.								*												*
 	 ************************************************************/
 	public void reset(IU_Jugar vBuscaminas){
-		iniciarTablero(nivel);
-		tablero.addObserver(vBuscaminas);
+		GestorSesion.getSesion().iniciarTablero(nivel);
+		GestorSesion.getSesion().getTablero().addObserver(vBuscaminas);
 		setContMinas();
-		contBanderas=contMinas;
-		tiempoTrans = -1;
-		timer.cancel();
-		crono();
-		tablero.addObserver(this);
+		GestorSesion.getSesion().setContBanderas(contMinas);
+		GestorSesion.getSesion().setTiempo(GestorSesion.getSesion().getTiempo() - 1 );
+		GestorSesion.getSesion().getTimer().cancel();
+		GestorSesion.getSesion().crono();
+		GestorSesion.getSesion().getTablero().addObserver(this);
 		setJuego(true);
 		setFinalizado(false);
 	}
@@ -102,26 +101,26 @@ public class Buscaminas extends Observable implements Observer{
 	}
 
 	public void descubrirCasilla(int pFila, int pCol){
-		tablero.descubrirCasilla(pFila, pCol);
+		GestorSesion.getSesion().getTablero().descubrirCasilla(pFila, pCol);
 	}
 	
 	/**
 	 * 
 	 */
 	public void gameOver(){
-		timer.cancel();
-		tablero.mostrarTablero();
+		GestorSesion.getSesion().getTimer().cancel();
+		GestorSesion.getSesion().getTablero().mostrarTablero();
 		setJuego(false);
 	}
 
 	public int obtenerNumFilas() {
 		
-		return tablero.obtenerNumFilas();
+		return GestorSesion.getSesion().getTablero().obtenerNumFilas();
 	}
 	
 	public int obtenerNumColumnas() {
 		
-		return tablero.obtenerNumColumnas();
+		return GestorSesion.getSesion().getTablero().obtenerNumColumnas();
 	}
 
 	public boolean getJuego(){
@@ -129,9 +128,10 @@ public class Buscaminas extends Observable implements Observer{
 	}
 	
 	public void ponerBandera(int fila, int col) {
+		int contBanderas = GestorSesion.getSesion().getContBanderas();
 		int aux = contBanderas;
 		if(0<=contBanderas){
-			tablero.ponerBandera(fila,col);
+			GestorSesion.getSesion().getTablero().ponerBandera(fila,col);
 			if(contBanderas < aux){
 				setChanged();
 				notifyObservers(fila+","+col+","+"PonerBandera");
@@ -140,33 +140,7 @@ public class Buscaminas extends Observable implements Observer{
 				notifyObservers(fila+","+col+","+"QuitarBandera");
 			}
 		}
-		
-		
 	}
-	
-	private void crono(){
-
-	  TimerTask  timerTask = new TimerTask() {
-	   @Override
-	   public void run() {
-	    String texto;
-	    tiempoTrans++;
-	    texto = ""+(int)tiempoTrans;
-	    if(tiempoTrans<10){
-	    	setChanged();
-	 	    notifyObservers("00"+texto+","+contBanderas);
-	    }else if(tiempoTrans<100){
-	    	 setChanged();
-	 	    notifyObservers("0"+texto+","+contBanderas);
-	    }else{
-	    	setChanged();
-	    	notifyObservers(texto+","+contBanderas);
-	    	}
-	   }
-	  };
-	  timer = new Timer();
-	  timer.scheduleAtFixedRate(timerTask, 0, 1000);
-	 }
 	
 	@Override
 
@@ -174,22 +148,22 @@ public class Buscaminas extends Observable implements Observer{
 		if(pObservable instanceof Tablero){
 			String[]p = pObjeto.toString().split(",");
 			if(p[1].equals("BANDERA") && p[0].equals("true")){
-				if(contBanderas>0){
-					contBanderas--;
+				if(GestorSesion.getSesion().getContBanderas()>0){
+					GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContBanderas() - 1);
 				}
 			}else if(p[1].equals("BANDERA") && p[0].equals("false")){
-				if(contBanderas<contMinas){
-					contBanderas++;
+				if(GestorSesion.getSesion().getContBanderas()<contMinas){
+					GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContBanderas() + 1);
 				}
 			}
 		}
 	}
 
 
-	public void anadirObservador(IU_Jugar vBuscaminas) {
-		addObserver(vBuscaminas);
-		tablero.addObserver(vBuscaminas);
-		tablero.addObserver(this);
+	public void anadirObservador(IU_Jugar iU_Jugar) {
+		this.addObserver(iU_Jugar);
+		GestorSesion.getSesion().getTablero().addObserver(iU_Jugar);
+		GestorSesion.getSesion().getTablero().addObserver(this);
 	}
 
 	public void establecerNombreJugador(String text) {
@@ -230,15 +204,15 @@ public class Buscaminas extends Observable implements Observer{
 	}
 	
 	public int obtenerBanderas(){
-		return contBanderas;
+		return GestorSesion.getSesion().getContBanderas();
 	}
 	
 	public int obtenerPuntuacion(){
 		return puntuacion;
 	}
 	public void comprobarJuego(){
-		if(tablero.getContadorCasillasDescubrir() == contMinas){
-			boolean fin = tablero.comprobarJuego();
+		if(GestorSesion.getSesion().getTablero().getContadorCasillasDescubrir() == contMinas){
+			boolean fin = GestorSesion.getSesion().getTablero().comprobarJuego();
 			setFinalizado(fin);
 		}
 		
@@ -247,7 +221,7 @@ public class Buscaminas extends Observable implements Observer{
 	private void setFinalizado(boolean fin) {
 		this.finalizado = fin;
 		if(finalizado){
-			timer.cancel();
+			GestorSesion.getSesion().getTimer().cancel();
 			setChanged();
 			notifyObservers("FINALIZADO");
 		}
@@ -257,7 +231,7 @@ public class Buscaminas extends Observable implements Observer{
 		if(!finalizado){
 			puntuacion = 0;
 		} else {
-			puntuacion =(int) ((((6000-tiempoTrans)*Math.sqrt(nivel))/10)-(int)tiempoTrans);			
+			puntuacion =(int) ((((6000-GestorSesion.getSesion().getTiempo())*Math.sqrt(nivel))/10)-(int)GestorSesion.getSesion().getTiempo());			
 		}	
 		asignarPuntos();
 	}
@@ -269,7 +243,7 @@ public class Buscaminas extends Observable implements Observer{
 	}
 
 	public void descubrirTodosLosVecinos(int a, int b) {
-		tablero.descubrirTodosLosVecinos(a,b);
+		GestorSesion.getSesion().getTablero().descubrirTodosLosVecinos(a,b);
 	}
 	
 

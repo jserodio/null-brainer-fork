@@ -76,7 +76,7 @@ public class Ranking {
 		while (itr.hasNext()){
 			j=itr.next();
 			if(pNombre.equals(j.obtenerNombre())){
-				j.establecerPuntuacion(Buscaminas.getBuscaminas().obtenerPuntuacion());
+				j.establecerPuntuacion(GestorBuscaminas.getBuscaminas().obtenerPuntuacion());
 			}
 				
 		}

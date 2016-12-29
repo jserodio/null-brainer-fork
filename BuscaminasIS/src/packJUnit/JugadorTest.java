@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import packCodigo.Buscaminas;
+import packCodigo.GestorBuscaminas;
 import packCodigo.Jugador;
 
 public class JugadorTest {

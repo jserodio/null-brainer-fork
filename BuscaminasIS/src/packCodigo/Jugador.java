@@ -31,13 +31,13 @@ public class Jugador {
 	}
 	
 	private void ponerPunt(){
-		this.puntuacion=Buscaminas.getBuscaminas().obtenerPuntuacion();
+		this.puntuacion=GestorBuscaminas.getBuscaminas().obtenerPuntuacion();
 	}
 	
 	//public para las JUnit
 	private boolean mismoJugador(){
 		boolean mismo = false;
-		if(this.obtenerNombre().equals(Buscaminas.getBuscaminas().obtenerNombreJugador())){
+		if(this.obtenerNombre().equals(GestorBuscaminas.getBuscaminas().obtenerNombreJugador())){
 			mismo = true;
 		}
 		return mismo;
@@ -48,7 +48,7 @@ public class Jugador {
 	}
 	
 	private void mayorPunt(){
-		if(Buscaminas.getBuscaminas().obtenerPuntuacion()>=this.obtenerPunt()){
+		if(GestorBuscaminas.getBuscaminas().obtenerPuntuacion()>=this.obtenerPunt()){
 			this.ponerPunt();
 		}
 	}

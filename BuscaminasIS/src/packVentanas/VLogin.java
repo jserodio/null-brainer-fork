@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
-import packCodigo.Buscaminas;
+import packCodigo.GestorBuscaminas;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 
@@ -138,9 +138,9 @@ public class VLogin extends JFrame {
 					 if (e.getButton() == MouseEvent.BUTTON1) {
 						 Ranking.getRanking().cargarLista();
 						 if(getTextField().getText().toString().equals("")){
-							 Buscaminas.getBuscaminas().establecerNombreJugador("Desconocido");
+							 GestorBuscaminas.getBuscaminas().establecerNombreJugador("Desconocido");
 						 }else{
-							 Buscaminas.getBuscaminas().establecerNombreJugador(getTextField().getText());
+							 GestorBuscaminas.getBuscaminas().establecerNombreJugador(getTextField().getText());
 						 }
 						 IU_Jugar vB = new IU_Jugar(Integer.parseInt(getChoice().getSelectedItem()));
 						 vB.setVisible(true);

@@ -13,6 +13,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IU_Buscaminas {
 
@@ -93,6 +95,12 @@ public class IU_Buscaminas {
 		frmMenuBuscaminas.getContentPane().add(btnConsultarRanking, "2, 13");
 		
 		JButton btnJugarContrarreloj = new JButton("Jugar Contrarreloj");
+		btnJugarContrarreloj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				IU_Jugar iu_jugar = new IU_Jugar();
+				iu_jugar.setVisible(true);
+			}
+		});
 		frmMenuBuscaminas.getContentPane().add(btnJugarContrarreloj, "2, 15");
 		
 		JButton btnSalir = new JButton("Salir");
