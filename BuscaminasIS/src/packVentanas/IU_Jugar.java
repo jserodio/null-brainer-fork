@@ -147,7 +147,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				GestorBuscaminas.getBuscaminas().reset(vBusca);
+				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
 		});
@@ -166,7 +166,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		iniciarCasillas(nivel);
 		GestorBuscaminas.getBuscaminas().inicioJuego(nivel);
-		GestorBuscaminas.getBuscaminas().anadirObservador(this);
+		GestorSesion.getSesion().anadirObservador(this);
 		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
 		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
 		mostrarTablero();
@@ -235,7 +235,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				GestorBuscaminas.getBuscaminas().reset(vBusca);
+				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
 		});
@@ -254,7 +254,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		iniciarCasillas(2);
 		
 		GestorBuscaminas.getBuscaminas().iniciarPartidaContrarreloj();
-		GestorBuscaminas.getBuscaminas().anadirObservador(this);
+		GestorSesion.getSesion().anadirObservador(this);
 		
 		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
 		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
@@ -309,7 +309,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 							 int b;
 							 a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							 b=gety(buscarPosCasilla((JLabel)e.getSource()));
-		                     GestorBuscaminas.getBuscaminas().ponerBandera(a,b);
+							 GestorSesion.getSesion().ponerBandera(a,b);
 		                     GestorBuscaminas.getBuscaminas().comprobarJuego();
 		                  }
 						 else if(e.getButton() == MouseEvent.BUTTON1 && juego && !finalizado){
@@ -360,7 +360,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		String[]p = arg.toString().split(",");
-		if(o instanceof GestorBuscaminas){ 
+		if(o instanceof GestorSesion){ 
 			   if(p.length==2){
 				   if(p[1]!=null){
 					   int aux;
@@ -443,7 +443,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource()==item1) {
-        	GestorBuscaminas.getBuscaminas().reset(vBusca);
+        	GestorSesion.getSesion().reset(vBusca);
         } else if (e.getSource() == item2){
         	VAyuda vA = new VAyuda();
 			vA.setVisible(true);
