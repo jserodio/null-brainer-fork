@@ -20,5 +20,9 @@ public class Partida1 {
 	public String getCodUsuario(){
 		return this.codUsuario;
 	}
+	
+	public String getCodTablero(){
+		return this.codTablero;
+	}
 
 }

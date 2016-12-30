@@ -25,9 +25,10 @@ public class GestorPartidas {
 	public ArrayList<Partida1> obtenerListaPartidasNivel(int pNivel) throws ExcepcionConectarBD, SQLException{
 		if(listaPartidas.isEmpty()==false){
 			listaPartidas.clear();
-		} 
+		}
+		  String niv=""+pNivel;
 		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM partida WHERE nivel ='"+pNivel+"' AND acabado ='true' ORDER BY puntuacion DESC";
+		  String cadena = "SELECT * FROM partida WHERE nivel LIKE '"+niv+"%' AND acabado ='true' ORDER BY puntuacion DESC";
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  
 		  if(rs!=null){

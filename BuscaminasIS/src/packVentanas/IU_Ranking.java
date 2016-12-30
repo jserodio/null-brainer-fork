@@ -110,8 +110,8 @@ public class IU_Ranking extends JFrame{
 		ArrayList<Partida1> partidas;
 		ArrayList<Usuario> usuarios;
 		boolean enc=false;
-		this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
 		if(tipo.equals("nivel")){
+			this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel(nivel);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			Iterator<Partida1> it=partidas.iterator();
@@ -137,6 +137,7 @@ public class IU_Ranking extends JFrame{
 			}
 		}
 		else if(tipo.equals("codUsuario")){
+			this.getTextArea().append("Pos\tNombre\tNivel\tTablero\tPunt");
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasUsuario(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			Iterator<Partida1> it=partidas.iterator();
@@ -157,11 +158,20 @@ public class IU_Ranking extends JFrame{
 					this.getTextArea().append("No ha jugado ninguna partida");
 				}
 				else{
-					this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
+					char nivel=p.getCodTablero().charAt(0);
+					if(p.getCodTablero().charAt(1)=='0'){
+						char tablero=p.getCodTablero().charAt(p.getCodTablero().length()-1);
+						this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tablero+"\t"+p.getPuntuacion());
+					}
+					else{
+						String tab=p.getCodTablero().substring(1, p.getCodTablero().length()-1);
+						this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tab+"\t"+p.getPuntuacion());
+					}
 				}
 			}
 		}
 		else if(tipo.equals("codTablero")){
+			this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasTablero(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			Iterator<Partida1> it=partidas.iterator();
