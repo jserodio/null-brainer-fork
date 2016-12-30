@@ -18,6 +18,30 @@ public class GestorBuscaminas {
     public static GestorBuscaminas getGestorBuscaminas() {
         return miGestorBuscaminas;
     }
+    
+    /**Iniciamos el juego**/
+	public void inicioJuego(int pNivel){
+		GestorSesion.getSesion().setNivel(pNivel);
+		GestorSesion.getSesion().setJuego(true);
+		GestorSesion.getSesion().iniciarTablero(pNivel);
+		GestorSesion.getSesion().setContMinas();
+		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+		GestorSesion.getSesion().crono();
+	}
+	
+	/**Iniciamos partica contrarreloj**/
+	public void iniciarPartidaContrarreloj(){
+		GestorSesion.getSesion().setNivel(2);
+		GestorSesion.getSesion().setJuego(true);
+		
+		// set tipo contrarreloj
+		GestorSesion.getSesion().setTipo("contrarreloj");
+		GestorSesion.getSesion().iniciarTablero(2);
+		GestorSesion.getSesion().setContMinas();
+		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+		// iniciarCrono()
+		GestorSesion.getSesion().iniciarCrono();
+	}
 	
     public boolean identificarse(String user, String password) throws SQLException, ExcepcionConectarBD{
 		return GestorUsuarios.getGestorUsuarios().identificarse(user, password);

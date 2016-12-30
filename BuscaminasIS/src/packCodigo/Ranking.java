@@ -2,7 +2,7 @@ package packCodigo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import packGestores.GestorSesion;
 
 public class Ranking {
 	private static Ranking mRanking = new Ranking();
@@ -76,7 +76,7 @@ public class Ranking {
 		while (itr.hasNext()){
 			j=itr.next();
 			if(pNombre.equals(j.obtenerNombre())){
-				j.establecerPuntuacion(GestorBuscaminas.getBuscaminas().obtenerPuntuacion());
+				j.establecerPuntuacion(GestorSesion.getSesion().obtenerPuntuacion());
 			}
 				
 		}

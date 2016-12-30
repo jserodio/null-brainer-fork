@@ -7,19 +7,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
-import packCodigo.GestorBuscaminas;
+import packGestores.GestorBuscaminas;
+import packGestores.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
-
 import javax.swing.JTextField;
 import java.awt.Choice;
 import java.awt.Dimension;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -138,9 +136,9 @@ public class VLogin extends JFrame {
 					 if (e.getButton() == MouseEvent.BUTTON1) {
 						 Ranking.getRanking().cargarLista();
 						 if(getTextField().getText().toString().equals("")){
-							 GestorBuscaminas.getBuscaminas().establecerNombreJugador("Desconocido");
+							 GestorSesion.getSesion().establecerNombreJugador("Desconocido");
 						 }else{
-							 GestorBuscaminas.getBuscaminas().establecerNombreJugador(getTextField().getText());
+							 GestorSesion.getSesion().establecerNombreJugador(getTextField().getText());
 						 }
 						 IU_Jugar vB = new IU_Jugar(Integer.parseInt(getChoice().getSelectedItem()));
 						 vB.setVisible(true);

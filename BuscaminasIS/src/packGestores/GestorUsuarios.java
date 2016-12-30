@@ -45,7 +45,7 @@ public class GestorUsuarios {
 				  return false;
 			  }
 			  else{
-				  GestorSesion.getGestorSesion().setUsuario(new Usuario(cod,nombre,clave,email,numP));
+				  GestorSesion.getSesion().setUsuario(new Usuario(cod,nombre,clave,email,numP));
 				  GestorBD.getConexionBD().closeResult(rs);
 				  System.out.println("Identificación correcta");
 				  return true;
@@ -107,7 +107,7 @@ public class GestorUsuarios {
 		  
 		  if(rs!=null){
 			  while(rs.next()){
-				  if(!rs.getString("nombre").equals(GestorSesion.getGestorSesion().getUsuario().getNombre())){
+				  if(!rs.getString("nombre").equals(GestorSesion.getSesion().getUsuario().getNombre())){
 					  Usuario u = new Usuario(rs.getString("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("numeroPistas"));
 					  listaUsuarios.add(u);
 				  }

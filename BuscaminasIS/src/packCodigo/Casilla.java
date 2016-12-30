@@ -1,6 +1,7 @@
 package packCodigo;
 
 import java.util.ArrayList;
+import packGestores.GestorSesion;
 
 public abstract class Casilla {
 
@@ -38,7 +39,7 @@ public abstract class Casilla {
 	
 	public void cambioBandera(){
 		if(!desvelada){
-			if (!bandera && GestorBuscaminas.getBuscaminas().obtenerBanderas() != 0){
+			if (!bandera && GestorSesion.getSesion().obtenerBanderas() != 0){
 				bandera = true;
 			} else if(bandera == true){
 				bandera = false;

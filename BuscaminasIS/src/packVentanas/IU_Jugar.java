@@ -25,8 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import packCodigo.GestorBuscaminas;
-import packCodigo.GestorSesion;
+import packGestores.GestorBuscaminas;
+import packGestores.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
@@ -165,10 +165,10 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		contentPane.add(panel, "cell 0 1,grow");
 		
 		iniciarCasillas(nivel);
-		GestorBuscaminas.getBuscaminas().inicioJuego(nivel);
+		GestorBuscaminas.getGestorBuscaminas().inicioJuego(nivel);
 		GestorSesion.getSesion().anadirObservador(this);
-		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
-		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
+		fil=GestorSesion.getSesion().obtenerNumFilas();
+		col=GestorSesion.getSesion().obtenerNumColumnas();
 		mostrarTablero();
 		anadirCasillas();
 	}
@@ -253,11 +253,11 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		contentPane.add(panel, "cell 0 1,grow");
 		iniciarCasillas(2);
 		
-		GestorBuscaminas.getBuscaminas().iniciarPartidaContrarreloj();
+		GestorBuscaminas.getGestorBuscaminas().iniciarPartidaContrarreloj();
 		GestorSesion.getSesion().anadirObservador(this);
 		
-		fil=GestorBuscaminas.getBuscaminas().obtenerNumFilas();
-		col=GestorBuscaminas.getBuscaminas().obtenerNumColumnas();
+		fil=GestorSesion.getSesion().obtenerNumFilas();
+		col=GestorSesion.getSesion().obtenerNumColumnas();
 		mostrarTablero();
 		anadirCasillas();
 	}
@@ -310,23 +310,23 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 							 a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							 b=gety(buscarPosCasilla((JLabel)e.getSource()));
 							 GestorSesion.getSesion().ponerBandera(a,b);
-		                     GestorBuscaminas.getBuscaminas().comprobarJuego();
+		                     GestorSesion.getSesion().getTablero().comprobarJuego();
 		                  }
 						 else if(e.getButton() == MouseEvent.BUTTON1 && juego && !finalizado){
 							 int a;
 							 int b;
 							 a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							 b=gety(buscarPosCasilla((JLabel)e.getSource()));
-							 GestorBuscaminas.getBuscaminas().descubrirCasilla(a,b);
-		                     GestorBuscaminas.getBuscaminas().comprobarJuego();
+							 GestorSesion.getSesion().descubrirCasilla(a,b);
+							 GestorSesion.getSesion().comprobarJuego();
 					} else
 						if(e.getButton() == MouseEvent.BUTTON2 && juego && !finalizado){
 							int a;
 							int b;
 							a=getx(buscarPosCasilla((JLabel)e.getSource()));
 							b=gety(buscarPosCasilla((JLabel)e.getSource()));
-							GestorBuscaminas.getBuscaminas().descubrirTodosLosVecinos(a,b);
-							GestorBuscaminas.getBuscaminas().comprobarJuego();
+							GestorSesion.getSesion().descubrirTodosLosVecinos(a,b);
+							GestorSesion.getSesion().comprobarJuego();
 					}
 				}
 					});
@@ -466,7 +466,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	}
 	
 	private void mostrarRanking(){
-		GestorBuscaminas.getBuscaminas().calcularPuntos();
+		GestorSesion.getSesion().calcularPuntos();
     	VRanking vR = new VRanking();
 		vR.setVisible(true);
 	}

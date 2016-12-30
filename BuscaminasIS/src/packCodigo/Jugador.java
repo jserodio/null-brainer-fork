@@ -1,5 +1,7 @@
 package packCodigo;
 
+import packGestores.GestorSesion;
+
 public class Jugador {
 	private String nombre;
 	private int puntuacion;
@@ -31,13 +33,13 @@ public class Jugador {
 	}
 	
 	private void ponerPunt(){
-		this.puntuacion=GestorBuscaminas.getBuscaminas().obtenerPuntuacion();
+		this.puntuacion=GestorSesion.getSesion().obtenerPuntuacion();
 	}
 	
 	//public para las JUnit
 	private boolean mismoJugador(){
 		boolean mismo = false;
-		if(this.obtenerNombre().equals(GestorBuscaminas.getBuscaminas().obtenerNombreJugador())){
+		if(this.obtenerNombre().equals(GestorSesion.getSesion().obtenerNombreJugador())){
 			mismo = true;
 		}
 		return mismo;
@@ -48,7 +50,7 @@ public class Jugador {
 	}
 	
 	private void mayorPunt(){
-		if(GestorBuscaminas.getBuscaminas().obtenerPuntuacion()>=this.obtenerPunt()){
+		if(GestorSesion.getSesion().obtenerPuntuacion()>=this.obtenerPunt()){
 			this.ponerPunt();
 		}
 	}

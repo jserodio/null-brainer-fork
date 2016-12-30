@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import packCodigo.GestorBuscaminas;
 import packCodigo.Jugador;
 
 public class JugadorTest {

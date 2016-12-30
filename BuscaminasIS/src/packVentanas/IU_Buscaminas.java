@@ -1,7 +1,6 @@
 package packVentanas;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;

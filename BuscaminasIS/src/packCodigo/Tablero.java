@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Stack;
-
+import packGestores.GestorSesion;
 import packVentanas.IU_Jugar;
 
 public class Tablero extends Observable{
@@ -545,7 +545,7 @@ public class Tablero extends Observable{
 			setChanged();
 			notifyObservers(pFila+","+pCol+","+10);
 			if(GestorSesion.getSesion().getJuego()){
-				GestorBuscaminas.getBuscaminas().gameOver();
+				GestorSesion.getSesion().gameOver();
 			}
 		}else if(casilla instanceof CasillaNumero&&!casilla.estaDesvelada()&&!casilla.tieneBandera()){
 			int num=((CasillaNumero)casilla).obtenerNumero();
