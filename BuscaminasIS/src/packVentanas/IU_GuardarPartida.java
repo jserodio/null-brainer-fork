@@ -4,14 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import packExcepciones.ExcepcionConectarBD;
+import packGestores.GestorPartidas;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IU_GuardarPartida {
 
 	private JFrame frmGuardarPartida;
-	private JTextField textField;
+	private JTextField txtNombrePartida;
 
 	/**
 	 * Launch the application.
@@ -41,7 +48,6 @@ public class IU_GuardarPartida {
 	 */
 	private void initialize() {
 		frmGuardarPartida = new JFrame();
-		frmGuardarPartida.setTitle("Guardar Partida");
 		frmGuardarPartida.setBounds(100, 100, 341, 224);
 		frmGuardarPartida.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmGuardarPartida.getContentPane().setLayout(null);
@@ -51,13 +57,40 @@ public class IU_GuardarPartida {
 		lbltexto.setBounds(61, 34, 191, 43);
 		frmGuardarPartida.getContentPane().add(lbltexto);
 		
-		textField = new JTextField();
-		textField.setBounds(71, 88, 167, 20);
-		frmGuardarPartida.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNombrePartida = new JTextField();
+		txtNombrePartida.setBounds(71, 88, 167, 20);
+		frmGuardarPartida.getContentPane().add(txtNombrePartida);
+		txtNombrePartida.setColumns(10);
 		
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comprobarNombrePartida(txtNombrePartida.getText().trim())){
+					// GuardarPartida
+				}
+			}
+		});
 		btnAceptar.setBounds(105, 119, 89, 23);
 		frmGuardarPartida.getContentPane().add(btnAceptar);
+	}
+	
+	private boolean comprobarNombrePartida(String nombrePartida){
+		// Si no se ha introducido nombre partida
+		if (nombrePartida.isEmpty()){
+			JOptionPane.showMessageDialog(null, "No has introducido el nombre de la partida", "Faltan datos", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// Si la partida ya existe en la BD
+		try {
+			if(GestorPartidas.getGestorPartidas().comprobarNombrePartida(nombrePartida)){
+				return false;
+			}
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+		
 	}
 }

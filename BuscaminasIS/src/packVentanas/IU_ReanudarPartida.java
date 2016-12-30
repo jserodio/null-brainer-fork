@@ -50,9 +50,9 @@ public class IU_ReanudarPartida {
 		lbltitulo.setBounds(126, 26, 179, 32);
 		frame.getContentPane().add(lbltitulo);
 		
-		JList list = new JList();
-		list.setBounds(45, 69, 341, 140);
-		frame.getContentPane().add(list);
+		JList listaPartidas = new JList();
+		listaPartidas.setBounds(45, 69, 341, 140);
+		frame.getContentPane().add(listaPartidas);
 		
 		JButton btnCargar = new JButton("Cancelar");
 		btnCargar.setBounds(297, 227, 89, 23);
@@ -61,5 +61,9 @@ public class IU_ReanudarPartida {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(198, 227, 89, 23);
 		frame.getContentPane().add(btnAceptar);
+	}
+	
+	private void cargarLista(JList listaPartidas){
+		
 	}
 }
