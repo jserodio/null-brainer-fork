@@ -7,8 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import packCodigo.Partida;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorPartidas;
+import packGestores.GestorSesion;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -67,6 +69,9 @@ public class IU_GuardarPartida {
 			public void actionPerformed(ActionEvent e) {
 				if(comprobarNombrePartida(txtNombrePartida.getText().trim())){
 					// GuardarPartida
+					Partida partidaActual = GestorSesion.getSesion().obtenerPartidaActual();
+					partidaActual.setNombrePartida(txtNombrePartida.getText().trim());
+					GestorPartidas.getGestorPartidas().guardarPartida(partidaActual);
 				}
 			}
 		});
