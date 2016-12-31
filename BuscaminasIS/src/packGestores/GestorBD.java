@@ -22,10 +22,11 @@ public class GestorBD {
 	 *Postcondicion:
 	 * */
 	private GestorBD(){
-		driver="com.mysql.jdbc.Driver";
-		url="url de la BD";
-		user="usuario"; //usuario que crearemos en la bd
-		pass="-------------"; //poner password
+		//driver="com.mysql.jdbc.Driver";
+		driver="org.gjt.mm.mysql.Driver";
+		url="jdbc:mysql://galan.ehu.eus/Xgrevilla002_nullbrain";
+		user="Xgrevilla002"; //usuario que crearemos en la bd
+		pass="pT50MdRQ"; //poner password
 	}
 	
 	//Singleton

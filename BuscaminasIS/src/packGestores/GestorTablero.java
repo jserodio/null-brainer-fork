@@ -26,14 +26,24 @@ public class GestorTablero {
 			  while(rs.next()){
 					  String p = rs.getString("codTablero");
 					  String aux=null;
-					  if(p.charAt(p.length()-2)==0){
+					  if(p.length()==3){
+						  if(p.charAt(p.charAt(1))=='0'){
+							  p=aux;
+							  p=""+p.charAt(p.length()-1);
+						  }
+						  else{
+							  p=""+p.charAt(1)+p.charAt(p.length()-1);
+						  }
+						  tablero.add(p);
+					  }
+					  else if(p.length()>3){
+						  int i=1;
 						  p=aux;
-						  p=""+p.charAt(p.length()-1);
+						  p="";
+						  while(p.length()-1>=i){
+							  p=p+p.charAt(i);
+						  }
 					  }
-					  else{
-						  p=""+p.charAt(p.length()-2)+p.charAt(p.length()-1);
-					  }
-					  tablero.add(p);
 			  }
 		  }
 		  else{
