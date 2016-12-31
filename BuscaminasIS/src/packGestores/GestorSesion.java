@@ -3,7 +3,9 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import packCodigo.Jugador;
+import packCodigo.Partida;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
 import packCodigo.TableroBuilderN1;
@@ -17,7 +19,7 @@ public class GestorSesion extends Observable implements Observer {
 	private static final GestorSesion miGestorSesion = new GestorSesion();
 	private Usuario usuario;
 	private Tablero tablero;
-	private float tiempo;
+	private int tiempo;
 	private boolean juego;
 	private int nivel;
 	private Timer timer=new Timer();//Aqui va el tiempo
@@ -78,7 +80,7 @@ public class GestorSesion extends Observable implements Observer {
 		nivel = pNivel;
 	}
 	
-	public void setTiempo(float tiempo) {
+	public void setTiempo(int tiempo) {
 		this.tiempo = tiempo;
 	}
 	
@@ -324,4 +326,9 @@ public class GestorSesion extends Observable implements Observer {
 			}
 		}
 	}
+
+	public Partida obtenerPartidaActual() {
+		return new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
+	}
+
 }

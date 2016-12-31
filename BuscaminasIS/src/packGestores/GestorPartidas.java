@@ -2,13 +2,10 @@ package packGestores;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import packCodigo.Partida;
 import packCodigo.Partida1;
-import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorPartidas {
@@ -95,15 +92,25 @@ public class GestorPartidas {
 	public boolean comprobarNombrePartida(String nombrePartida) throws ExcepcionConectarBD {
 		ResultSet rs = null;
 		boolean rdo = false;
-		String cadena = "SELECT * FROM PARTIDAS WHERE nombrepartida ='" + nombrePartida
-				+ "' ";
+		String cadena = "SELECT * FROM PARTIDAS WHERE nombrepartida ='" + nombrePartida + "' ";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 		if (rs != null) {
 			rdo = true;
-		} 
+		}
 		GestorBD.getConexionBD().closeResult(rs);
 		return rdo;
 
 	}
 
+	public void guardarPartida(Partida pPartida) {
+		String sentencia = "INSERT INTO PARTIDAS(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
+				+ pPartida.getPuntuacion() + "," + pPartida.getTipo()  + "," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
+		try {
+			GestorBD.getConexionBD().actualizarBD(sentencia);
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
