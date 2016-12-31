@@ -26,7 +26,7 @@ public class GestorPartidas {
 		}
 		  String niv=""+pNivel;
 		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM partida WHERE nivel LIKE '"+niv+"%' AND acabado ='true' ORDER BY puntuacion DESC";
+		  String cadena = "SELECT * FROM PARTIDAS WHERE nivel LIKE '"+niv+"%' AND acabado ='true' ORDER BY puntuacion DESC";
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  
 		  if(rs!=null){
@@ -48,7 +48,7 @@ public class GestorPartidas {
 			listaPartidas.clear();
 		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM partida WHERE codTablero ='" + pCodTablero
+		String cadena = "SELECT * FROM PARTIDAS WHERE codTablero ='" + pCodTablero
 				+ "' AND acabado ='true' ORDER BY puntuacion DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
@@ -71,7 +71,7 @@ public class GestorPartidas {
 			listaPartidas.clear();
 		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM partida WHERE codUsuario ='" + pCodUsuario
+		String cadena = "SELECT * FROM PARTIDAS WHERE codUsuario ='" + pCodUsuario
 				+ "' AND acabado ='true' ORDER BY puntuacion DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 

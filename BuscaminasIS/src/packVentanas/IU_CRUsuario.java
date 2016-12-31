@@ -122,12 +122,18 @@ public class IU_CRUsuario extends JFrame{
 		usuario.addItem("Nombres de usuarios");
 		try {
 			ArrayList<Usuario> usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Usuario> it=usuarios.iterator();
-			Usuario u=null;
-			while(it.hasNext()){
-				u=it.next();
-				usuario.addItem(u.getNombre());
+			if(usuarios.equals(null)){
+				usuario.addItem("No hay usuarios");
 			}
+			else{
+				Iterator<Usuario> it=usuarios.iterator();
+				Usuario u=null;
+				while(it.hasNext()){
+					u=it.next();
+					usuario.addItem(u.getNombre());
+				}
+			}
+			
 		} catch (SQLException | ExcepcionConectarBD e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -24,7 +24,7 @@ public class GestorUsuarios {
 	public boolean identificarse(String user, String password) throws SQLException, ExcepcionConectarBD{
 		
 		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM usuario WHERE nombre ='"+user+"' AND clave ='"+password+"'";
+		  String cadena = "SELECT * FROM USUARIOS WHERE nombre ='"+user+"' AND clave ='"+password+"'";
 		  String nombre=null,clave=null;
 		  String cod=null,email=null;
 		  int numP=0;
@@ -62,7 +62,7 @@ public class GestorUsuarios {
 	public Boolean existeUser (String user) throws SQLException, ExcepcionConectarBD{
 		ResultSet rs = null;
 		int resultado = 0;
-		String cadena = "SELECT Count(nombre) as numero FROM usuario WHERE nombre='"+user+"';";
+		String cadena = "SELECT Count(nombre) as numero FROM USUARIOS WHERE nombre='"+user+"';";
 			
 
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
@@ -82,7 +82,7 @@ public class GestorUsuarios {
 	public boolean registrarse(String user,String password,String confirmedPassword,String email) throws SQLException, ExcepcionConectarBD{
 		if(password.equals(confirmedPassword)){
 			  if(!this.existeUser(user)){
-				  	String cadena = "INSERT INTO usuario VALUES ('"+user+"', '"+password+"', '10', '"+email+"');";
+				  	String cadena = "INSERT INTO USUARIOS VALUES ('"+user+"', '"+password+"', '10', '"+email+"');";
 					GestorBD.getConexionBD().actualizarBD(cadena);
 					return true;
 			  }
@@ -102,7 +102,7 @@ public class GestorUsuarios {
 			listaUsuarios.clear();
 		}
 		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM usuario ORDER BY nombre ASC";
+		  String cadena = "SELECT * FROM USUARIOS ORDER BY nombre ASC";
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  
 		  if(rs!=null){

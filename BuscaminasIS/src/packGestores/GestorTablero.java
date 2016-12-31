@@ -19,7 +19,7 @@ public class GestorTablero {
 	public ArrayList<String> obtenerTableros(String pNivel) throws ExcepcionConectarBD, SQLException{
 		ArrayList<String> tablero=new ArrayList<String>();
 		ResultSet rs = null;
-		  String cadena = "SELECT codTablero FROM tablero WHERE nivel ='"+pNivel+"' ORDER BY ASC";
+		  String cadena = "SELECT codTablero FROM TABLEROS WHERE nivel ='"+pNivel+"' ORDER BY ASC";
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  
 		  if(rs!=null){
