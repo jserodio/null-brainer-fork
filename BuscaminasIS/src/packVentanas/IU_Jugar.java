@@ -416,8 +416,10 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
-				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
-
+//				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
+				   this.setVisible(false);
+				   this.dispose();
+				   IU_CompartirPuntuacion.getVentana().setVisible(true);
 			   }
 			} else if(o instanceof Tablero){
 				if (p.length == 3){
