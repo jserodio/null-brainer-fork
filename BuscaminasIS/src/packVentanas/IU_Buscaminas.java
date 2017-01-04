@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 public class IU_Buscaminas {
 
 	private JFrame frmMenuBuscaminas;
+	private static IU_Buscaminas ventana;
 
 	/**
 	 * Launch the application.
@@ -36,6 +37,13 @@ public class IU_Buscaminas {
 		});
 	}
 
+	public static IU_Buscaminas getVentana(){
+		if(ventana == null){
+			ventana = new IU_Buscaminas();
+		}
+		return ventana;
+	}
+	
 	/**
 	 * Create the application.
 	 */
