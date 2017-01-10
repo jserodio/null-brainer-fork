@@ -73,7 +73,7 @@ public class IU_CRTablero extends JFrame {
 				public void mouseClicked(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 			});
 		}
@@ -94,7 +94,7 @@ public class IU_CRTablero extends JFrame {
 					}
 					IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
 					vCR.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 			});
 		}

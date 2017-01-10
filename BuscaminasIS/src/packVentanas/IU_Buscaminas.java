@@ -105,6 +105,7 @@ public class IU_Buscaminas {
 			public void actionPerformed(ActionEvent e) {
 				IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 				vCR.setVisible(true);
+				setVisible(false);
 			}
 		});
 		
@@ -113,6 +114,7 @@ public class IU_Buscaminas {
 			public void actionPerformed(ActionEvent arg0) {
 				IU_Jugar iu_jugar = new IU_Jugar();
 				iu_jugar.setVisible(true);
+				setVisible(false);
 			}
 		});
 		frmMenuBuscaminas.getContentPane().add(btnJugarContrarreloj, "2, 15");

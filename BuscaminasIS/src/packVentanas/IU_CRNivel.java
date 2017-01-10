@@ -67,7 +67,7 @@ public class IU_CRNivel extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 			});
 		}
@@ -82,17 +82,17 @@ public class IU_CRNivel extends JFrame {
 					if(nivel.equals("Fácil")){
 						IU_Ranking vCR=new IU_Ranking("nivel",null,1);
 						vCR.setVisible(true);
-						setVisible(false);
+						frame.setVisible(false);
 					}
 					else if(nivel.equals("Medio")){
 						IU_Ranking vCR=new IU_Ranking("nivel",null,2);
 						vCR.setVisible(true);
-						setVisible(false);
+						frame.setVisible(false);
 					}
 					else{
 						IU_Ranking vCR=new IU_Ranking("nivel",null,3);
 						vCR.setVisible(true);
-						setVisible(false);
+						frame.setVisible(false);
 					}
 					
 				}

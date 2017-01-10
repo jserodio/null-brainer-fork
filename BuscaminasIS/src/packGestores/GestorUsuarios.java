@@ -30,19 +30,18 @@ public class GestorUsuarios {
 		  int numP=0;
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  if(rs!=null){
-				  int i=0;
 				  //se rellena el atributo retos con los retos que tiene el usuario sin jugar
-				  System.out.println("AQUIIIIIIII");
+				  //System.out.println("AQUIIIIIIII");
 				  while(rs.next()){
 					  nombre=rs.getString("nombre");
 					  clave=rs.getString("clave");
-					  cod=rs.getString("codUsuario");
+					  cod=""+rs.getInt("codUsuario");
 					  email=rs.getString("email");
 					  numP=rs.getInt("pistas");
 				  }
 				  System.out.println(nombre);
 				  System.out.println(clave);
-				  if(!(nombre.equals(null)&&clave.equals(null))){
+				  if(!(nombre==null&&clave==null)){
 					  GestorSesion.getSesion().setUsuario(new Usuario(cod,nombre,clave,email,numP));
 					  GestorBD.getConexionBD().closeResult(rs);
 					  System.out.println("Identificación correcta");
@@ -109,10 +108,14 @@ public class GestorUsuarios {
 		  
 		  if(rs!=null){
 			  while(rs.next()){
-				  if(!rs.getString("nombre").equals(GestorSesion.getSesion().getUsuario().getNombre())){
-					  Usuario u = new Usuario(rs.getString("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("numeroPistas"));
-					  listaUsuarios.add(u);
-				  }
+				  Usuario u = new Usuario(""+rs.getInt("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("Pistas"));
+				  System.out.println(u.getNombre());
+				  listaUsuarios.add(u);
+//				  if(!rs.getString("nombre").equals(GestorSesion.getSesion().getUsuario().getNombre())){
+//					  Usuario u = new Usuario(""+rs.getInt("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("numeroPistas"));
+//					  System.out.println(u.getNombre());
+//					  listaUsuarios.add(u);
+//				  }
 			  }
 		  }
 		  else{

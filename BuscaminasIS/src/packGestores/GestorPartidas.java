@@ -75,15 +75,27 @@ public class GestorPartidas {
 				+ "' AND acabado ='true' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
-		if (rs != null) {
+		
+		if(!rs.next()){
+			System.out.println("No ha jugado el usuario ninguna partida");
+		}
+		else{
 			while (rs.next()) {
 				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
 						""+rs.getInt("codTablero"));
 				listaPartidas.add(p);
 			}
-		} else {
-			System.out.println("El usuario no ha jugado ninguna partida");
 		}
+		
+//		if (rs != null) {
+//			while (rs.next()) {
+//				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
+//						""+rs.getInt("codTablero"));
+//				listaPartidas.add(p);
+//			}
+//		} else {
+//			System.out.println("El usuario no ha jugado ninguna partida");
+//		}
 		GestorBD.getConexionBD().closeResult(rs);
 		return listaPartidas;
 	}

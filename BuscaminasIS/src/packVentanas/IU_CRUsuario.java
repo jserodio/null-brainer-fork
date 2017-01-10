@@ -70,7 +70,7 @@ public class IU_CRUsuario extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
 					vCR.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 			});
 		}
@@ -79,8 +79,8 @@ public class IU_CRUsuario extends JFrame{
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
-			btnAceptar.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
+			btnAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					String nombre=(String) usuario.getSelectedItem();
 					try {
 						ArrayList<Usuario> usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
@@ -95,7 +95,7 @@ public class IU_CRUsuario extends JFrame{
 						}
 						IU_Ranking vCR=new IU_Ranking("codUsuario",u.getCodUsuario(),0);
 						vCR.setVisible(true);
-						setVisible(false);
+						frame.setVisible(false);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -128,8 +128,11 @@ public class IU_CRUsuario extends JFrame{
 			else{
 				Iterator<Usuario> it=usuarios.iterator();
 				Usuario u=null;
+				int i=-1;
 				while(it.hasNext()){
 					u=it.next();
+					i++;
+					System.out.println(u.getNombre());
 					usuario.addItem(u.getNombre());
 				}
 			}
