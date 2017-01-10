@@ -26,12 +26,12 @@ public class GestorPartidas {
 		}
 		  String niv=""+pNivel;
 		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM PARTIDAS WHERE nivel LIKE '"+niv+"%' AND acabado ='true' ORDER BY puntuacion DESC";
+		  String cadena = "SELECT * FROM PARTIDA WHERE CODTABLERO LIKE '"+niv+"%' AND acabado ='true' ORDER BY puntuacion DESC";
 		  rs = GestorBD.getConexionBD().consultaBD(cadena);
 		  
 		  if(rs!=null){
 			  while(rs.next()){
-					  Partida1 p = new Partida1(rs.getInt("puntuacion"),rs.getString("tipo"),rs.getString("codUsuario"),rs.getString("codTablero"));
+					  Partida1 p = new Partida1(rs.getInt("puntuacion"),rs.getString("tipo"),""+rs.getInt("codUsuario"),""+rs.getInt("codTablero"));
 					  listaPartidas.add(p);
 			  }
 		  }
@@ -48,14 +48,14 @@ public class GestorPartidas {
 			listaPartidas.clear();
 		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM PARTIDAS WHERE codTablero ='" + pCodTablero
-				+ "' AND acabado ='true' ORDER BY puntuacion DESC";
+		String cadena = "SELECT * FROM PARTIDA WHERE codTablero ='" + Integer.parseInt(pCodTablero)
+				+ "' AND acabado ='true' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
 		if (rs != null) {
 			while (rs.next()) {
-				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), rs.getString("codUsuario"),
-						rs.getString("codTablero"));
+				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
+						""+rs.getInt("codTablero"));
 				listaPartidas.add(p);
 			}
 		} else {
@@ -71,14 +71,14 @@ public class GestorPartidas {
 			listaPartidas.clear();
 		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM PARTIDAS WHERE codUsuario ='" + pCodUsuario
-				+ "' AND acabado ='true' ORDER BY puntuacion DESC";
+		String cadena = "SELECT * FROM PARTIDA WHERE codUsuario ='" +Integer.parseInt(pCodUsuario)
+				+ "' AND acabado ='true' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
 		if (rs != null) {
 			while (rs.next()) {
-				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), rs.getString("codUsuario"),
-						rs.getString("codTablero"));
+				Partida1 p = new Partida1(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
+						""+rs.getInt("codTablero"));
 				listaPartidas.add(p);
 			}
 		} else {
@@ -92,7 +92,7 @@ public class GestorPartidas {
 	public boolean comprobarNombrePartida(String nombrePartida) throws ExcepcionConectarBD {
 		ResultSet rs = null;
 		boolean rdo = false;
-		String cadena = "SELECT * FROM PARTIDAS WHERE nombrepartida ='" + nombrePartida + "' ";
+		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + nombrePartida + "' ";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 		if (rs != null) {
 			rdo = true;
@@ -103,7 +103,7 @@ public class GestorPartidas {
 	}
 
 	public void guardarPartida(Partida pPartida) {
-		String sentencia = "INSERT INTO PARTIDAS(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
+		String sentencia = "INSERT INTO PARTIDA(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
 				+ pPartida.getPuntuacion() + "," + pPartida.getTipo()  + "," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
 		try {
 			GestorBD.getConexionBD().actualizarBD(sentencia);

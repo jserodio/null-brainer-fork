@@ -94,7 +94,7 @@ public class IU_IdRg extends JFrame{
 			
 			// Iniciando ventana
 			setUndecorated(true);
-			setBounds(100, 100, 1280, 850);
+			setBounds(100, 100, 1000, 550);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
@@ -117,7 +117,6 @@ public class IU_IdRg extends JFrame{
 			
 			// Inicializo la carga
 			
-			gestionNombre();
 			
 			// Controles
 			
@@ -264,34 +263,30 @@ public class IU_IdRg extends JFrame{
 					
 					// Campo usuario vacio
 					if(!(user.equals("") || user.equals("Introduce tu nombre"))){
-						cargandoNombreId.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnTick.png")));
 						if (!pass.equals("")){
-							cargandoPassId.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnTick.png")));
 						}else{
-							cargandoPassId.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 							lblInformacion.setText("La contraseña no puede estar vacía en Identificación");
 							continua = false;
 						}
 					}else{
-						cargandoNombreId.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 						lblInformacion.setText("Revisa el campo nombre de Identificación");
 						continua = false;
 					}
 					
 					if (continua){
 					// Si todo ha ido bien, y no hay ninguna X roja.
-						//IDENTIFICARSE Introducir el mio
 						try {
 							boolean correcto=GestorBuscaminas.getGestorBuscaminas().identificarse(user, pass);
 							if(correcto){
 								lblInformacion.setText("Todo correcto");
+								System.out.println("Todo correcto");
 								dentro=false;
-								cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnTick.png")));
 								setEnabled(false);
 								cargarventana = true;
 							}
 							else{
-								lblInformacion.setText("Este usuario no ha sido registrado aún o la contraseña que ha introducido es incorrecta");
+								System.out.println("Todo incorrecto");
+								lblInformacion.setText("Usuario no registrado o contraseña incorrecta");
 							}
 							
 
@@ -355,14 +350,12 @@ public class IU_IdRg extends JFrame{
 						if (!pass.equals(confirmedPass) || pass.equals("")){
 							// Si las contraseñas no coinciden, no continua y le dice error.
 							lblInformacion.setText("Las contraseñas de Registro no coinciden o estan vacias.");
-							cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 							continua = false;
 							dentro=false;
 							btnRegistrarse.setEnabled(true);
 						}else{
 							if (email.equals("") || email.equals("Introduce tu Email")){
 								lblInformacion.setText("El campo de email está vacio.");
-								cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 								continua = false;
 								dentro=false;
 								btnRegistrarse.setEnabled(true);
@@ -371,7 +364,6 @@ public class IU_IdRg extends JFrame{
 					}else{
 						// Nombre de usuario de registro vacio
 						lblInformacion.setText("Verifica que el campo nombre de Registro no este vacío.");
-						cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 						continua = false;
 						dentro=false;
 						btnRegistrarse.setEnabled(true);
@@ -386,13 +378,11 @@ public class IU_IdRg extends JFrame{
 								lblInformacion.setText("Muy bien "+user+", has sido registrado como Jugador");
 								Thread.sleep(200);
 								dentro=false;
-								cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnTick.png"))); 
 							}
 							else{
 								lblInformacion.setText("¡Vaya! "+user+" parece que ya estás registrado.");
 								Thread.sleep(200);
 								dentro=false;
-								cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/ok/btnX.png")));
 							}
 							btnRegistrarse.setEnabled(true);
 						} catch (SQLException e1) {
@@ -420,45 +410,6 @@ public class IU_IdRg extends JFrame{
 			panel.add(btnRegistrarse, "cell 5 8,alignx center,aligny center");
 		}
 		
-		private void gestionNombre(){
-			Timer timer;
-			TimerTask  timerTask = new TimerTask() {
-				int p =0;
-				@Override
-				public void run() {
-					try{
-			    		 Thread.sleep(200); 
-			    	  }catch (Exception e) {}
-					if(p==4){
-						p=0;
-					}
-					if(dentro){
-						switch (p) {
-					      case 0:
-					    	  cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/load/Cargar1.png")));
-					          p++;
-					    	  break;
-					      case 1:
-					    	  cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/load/Cargar2.png")));
-					           p++;
-					    	  break;
-					      case 2:
-					    	  cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/load/Cargar3.png")));
-					           p++;
-					    	  break;
-					      case 3:
-					    	  cargando.setIcon(new ImageIcon(IU_IdRg.class.getResource("/load/Cargar4.png")));
-					           p++;
-					    	  break;
-					      default:
 
-					           break;
-					      }
-					}
-				}		
-			};
-			timer = new Timer();
-			timer.scheduleAtFixedRate(timerTask, 0, 50);
-		}
 
 }
