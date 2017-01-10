@@ -127,11 +127,59 @@ public class IU_CRTablero extends JFrame {
 			tablero = new JComboBox();
 		}
 		String n=(String)nivel.getSelectedItem();
-		int niv=0;
-		if(!n.equals("")){
+		String niv="";
+		if(n.equals("Fácil")){
+			niv=""+1;
 			try {
 				ArrayList<String> t=new ArrayList<String>();
-				t=GestorTablero.getGestorTablero().obtenerTableros(n);
+				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
+				if(t.isEmpty()){
+					tablero.addItem("No hay tableros para el nivel seleccionado");
+				}
+				Iterator<String> it=t.iterator();
+				String aux=null;
+				while(it.hasNext()){
+					aux=it.next();
+					tablero.addItem(aux);
+				}
+			} catch (ExcepcionConectarBD e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+		else if(n.equals("Medio")){
+			niv=""+2;
+			try {
+				ArrayList<String> t=new ArrayList<String>();
+				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
+				if(t.isEmpty()){
+					tablero.addItem("No hay tableros para el nivel seleccionado");
+				}
+				Iterator<String> it=t.iterator();
+				String aux=null;
+				while(it.hasNext()){
+					aux=it.next();
+					tablero.addItem(aux);
+				}
+			} catch (ExcepcionConectarBD e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+		else{
+			niv=""+3;
+			try {
+				ArrayList<String> t=new ArrayList<String>();
+				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
+				if(t.isEmpty()){
+					tablero.addItem("No hay tableros para el nivel seleccionado");
+				}
 				Iterator<String> it=t.iterator();
 				String aux=null;
 				while(it.hasNext()){

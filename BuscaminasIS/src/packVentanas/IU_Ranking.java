@@ -150,7 +150,6 @@ public class IU_Ranking extends JFrame{
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			if(partidas.isEmpty()){
 				this.getTextArea().append("No ha jugado partidas el usuario");
-				System.out.println("AQUIIIIIIIIIII");
 			}
 			else{
 				this.getTextArea().append("Pos\tNombre\tNivel\tTablero\tPunt");
@@ -187,29 +186,35 @@ public class IU_Ranking extends JFrame{
 			}
 		}
 		else if(tipo.equals("codTablero")){
-			this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasTablero(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
-			Iterator<Usuario> it1;
-			Partida1 p;
-			Usuario u=null;
-			int i=1;
-			while(it.hasNext()||i<=10){
-				p=it.next();
-				it1=usuarios.iterator();
-				while(it1.hasNext()||enc){
-					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
-						enc=true;
+			if(partidas.isEmpty()){
+				this.getTextArea().append("No se han jugado partidas en el tablero escogido");
+			}
+			else{
+				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
+				Iterator<Partida1> it=partidas.iterator();
+				Iterator<Usuario> it1;
+				Partida1 p;
+				Usuario u=null;
+				int i=1;
+				while(it.hasNext()||i<=10){
+					p=it.next();
+					it1=usuarios.iterator();
+					while(it1.hasNext()||enc){
+						u=it1.next();
+						if(u.getCodUsuario().equals(p.getCodUsuario())){
+							enc=true;
+						}
 					}
-				}
-				if(enc==false){
-					this.getTextArea().append("No ha jugado ninguna partida");
-				}
-				else{
-					this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
-				}
+					if(enc==false){
+						this.getTextArea().append("No ha jugado ninguna partida");
+					}
+					else{
+						this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
+					}
+			}
+			
 			}
 		}
 		
