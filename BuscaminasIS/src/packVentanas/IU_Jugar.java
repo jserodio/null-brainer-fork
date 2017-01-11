@@ -31,11 +31,13 @@ import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
 
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -60,7 +62,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private Clip clip;
 	private AudioInputStream ais;
 	private int bomba = 0;
-
+	private JButton btnPista;
 
 	/**
 	 * Launch the application.
@@ -159,6 +161,15 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			j1.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
 		
+		//Situar boton pista
+		btnPista = new JButton("Pista");
+		panel_2.add(btnPista, "cell 7 0");
+		btnPista.setHorizontalAlignment(SwingConstants.CENTER);
+		btnPista.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//Hacer aqui lo relacionado con la pista
+			}
+		});
 		
 		panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
