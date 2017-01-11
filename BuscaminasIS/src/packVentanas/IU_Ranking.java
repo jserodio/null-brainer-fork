@@ -45,10 +45,10 @@ public class IU_Ranking extends JFrame{
 	 * Create the application.
 	 */
 	public IU_Ranking(String pTipo,String valor,int nivel) {
-		initialize();
 		this.tipo=pTipo;
 		this.nivel=nivel;
 		this.valor=valor;
+		initialize();
 	}
 
 	/**
@@ -61,6 +61,7 @@ public class IU_Ranking extends JFrame{
 		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][][grow]", "[][][][grow][]"));
 		frame.getContentPane().add(getTextArea(), "flowy,cell 0 0 7 4,grow");
 		frame.getContentPane().add(getBtnAtras(), "cell 5 4");
+		frame.setVisible(true);
 		try {
 			this.getRanking();
 		} catch (SQLException e) {
@@ -70,6 +71,7 @@ public class IU_Ranking extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		setVisible(true);
 	}
 
 	private JTextArea getTextArea() {
@@ -85,21 +87,20 @@ public class IU_Ranking extends JFrame{
 		btnAtras.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				IU_Ranking.this.setVisible(false);
 				if(tipo.equals("nivel")){
 					IU_CRNivel vC=new IU_CRNivel();
 					vC.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 				else if(tipo.equals("codUsuario")){
 					IU_CRUsuario vC=new IU_CRUsuario();
 					vC.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}
 				else if(tipo.equals("codTablero")){
 					IU_CRTablero vC=new IU_CRTablero();
 					vC.setVisible(true);
-					setVisible(false);
+					frame.setVisible(false);
 				}	
 			}
 		});
@@ -110,80 +111,110 @@ public class IU_Ranking extends JFrame{
 		ArrayList<Partida1> partidas;
 		ArrayList<Usuario> usuarios;
 		boolean enc=false;
-		this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
+		System.out.println(this.tipo);
+		System.out.println(this.nivel);
 		if(tipo.equals("nivel")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel(nivel);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
-			Iterator<Usuario> it1;
-			Partida1 p;
-			Usuario u=null;
-			int i=1;
-			while(it.hasNext()||i<=10){
-				p=it.next();
-				it1=usuarios.iterator();
-				while(it1.hasNext()||!enc){
-					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
-						enc=true;
+			if(partidas.isEmpty()){
+				this.getTextArea().append("No se han jugado partidas en este nivel");
+			}
+			else{
+				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
+				Iterator<Partida1> it=partidas.iterator();
+				Iterator<Usuario> it1;
+				Partida1 p;
+				Usuario u=null;
+				int i=1;
+				while(it.hasNext()||i<=10){
+					p=it.next();
+					it1=usuarios.iterator();
+					while(it1.hasNext()||!enc){
+						u=it1.next();
+						if(u.getCodUsuario().equals(p.getCodUsuario())){
+							enc=true;
+						}
 					}
-				}
-				if(enc==false){
-					this.getTextArea().append("No ha jugado ninguna partida");
-				}
-				else{
-					this.getTextArea().append(i+"\t\t"+u.getNombre()+"\t\t"+p.getPuntuacion());
-				}
+					if(enc==false){
+						this.getTextArea().append("No se han jugado partidas en este nivel");
+					}
+					else{
+						this.getTextArea().append(i+"\t\t"+u.getNombre()+"\t\t"+p.getPuntuacion());
+					}
+			}
+			
 			}
 		}
 		else if(tipo.equals("codUsuario")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasUsuario(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
-			Iterator<Usuario> it1;
-			Partida1 p;
-			Usuario u=null;
-			int i=1;
-			while(it.hasNext()||i<=10){
-				p=it.next();
-				it1=usuarios.iterator();
-				while(it1.hasNext()||enc){
-					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
-						enc=true;
+			if(partidas.isEmpty()){
+				this.getTextArea().append("No ha jugado partidas el usuario");
+			}
+			else{
+				this.getTextArea().append("Pos\tNombre\tNivel\tTablero\tPunt");
+				Iterator<Partida1> it=partidas.iterator();
+				Iterator<Usuario> it1;
+				Partida1 p;
+				Usuario u=null;
+				int i=1;
+				while(it.hasNext()||i<=10){
+					p=it.next();
+					it1=usuarios.iterator();
+					while(it1.hasNext()||enc){
+						u=it1.next();
+						if(u.getCodUsuario().equals(p.getCodUsuario())){
+							enc=true;
+						}
 					}
-				}
-				if(enc==false){
-					this.getTextArea().append("No ha jugado ninguna partida");
-				}
-				else{
-					this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
-				}
+					if(enc==false){
+						this.getTextArea().append("No ha jugado ninguna partida");
+					}
+					else{
+						char nivel=p.getCodTablero().charAt(0);
+						if(p.getCodTablero().charAt(1)=='0'){
+							char tablero=p.getCodTablero().charAt(p.getCodTablero().length()-1);
+							this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tablero+"\t"+p.getPuntuacion());
+						}
+						else{
+							String tab=p.getCodTablero().substring(1, p.getCodTablero().length()-1);
+							this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tab+"\t"+p.getPuntuacion());
+						}
+					}
+			}
+			
 			}
 		}
 		else if(tipo.equals("codTablero")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasTablero(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
-			Iterator<Usuario> it1;
-			Partida1 p;
-			Usuario u=null;
-			int i=1;
-			while(it.hasNext()||i<=10){
-				p=it.next();
-				it1=usuarios.iterator();
-				while(it1.hasNext()||enc){
-					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
-						enc=true;
+			if(partidas.isEmpty()){
+				this.getTextArea().append("No se han jugado partidas en el tablero escogido");
+			}
+			else{
+				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
+				Iterator<Partida1> it=partidas.iterator();
+				Iterator<Usuario> it1;
+				Partida1 p;
+				Usuario u=null;
+				int i=1;
+				while(it.hasNext()||i<=10){
+					p=it.next();
+					it1=usuarios.iterator();
+					while(it1.hasNext()||enc){
+						u=it1.next();
+						if(u.getCodUsuario().equals(p.getCodUsuario())){
+							enc=true;
+						}
 					}
-				}
-				if(enc==false){
-					this.getTextArea().append("No ha jugado ninguna partida");
-				}
-				else{
-					this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
-				}
+					if(enc==false){
+						this.getTextArea().append("No ha jugado ninguna partida");
+					}
+					else{
+						this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
+					}
+			}
+			
 			}
 		}
 		

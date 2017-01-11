@@ -6,7 +6,7 @@ public class Partida1 {
 	private String codTablero;
 	private String codUsuario;
 	
-	public Partida1(int pPunt,String pTipo,String pCt, String pCu){
+	public Partida1(int pPunt,String pTipo,String pCt,String pCu){
 		this.puntuacion=pPunt;
 		this.tipo=pTipo;
 		this.codTablero=pCt;
@@ -19,6 +19,10 @@ public class Partida1 {
 
 	public String getCodUsuario(){
 		return this.codUsuario;
+	}
+	
+	public String getCodTablero(){
+		return this.codTablero;
 	}
 
 }
