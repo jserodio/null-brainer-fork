@@ -29,6 +29,7 @@ public class GestorSesion extends Observable implements Observer {
 	private int contMinas;
 	private Jugador j;
 	private int puntuacion;
+	private Partida partida;
     
     private GestorSesion() {}
 
@@ -328,7 +329,12 @@ public class GestorSesion extends Observable implements Observer {
 	}
 
 	public Partida obtenerPartidaActual() {
-		return new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
+		this.partida = new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
+		return partida;
+	}
+
+	public Partida getPartida() {
+		return partida;
 	}
 
 }

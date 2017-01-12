@@ -75,4 +75,7 @@ public class Partida {
 		this.nombrePartida = nombrePartida;
 	}
 
+	public Tablero getTablero(){
+		return juego;
+	}
 }

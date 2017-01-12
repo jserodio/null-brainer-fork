@@ -431,7 +431,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   if (JOptionPane.showConfirmDialog(null, "¡Enhorabuena, has terminado la partida correctamente! ¿Quieres compartirla en Twitter?", "Partida finalizada",
 					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					   //Opción yes, llamar a gestor y comprobar puntos
-					   
+					   GestorBuscaminas.getGestorBuscaminas().compartirTwitter();
 					   }
 				   this.dispose();
 				   this.setVisible(false);

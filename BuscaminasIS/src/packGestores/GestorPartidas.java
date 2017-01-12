@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import packCodigo.Partida;
 import packCodigo.Partida1;
+import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorPartidas {
@@ -125,4 +126,5 @@ public class GestorPartidas {
 		}
 
 	}
+
 }
