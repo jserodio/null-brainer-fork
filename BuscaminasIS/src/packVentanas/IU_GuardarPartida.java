@@ -1,23 +1,22 @@
 package packVentanas;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import packCodigo.Jugador;
 import packCodigo.Partida;
+import packCodigo.Tablero;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorPartidas;
 import packGestores.GestorSesion;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class IU_GuardarPartida {
 
@@ -74,7 +73,11 @@ public class IU_GuardarPartida {
 					Partida partidaActual = GestorSesion.getSesion().obtenerPartidaActual();
 					partidaActual.setNombrePartida(txtNombrePartida.getText().trim());
 					//Pruebas
-					partidaActual.setJugador(new Usuario("1", "Caranchoa", "Caranchoa", "Caranchoa", 1));
+					partidaActual.setJugador(new Usuario("2", "Galder", "grevilla", "grevilla002@ikasle.ehu.eus", 10));
+					Tablero t1 = new Tablero(1,12,12);
+					t1.setCodTablero("F1");
+					partidaActual.setJuego(t1);
+					// Añadir Partida
 					GestorPartidas.getGestorPartidas().guardarPartida(partidaActual);
 				}
 			}

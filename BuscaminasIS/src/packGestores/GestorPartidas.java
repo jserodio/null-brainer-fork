@@ -92,7 +92,7 @@ public class GestorPartidas {
 	public boolean comprobarNombrePartida(String nombrePartida) throws ExcepcionConectarBD {
 		ResultSet rs = null;
 		boolean rdo = false;
-		String cadena = "SELECT * FROM PARTIDAS WHERE nombrepartida ='" + nombrePartida + "' ";
+		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + nombrePartida + "' ";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 		
 		if (rs != null) {
@@ -111,10 +111,11 @@ public class GestorPartidas {
 	}
 
 	public void guardarPartida(Partida pPartida) {
-		String sentencia = "INSERT INTO PARTIDAS(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
-				+ pPartida.getPuntuacion() + "," + pPartida.getTipo()  + "," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
+		String sentencia = "INSERT INTO PARTIDA (CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + ",'" + pPartida.getJuego().getCodTablero() + "',"
+				+ pPartida.getPuntuacion() + ",'" + pPartida.getTipo()  + "'," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
 		try {
 			GestorBD.getConexionBD().actualizarBD(sentencia);
+			//listaPartidas.add(pPartida);
 		} catch (ExcepcionConectarBD e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

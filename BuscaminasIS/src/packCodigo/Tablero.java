@@ -10,7 +10,7 @@ import packGestores.GestorSesion;
 
 public class Tablero extends Observable {
 
-	private int codTablero;
+	private String codTablero;
 	private int nivel;
 	private int columnas;
 	private int filas;
@@ -764,11 +764,11 @@ public class Tablero extends Observable {
 		return cont;
 	}
 
-	public int getCodTablero() {
+	public String getCodTablero() {
 		return codTablero;
 	}
 
-	public void setCodTablero(int codTablero) {
+	public void setCodTablero(String codTablero) {
 		this.codTablero = codTablero;
 	}
 
