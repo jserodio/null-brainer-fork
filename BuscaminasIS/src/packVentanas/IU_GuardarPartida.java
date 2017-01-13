@@ -7,7 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import packCodigo.Jugador;
 import packCodigo.Partida;
+import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorPartidas;
 import packGestores.GestorSesion;
@@ -71,6 +73,8 @@ public class IU_GuardarPartida {
 					// GuardarPartida
 					Partida partidaActual = GestorSesion.getSesion().obtenerPartidaActual();
 					partidaActual.setNombrePartida(txtNombrePartida.getText().trim());
+					//Pruebas
+					partidaActual.setJugador(new Usuario("1", "Caranchoa", "Caranchoa", "Caranchoa", 1));
 					GestorPartidas.getGestorPartidas().guardarPartida(partidaActual);
 				}
 			}

@@ -107,8 +107,17 @@ public class GestorPartidas {
 		boolean rdo = false;
 		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + nombrePartida + "' ";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
+		
 		if (rs != null) {
-			rdo = true;
+			try {
+				// Si existe datos es que la partida existe
+				if (rs.next()){
+					rdo = true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		GestorBD.getConexionBD().closeResult(rs);
 		return rdo;
