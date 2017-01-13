@@ -6,15 +6,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
 import net.miginfocom.swing.MigLayout;
+import packCodigo.Partida;
 import packCodigo.Partida1;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorBuscaminas;
-
-import javax.swing.JTextArea;
-import javax.swing.JButton;
 
 public class IU_Ranking extends JFrame{
 
@@ -22,7 +23,7 @@ public class IU_Ranking extends JFrame{
 	private JTextArea textArea;
 	private JButton btnAtras;
 	private String tipo;
-	private int nivel;
+	private String nivel;
 	private String valor;
 
 	/**
@@ -32,7 +33,7 @@ public class IU_Ranking extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IU_Ranking window = new IU_Ranking("nivel",null,0);
+					IU_Ranking window = new IU_Ranking("nivel",null,"F");
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +45,7 @@ public class IU_Ranking extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public IU_Ranking(String pTipo,String valor,int nivel) {
+	public IU_Ranking(String pTipo,String valor,String nivel) {
 		initialize();
 		this.tipo=pTipo;
 		this.nivel=nivel;
@@ -107,16 +108,16 @@ public class IU_Ranking extends JFrame{
 	}
 	
 	private void getRanking() throws SQLException, ExcepcionConectarBD{
-		ArrayList<Partida1> partidas;
+		ArrayList<Partida> partidas;
 		ArrayList<Usuario> usuarios;
 		boolean enc=false;
 		this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
 		if(tipo.equals("nivel")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel(nivel);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
+			Iterator<Partida> it=partidas.iterator();
 			Iterator<Usuario> it1;
-			Partida1 p;
+			Partida p;
 			Usuario u=null;
 			int i=1;
 			while(it.hasNext()||i<=10){
@@ -124,7 +125,7 @@ public class IU_Ranking extends JFrame{
 				it1=usuarios.iterator();
 				while(it1.hasNext()||!enc){
 					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
+					if(u.getCodUsuario().equals(p.getJugador().getCodUsuario())){
 						enc=true;
 					}
 				}
@@ -139,9 +140,9 @@ public class IU_Ranking extends JFrame{
 		else if(tipo.equals("codUsuario")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasUsuario(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
+			Iterator<Partida> it=partidas.iterator();
 			Iterator<Usuario> it1;
-			Partida1 p;
+			Partida p;
 			Usuario u=null;
 			int i=1;
 			while(it.hasNext()||i<=10){
@@ -149,7 +150,7 @@ public class IU_Ranking extends JFrame{
 				it1=usuarios.iterator();
 				while(it1.hasNext()||enc){
 					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
+					if(u.getCodUsuario().equals(p.getJugador().getCodUsuario())){
 						enc=true;
 					}
 				}
@@ -164,9 +165,9 @@ public class IU_Ranking extends JFrame{
 		else if(tipo.equals("codTablero")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasTablero(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			Iterator<Partida1> it=partidas.iterator();
+			Iterator<Partida> it=partidas.iterator();
 			Iterator<Usuario> it1;
-			Partida1 p;
+			Partida p;
 			Usuario u=null;
 			int i=1;
 			while(it.hasNext()||i<=10){
@@ -174,7 +175,7 @@ public class IU_Ranking extends JFrame{
 				it1=usuarios.iterator();
 				while(it1.hasNext()||enc){
 					u=it1.next();
-					if(u.getCodUsuario().equals(p.getCodUsuario())){
+					if(u.getCodUsuario().equals(p.getJugador().getCodUsuario())){
 						enc=true;
 					}
 				}

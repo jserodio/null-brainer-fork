@@ -75,4 +75,9 @@ public class Partida {
 		this.nombrePartida = nombrePartida;
 	}
 
+	@Override
+	public String toString() {
+		return nombrePartida;
+	}
+	
 }

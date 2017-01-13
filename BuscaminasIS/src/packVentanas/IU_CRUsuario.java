@@ -93,7 +93,7 @@ public class IU_CRUsuario extends JFrame{
 								enc=true;
 							}
 						}
-						IU_Ranking vCR=new IU_Ranking("codUsuario",u.getCodUsuario(),0);
+						IU_Ranking vCR=new IU_Ranking("codUsuario",u.getCodUsuario(),"F");
 						vCR.setVisible(true);
 						setVisible(false);
 					} catch (SQLException e1) {

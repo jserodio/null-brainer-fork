@@ -11,7 +11,7 @@ public class TableroBuilderN3 extends TableroBuilder{
 	}
 		
 	public Tablero asignarTablero(){
-		elTablero = new Tablero(3,12,25);
+		elTablero = new Tablero("D",12,25);
 		elTablero.generarMatriz();
 		return elTablero;
 	}

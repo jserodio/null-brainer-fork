@@ -81,7 +81,7 @@ public class IU_GuardarPartida {
 					
 					// Para Pruebas
 					partidaActual.setJugador(new Usuario("2", "Galder", "grevilla", "grevilla002@ikasle.ehu.eus", 10));
-					Tablero t1 = new Tablero(1, 12, 12);
+					Tablero t1 = new Tablero("F", 12, 12);
 					partidaActual.setPuntuacion(20);
 					t1.setCodTablero("F1");
 					partidaActual.setJuego(t1);

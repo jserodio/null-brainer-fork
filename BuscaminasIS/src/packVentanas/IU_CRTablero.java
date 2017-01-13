@@ -92,7 +92,7 @@ public class IU_CRTablero extends JFrame {
 						t="0";
 						t=t+aux;
 					}
-					IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
+					IU_Ranking vCR=new IU_Ranking("codTablero",n+t,"F");
 					vCR.setVisible(true);
 					setVisible(false);
 				}

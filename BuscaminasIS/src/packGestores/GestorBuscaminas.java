@@ -53,16 +53,16 @@ public class GestorBuscaminas {
 		return GestorUsuarios.getGestorUsuarios().registrarse(user, password, confirmedPassword, email);
 	}
 
-	public ArrayList<Partida1> obtenerListaPartidasNivel(int pNivel) throws SQLException, ExcepcionConectarBD {
+	public ArrayList<Partida> obtenerListaPartidasNivel(String pNivel) throws SQLException, ExcepcionConectarBD {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasNivel(pNivel);
 	}
 
-	public ArrayList<Partida1> obtenerListaPartidasTablero(String pCodTablero)
+	public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero)
 			throws SQLException, ExcepcionConectarBD {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasTablero(pCodTablero);
 	}
 
-	public ArrayList<Partida1> obtenerListaPartidasUsuario(String pCodUsuario)
+	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario)
 			throws SQLException, ExcepcionConectarBD {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasUsuario(pCodUsuario);
 	}
