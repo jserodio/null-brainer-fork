@@ -89,37 +89,24 @@ public class GestorPartidas {
 	}
 
 	// Si la partida existe devuelve true
-	public boolean comprobarNombrePartida(String nombrePartida) throws ExcepcionConectarBD {
+	public boolean comprobarNombrePartida(Partida partida) throws ExcepcionConectarBD {
 		ResultSet rs = null;
 		boolean rdo = false;
-		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + nombrePartida + "' ";
+		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + partida.getNombrePartida()
+				+ "' AND CODUSUARIO = " + partida.getJugador().getCodUsuario();
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
-		
 		if (rs != null) {
 			try {
 				// Si existe datos es que la partida existe
-				if (rs.next()){
+				if (rs.next()) {
 					rdo = true;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
 		GestorBD.getConexionBD().closeResult(rs);
 		return rdo;
-	}
-
-	public void guardarPartida(Partida pPartida) {
-		String sentencia = "INSERT INTO PARTIDA (CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + ",'" + pPartida.getJuego().getCodTablero() + "',"
-				+ pPartida.getPuntuacion() + ",'" + pPartida.getTipo()  + "'," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
-		try {
-			GestorBD.getConexionBD().actualizarBD(sentencia);
-			//listaPartidas.add(pPartida);
-		} catch (ExcepcionConectarBD e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 }
