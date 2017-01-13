@@ -62,22 +62,7 @@ public class Tablero extends Observable {
 	}
 
 	private int calcularMinas() {
-		int valor;
-		switch (nivel) {
-		case "F":
-			valor = 1;
-			break;
-		case "M":
-			valor = 2;
-			break;
-		case "D":
-			valor = 3;
-			break;
-		default:
-			valor = 1;
-			break;
-		}
-		int sol = valor * (columnas + 1);
+		int sol = this.getValorNivel() * (columnas + 1);
 		return sol;
 	}
 
@@ -787,4 +772,16 @@ public class Tablero extends Observable {
 		this.codTablero = codTablero;
 	}
 
+	public int getValorNivel() {
+		switch (nivel) {
+		case "F":
+			return 1;
+		case "M":
+			return 2;
+		case "D":
+			return 3;
+		default:
+			return 1;
+		}
+	}
 }

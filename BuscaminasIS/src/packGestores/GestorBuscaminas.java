@@ -1,11 +1,9 @@
 package packGestores;
 
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 
 import packCodigo.Partida;
-import packCodigo.Partida1;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 
@@ -57,13 +55,11 @@ public class GestorBuscaminas {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasNivel(pNivel);
 	}
 
-	public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero)
-			throws SQLException, ExcepcionConectarBD {
+	public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero) throws SQLException, ExcepcionConectarBD {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasTablero(pCodTablero);
 	}
 
-	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario)
-			throws SQLException, ExcepcionConectarBD {
+	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario) throws SQLException, ExcepcionConectarBD {
 		return GestorPartidas.getGestorPartidas().obtenerListaPartidasUsuario(pCodUsuario);
 	}
 
@@ -92,6 +88,11 @@ public class GestorBuscaminas {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	public void reanudarPartida(Partida pPartida) {
+		// FALTA POR HACER
+		System.out.println(pPartida.toString());
 	}
 
 }
