@@ -72,7 +72,7 @@ public class GestorBuscaminas {
     }
 
 	public void compartirTwitter() {
-		Partida p = GestorSesion.getSesion().getPartida();
+		Partida p = GestorSesion.getSesion().obtenerPartidaActual();
 		int puntos = p.getPuntuacion();
 		String codJugador = p.getJugador().getCodUsuario();
 		int codTablero = p.getTablero().getCodTablero();
@@ -112,14 +112,21 @@ public class GestorBuscaminas {
 			e.printStackTrace();
 		}
 		String mensaje = "";
+		boolean puntSuperada = false;
 		if(puntos > maxPuntuacionTableros){
+			puntSuperada = true;
 			mensaje += "¡Has superado la puntuación máxima de los tableros! \n\n";
 		}
 		if(puntos > maxPuntuacionNiveles){
+			puntSuperada = true;
 			mensaje += "¡Has superado la puntuación máxima de los niveles! \n\n";
 		}
 		if(puntos > maxPuntuacionUsuario){
+			puntSuperada = true;
 			mensaje += "¡Has superado tu puntuación máxima!";
+		}
+		if(!puntSuperada){
+			mensaje = "No has superado ninguna puntuación.";
 		}
 		try {
 			GestorTwitter.getGestorTwitter().compartirTwitter(mensaje);
