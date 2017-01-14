@@ -1,14 +1,12 @@
 package packCodigo;
 
-import packVentanas.VLogin;
+import packVentanas.IU_IdRg;
 
 public class Main {
 
-	//ESTE ES EL COMENTARIO
 	public static void main(String[] args) throws NoArchivoAudioException {
-		//alert("Bienvenidos");
-		VLogin vL = new VLogin();
-		vL.setVisible(true);
+		IU_IdRg idrg = new IU_IdRg();
+		idrg.setVisible(true);
 	}
 
 }

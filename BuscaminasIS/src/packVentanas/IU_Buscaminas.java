@@ -11,6 +11,10 @@ import javax.swing.JButton;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import packCodigo.Ranking;
+import packGestores.GestorSesion;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -88,6 +92,14 @@ public class IU_Buscaminas {
 		frmMenuBuscaminas.getContentPane().add(lblNewJgoodiesTitle, "2, 1, 1, 3, fill, fill");
 		
 		JButton btnComenzarPartida = new JButton("Comenzar Partida");
+		btnComenzarPartida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 Ranking.getRanking().cargarLista();
+				 IU_Jugar vB = new IU_Jugar(3);
+				 vB.setVisible(true);
+				 setVisible(false);
+			}
+		});
 		frmMenuBuscaminas.getContentPane().add(btnComenzarPartida, "2, 5");
 		
 		JButton btnReanudarPartida = new JButton("Reanudar Partida");
