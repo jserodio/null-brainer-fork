@@ -60,6 +60,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private Clip clip;
 	private AudioInputStream ais;
 	private int bomba = 0;
+	private JMenuItem itemGuardar;
 
 
 	/**
@@ -116,6 +117,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3.addActionListener(this);
 		menu1.add(item3);
 		
+		itemGuardar = new JMenuItem("Guardar Partida");
+		itemGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IU_GuardarPartida();
+			}
+		});
+		menu1.add(itemGuardar);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -205,6 +213,14 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3 = new JMenuItem("Ranking");
 		item3.addActionListener(this);
 		menu1.add(item3);
+		
+		itemGuardar = new JMenuItem("Guardar Partida");
+		itemGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IU_GuardarPartida();
+			}
+		});
+		menu1.add(itemGuardar);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);

@@ -43,6 +43,7 @@ public class IU_GuardarPartida {
 	 */
 	public IU_GuardarPartida() {
 		initialize();
+		frmGuardarPartida.setVisible(true);
 	}
 
 	/**
