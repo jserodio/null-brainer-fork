@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import packCodigo.Partida;
 import packCodigo.Tablero;
 import packCodigo.Usuario;
-
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorPartidas {
@@ -26,38 +25,45 @@ public class GestorPartidas {
 		if (listaPartidas.isEmpty() == false) {
 			listaPartidas.clear();
 		}
-		  String niv=""+pNivel;
-		  ResultSet rs = null;
-		  String cadena = "SELECT * FROM PARTIDA WHERE CODTABLERO LIKE '"+niv+"%' AND acabado =1 ORDER BY puntuacion DESC";
-		  rs = GestorBD.getConexionBD().consultaBD(cadena);
-		  
-		  if(rs!=null){
-			  while(rs.next()){
-					  Partida p = new Partida(rs.getInt("puntuacion"),rs.getString("tipo"),""+rs.getInt("codUsuario"),rs.getString("codTablero"));
-					  listaPartidas.add(p);
-			  }
-		  }
-		  else{
-			  System.out.println("No hay Jugadores");
-		  }
-		  GestorBD.getConexionBD().closeResult(rs);
-		  return listaPartidas;
-	}
-
-	public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero)
-			throws SQLException, ExcepcionConectarBD {
-		if (listaPartidas.isEmpty() == false) {
-			listaPartidas.clear();
-		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM PARTIDA WHERE codTablero ='"+pCodTablero
-				+ "' AND acabado =1 ORDER BY PUNTUACION DESC";
+		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND TABLERO.NIVEL = '"
+				+ pNivel + "' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
 		if (rs != null) {
 			while (rs.next()) {
-				Partida p = new Partida(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
-						rs.getString("codTablero"));
+				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
+						// OBtener el tablero
+						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"),rs.getInt("COLUMNAS")),
+						// Obtener el jugador
+						new Usuario(rs.getString("CODUSUARIO"),rs.getString("NOMBRE"),rs.getString("CLAVE"),rs.getString("EMAIL"),rs.getInt("PISTAS")), rs.getString("NOMBREPARTIDA"));
+				listaPartidas.add(p);
+			}
+		} else {
+			System.out.println("No hay Jugadores");
+		}
+		GestorBD.getConexionBD().closeResult(rs);
+		return listaPartidas;
+	}
+
+	public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero) throws SQLException, ExcepcionConectarBD {
+		if (listaPartidas.isEmpty() == false) {
+			listaPartidas.clear();
+		}
+		ResultSet rs = null;
+		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND TABLERO.CODTABLERO = "
+				+ pCodTablero + " ORDER BY PUNTUACION DESC";
+		rs = GestorBD.getConexionBD().consultaBD(cadena);
+
+		if (rs != null) {
+			while (rs.next()) {
+				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
+						// OBtener el tablero
+						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						// Obtener el jugador
+						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
+								rs.getString("EMAIL"), rs.getInt("PISTAS")),
+						rs.getString("NOMBREPARTIDA"));
 				listaPartidas.add(p);
 			}
 		} else {
@@ -66,32 +72,25 @@ public class GestorPartidas {
 		GestorBD.getConexionBD().closeResult(rs);
 		return listaPartidas;
 	}
-	
-	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario)
-			throws SQLException, ExcepcionConectarBD {
-		if (listaPartidas.isEmpty() == false) {
+
+	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario) throws SQLException, ExcepcionConectarBD {
+		if (!listaPartidas.isEmpty()) {
 			listaPartidas.clear();
 		}
 		ResultSet rs = null;
-		String cadena = "SELECT * FROM PARTIDA WHERE codUsuario ='" +pCodUsuario
-				+ "' AND acabado ='1' ORDER BY PUNTUACION DESC";
+		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND USUARIO.CODUSUARIO = "
+				+ pCodUsuario + " ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
-		
-//		if(!rs.next()){
-//			System.out.println("No ha jugado el usuario ninguna partida");
-//		}
-//		else{
-//			while (rs.next()) {
-//				Partida p = new Partida(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
-//						""+rs.getString("codTablero"));
-//				listaPartidas.add(p);
-//			}
-//		}
-//		
+
 		if (rs != null) {
 			while (rs.next()) {
-				Partida p = new Partida(rs.getInt("puntuacion"), rs.getString("tipo"), ""+rs.getInt("codUsuario"),
-						""+rs.getString("codTablero"));
+				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
+						// OBtener el tablero
+						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						// Obtener el jugador
+						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
+								rs.getString("EMAIL"), rs.getInt("PISTAS")),
+						rs.getString("NOMBREPARTIDA"));
 				listaPartidas.add(p);
 			}
 		} else {
