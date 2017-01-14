@@ -81,17 +81,14 @@ public class IU_CRNivel extends JFrame {
 					String nivel=(String)getComboBox().getSelectedItem();
 					if(nivel.equals("Fácil")){
 						IU_Ranking vCR=new IU_Ranking("nivel",null,1);
-						vCR.setVisible(true);
 						frame.setVisible(false);
 					}
 					else if(nivel.equals("Medio")){
 						IU_Ranking vCR=new IU_Ranking("nivel",null,2);
-						vCR.setVisible(true);
 						frame.setVisible(false);
 					}
-					else{
+					else if(nivel.equals("Dificil")){
 						IU_Ranking vCR=new IU_Ranking("nivel",null,3);
-						vCR.setVisible(true);
 						frame.setVisible(false);
 					}
 					

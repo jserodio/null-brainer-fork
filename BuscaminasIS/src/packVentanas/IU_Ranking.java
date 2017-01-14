@@ -1,19 +1,24 @@
 package packVentanas;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
-import packCodigo.Partida1;
+import packCodigo.Partida;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorBuscaminas;
 
 import javax.swing.JTextArea;
+
+
+
 import javax.swing.JButton;
 
 public class IU_Ranking extends JFrame{
@@ -32,7 +37,7 @@ public class IU_Ranking extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IU_Ranking window = new IU_Ranking("nivel",null,0);
+					IU_Ranking window = new IU_Ranking("nivel",null,1);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +61,7 @@ public class IU_Ranking extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 525, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][][grow]", "[][][][grow][]"));
 		frame.getContentPane().add(getTextArea(), "flowy,cell 0 0 7 4,grow");
@@ -71,13 +76,13 @@ public class IU_Ranking extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setVisible(true);
 	}
 
 	private JTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new JTextArea();
 		}
+		textArea.setEditable(false);
 		return textArea;
 	}
 	private JButton getBtnAtras() {
@@ -94,12 +99,10 @@ public class IU_Ranking extends JFrame{
 				}
 				else if(tipo.equals("codUsuario")){
 					IU_CRUsuario vC=new IU_CRUsuario();
-					vC.setVisible(true);
 					frame.setVisible(false);
 				}
 				else if(tipo.equals("codTablero")){
 					IU_CRTablero vC=new IU_CRTablero();
-					vC.setVisible(true);
 					frame.setVisible(false);
 				}	
 			}
@@ -108,113 +111,132 @@ public class IU_Ranking extends JFrame{
 	}
 	
 	private void getRanking() throws SQLException, ExcepcionConectarBD{
-		ArrayList<Partida1> partidas;
+		ArrayList<Partida> partidas;
 		ArrayList<Usuario> usuarios;
-		boolean enc=false;
 		System.out.println(this.tipo);
 		System.out.println(this.nivel);
 		if(tipo.equals("nivel")){
-			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel(nivel);
-			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
-			if(partidas.isEmpty()){
-				this.getTextArea().append("No se han jugado partidas en este nivel");
-			}
-			else{
-				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
-				Iterator<Partida1> it=partidas.iterator();
-				Iterator<Usuario> it1;
-				Partida1 p;
-				Usuario u=null;
-				int i=1;
-				while(it.hasNext()||i<=10){
-					p=it.next();
-					it1=usuarios.iterator();
-					while(it1.hasNext()||!enc){
-						u=it1.next();
-						if(u.getCodUsuario().equals(p.getCodUsuario())){
-							enc=true;
-						}
+			if(this.nivel==1){
+				partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel("F");
+				usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
+				if(partidas.isEmpty()){
+					this.getTextArea().append("No se han jugado partidas en este nivel");
+				}
+				else{
+					this.getTextArea().setFont(new Font("Serif", TextAttribute.UNDERLINE_ON,Font.BOLD));
+					this.getTextArea().append("Posición\tTablero\tNombre\tPuntuación\n");
+					Iterator<Partida> it=partidas.iterator();
+					String nombre="";
+					Partida p;
+					int i=1;
+					while(it.hasNext()&&i<=10){
+						p=it.next();
+						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
+						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						i++;
 					}
-					if(enc==false){
-						this.getTextArea().append("No se han jugado partidas en este nivel");
-					}
-					else{
-						this.getTextArea().append(i+"\t\t"+u.getNombre()+"\t\t"+p.getPuntuacion());
-					}
-			}
+			   }
 			
+			}else if(this.nivel==2){
+				partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel("M");
+				usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
+				if(partidas.isEmpty()){
+					this.getTextArea().append("No se han jugado partidas en este nivel");
+				}
+				else{
+					this.getTextArea().setFont(new Font("Serif", TextAttribute.UNDERLINE_ON,Font.BOLD));
+					this.getTextArea().append("Posición\tTablero\tNombre\tPuntuación\n");
+					Iterator<Partida> it=partidas.iterator();
+					String nombre="";
+					Partida p;
+					int i=1;
+					while(it.hasNext()&&i<=10){
+						p=it.next();
+						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
+						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						i++;
+					}
+			   }
+			}else if(this.nivel==3){
+				partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasNivel("D");
+				usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
+				if(partidas.isEmpty()){
+					this.getTextArea().append("No se han jugado partidas en este nivel");
+				}
+				else{
+					this.getTextArea().setFont(new Font("Serif", TextAttribute.UNDERLINE_ON,Font.BOLD));
+					this.getTextArea().append("Posición\tTablero\tNombre\tPuntuación\n");
+					Iterator<Partida> it=partidas.iterator();
+					String nombre="";
+					Partida p;
+					int i=1;
+					while(it.hasNext()&&i<=10){
+						p=it.next();
+						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
+						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						i++;
+					}
+			   }
+				
 			}
 		}
 		else if(tipo.equals("codUsuario")){
+			System.out.println("El codigo del usuario es:"+valor);
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasUsuario(valor);
+			System.out.println(partidas.size());
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
 			if(partidas.isEmpty()){
 				this.getTextArea().append("No ha jugado partidas el usuario");
 			}
 			else{
-				this.getTextArea().append("Pos\tNombre\tNivel\tTablero\tPunt");
-				Iterator<Partida1> it=partidas.iterator();
-				Iterator<Usuario> it1;
-				Partida1 p;
-				Usuario u=null;
+				this.getTextArea().append("Pos\tNombre\tNivel\tTablero\tPunt\n");
+				Iterator<Partida> it=partidas.iterator();
+				Partida p;
+				String nombre="";
 				int i=1;
-				while(it.hasNext()||i<=10){
+				while(it.hasNext()&&i<=10){
 					p=it.next();
-					it1=usuarios.iterator();
-					while(it1.hasNext()||enc){
-						u=it1.next();
-						if(u.getCodUsuario().equals(p.getCodUsuario())){
-							enc=true;
+					nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+					char nivel=p.getCodTablero().charAt(0);
+					if(p.getCodTablero().length()>2){
+						String tablero="";
+						i=1;
+						while(i<=p.getCodTablero().length()){
+							tablero=tablero+p.getCodTablero().charAt(i);
 						}
-					}
-					if(enc==false){
-						this.getTextArea().append("No ha jugado ninguna partida");
+						this.getTextArea().append(i+"\t"+nombre+"\t"+nivel+"\t"+tablero+"\t"+p.getPuntuacion()+"\n");
 					}
 					else{
-						char nivel=p.getCodTablero().charAt(0);
-						if(p.getCodTablero().charAt(1)=='0'){
-							char tablero=p.getCodTablero().charAt(p.getCodTablero().length()-1);
-							this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tablero+"\t"+p.getPuntuacion());
-						}
-						else{
-							String tab=p.getCodTablero().substring(1, p.getCodTablero().length()-1);
-							this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+nivel+"\t"+tab+"\t"+p.getPuntuacion());
-						}
+						char tab=p.getCodTablero().charAt(1);
+						this.getTextArea().append(i+"\t"+nombre+"\t"+nivel+"\t"+tab+"\t"+p.getPuntuacion()+"\n");
 					}
-			}
-			
+					i++;
+				}
+				
 			}
 		}
 		else if(tipo.equals("codTablero")){
 			partidas=GestorBuscaminas.getGestorBuscaminas().obtenerListaPartidasTablero(valor);
 			usuarios=GestorBuscaminas.getGestorBuscaminas().obtenerUsuarios();
+			String nombre=null;
 			if(partidas.isEmpty()){
 				this.getTextArea().append("No se han jugado partidas en el tablero escogido");
 			}
 			else{
-				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación");
-				Iterator<Partida1> it=partidas.iterator();
-				Iterator<Usuario> it1;
-				Partida1 p;
-				Usuario u=null;
+				this.getTextArea().append("Posición\t\tNombre\t\tPuntuación\n");
+				Iterator<Partida> it=partidas.iterator();
+				Partida p;
 				int i=1;
-				while(it.hasNext()||i<=10){
+				while(it.hasNext()&&i<=10){
 					p=it.next();
-					it1=usuarios.iterator();
-					while(it1.hasNext()||enc){
-						u=it1.next();
-						if(u.getCodUsuario().equals(p.getCodUsuario())){
-							enc=true;
-						}
-					}
-					if(enc==false){
-						this.getTextArea().append("No ha jugado ninguna partida");
-					}
-					else{
-						this.getTextArea().append(i+"\t"+u.getNombre()+"\t"+p.getPuntuacion());
-					}
-			}
-			
+					nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+					this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
+					this.getTextArea().append(i+"\t\t"+nombre+"\t\t"+p.getPuntuacion()+"\n");
+					i++;
+				}
 			}
 		}
 		

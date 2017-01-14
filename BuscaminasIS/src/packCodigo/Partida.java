@@ -8,6 +8,8 @@ public class Partida {
 	private Tablero juego;
 	private Usuario jugador;
 	private String nombrePartida;
+	private String codUsuario;
+	public String codTablero;
 
 	public Partida(int puntuacion, int tiempo, String tipo, boolean acabado, Tablero juego, Usuario jugador, String nombrePartida) {
 		this.puntuacion = puntuacion;
@@ -17,6 +19,13 @@ public class Partida {
 		this.juego = juego;
 		this.jugador = jugador;
 		this.nombrePartida= nombrePartida;
+	}
+	
+	public Partida(int pPunt,String pTipo,String pCu,String pCt){
+		this.puntuacion=pPunt;
+		this.tipo=pTipo;
+		this.codUsuario=pCu;
+		this.codTablero=pCt;
 	}
 
 	public int getPuntuacion() {
@@ -41,6 +50,14 @@ public class Partida {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	public String getCodUsuario(){
+		return this.codUsuario;
+	}
+	
+	public String getCodTablero(){
+		return this.codTablero;
 	}
 
 	public boolean isAcabado() {

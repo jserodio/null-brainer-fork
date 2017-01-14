@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import packCodigo.Partida;
-import packCodigo.Partida1;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 
@@ -51,20 +50,29 @@ public class GestorBuscaminas {
     	return GestorUsuarios.getGestorUsuarios().registrarse(user, password, confirmedPassword, email);
     }
     
-    public ArrayList<Partida1> obtenerListaPartidasNivel(int pNivel) throws SQLException, ExcepcionConectarBD{
+    public ArrayList<Partida> obtenerListaPartidasNivel(String pNivel) throws SQLException, ExcepcionConectarBD{
     	return GestorPartidas.getGestorPartidas().obtenerListaPartidasNivel(pNivel);
     }
     
-    public ArrayList<Partida1> obtenerListaPartidasTablero(String pCodTablero) throws SQLException, ExcepcionConectarBD{
+    public ArrayList<Partida> obtenerListaPartidasTablero(String pCodTablero) throws SQLException, ExcepcionConectarBD{
     	return GestorPartidas.getGestorPartidas().obtenerListaPartidasTablero(pCodTablero);
     }
     
-    public ArrayList<Partida1> obtenerListaPartidasUsuario(String pCodUsuario) throws SQLException, ExcepcionConectarBD{
+    public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario) throws SQLException, ExcepcionConectarBD{
     	return GestorPartidas.getGestorPartidas().obtenerListaPartidasUsuario(pCodUsuario);
     }
     
     public ArrayList<Usuario> obtenerUsuarios() throws SQLException, ExcepcionConectarBD{
     	return GestorUsuarios.getGestorUsuarios().obtenerUsuarios();
     }
+
+	public ArrayList<String> obtenerTableros(String pNivel) throws ExcepcionConectarBD, SQLException {
+		// TODO Auto-generated method stub
+		return GestorTablero.getGestorTablero().obtenerTableros(pNivel);
+	}
+	
+	public String buscarNombre(String pCodUsuario){
+		return GestorUsuarios.getGestorUsuarios().buscarNombre(pCodUsuario);
+	}
 
 }

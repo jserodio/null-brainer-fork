@@ -104,7 +104,6 @@ public class IU_Buscaminas {
 		btnConsultarRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IU_ConsultarRanking vCR=new IU_ConsultarRanking();
-				vCR.setVisible(true);
 				setVisible(false);
 			}
 		});

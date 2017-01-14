@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
 import packExcepciones.ExcepcionConectarBD;
+import packGestores.GestorBuscaminas;
 import packGestores.GestorTablero;
 
 public class IU_CRTablero extends JFrame {
@@ -55,7 +56,7 @@ public class IU_CRTablero extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(500, 250, 225, 150);
+		frame.setBounds(500, 250, 305, 150);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[][][][][][grow][grow][]", "[][][][grow]"));
 		frame.getContentPane().add(getLblNivel(), "cell 4 1,alignx center");
@@ -69,10 +70,9 @@ public class IU_CRTablero extends JFrame {
 	private JButton getBtnAtras() {
 		if (btnAtras == null) {
 			btnAtras = new JButton("Atr\u00E1s");
-			btnAtras.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(ActionEvent e) {
+			btnAtras.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
-					vCR.setVisible(true);
 					frame.setVisible(false);
 				}
 			});
@@ -86,15 +86,20 @@ public class IU_CRTablero extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					String n=(String)nivel.getSelectedItem();
 					String t=(String)tablero.getSelectedItem();
-					String aux=null;
-					if(t.length()==1){
-						t=aux;
-						t="0";
-						t=t+aux;
+					if(n.equals("Fácil")){
+						n="F";
+						System.out.println(n+t);
+						IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
+						frame.setVisible(false);
+					}else if(n.equals("Medio")){
+						n="M";
+						IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
+						frame.setVisible(false);
+					}else{
+						n="D";
+						IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
+						frame.setVisible(false);
 					}
-					IU_Ranking vCR=new IU_Ranking("codTablero",n+t,0);
-					vCR.setVisible(true);
-					frame.setVisible(false);
 				}
 			});
 		}
@@ -110,10 +115,60 @@ public class IU_CRTablero extends JFrame {
 		if (nivel == null) {
 			nivel = new JComboBox();
 		}
-		nivel.addItem("");
+		nivel.addItem("Elige nivel");
 		nivel.addItem("Fácil");
 		nivel.addItem("Medio");
 		nivel.addItem("Dificil");
+		nivel.addActionListener(new ActionListener() {
+			   public void actionPerformed(ActionEvent arg0) {
+				String cad1=(String)nivel.getSelectedItem();
+				try {
+					if(cad1.equals("Fácil")){
+						ArrayList<String> tableros=GestorBuscaminas.getGestorBuscaminas().obtenerTableros("F");
+					    int i=tableros.size();
+					    System.out.println(""+i);
+						int j=1;
+						tablero.removeAllItems();
+						while(j<=i){
+							tablero.addItem(""+j);
+							j++;
+						}
+					}
+					else if(cad1.equals("Medio")){
+						ArrayList<String> tableros=GestorBuscaminas.getGestorBuscaminas().obtenerTableros("M");
+					    int i=tableros.size();
+					    System.out.println(""+i);
+						int j=1;
+						tablero.removeAllItems();
+						while(j<=i){
+							tablero.addItem(""+j);
+							j++;
+						}
+					}
+					else if(cad1.equals("Dificil")){
+						ArrayList<String> tableros=GestorBuscaminas.getGestorBuscaminas().obtenerTableros("D");
+					    int i=tableros.size();
+					    System.out.println(""+i);
+						int j=1;
+						tablero.removeAllItems();
+						while(j<=i){
+							tablero.addItem(""+j);
+							j++;
+						}
+					}
+					
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExcepcionConectarBD e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		return nivel;
 	}
 	private JLabel getLblTablero() {
@@ -125,74 +180,6 @@ public class IU_CRTablero extends JFrame {
 	private JComboBox getTablero() {
 		if (tablero == null) {
 			tablero = new JComboBox();
-		}
-		String n=(String)nivel.getSelectedItem();
-		String niv="";
-		if(n.equals("Fácil")){
-			niv=""+1;
-			try {
-				ArrayList<String> t=new ArrayList<String>();
-				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
-				if(t.isEmpty()){
-					tablero.addItem("No hay tableros para el nivel seleccionado");
-				}
-				Iterator<String> it=t.iterator();
-				String aux=null;
-				while(it.hasNext()){
-					aux=it.next();
-					tablero.addItem(aux);
-				}
-			} catch (ExcepcionConectarBD e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-		}
-		else if(n.equals("Medio")){
-			niv=""+2;
-			try {
-				ArrayList<String> t=new ArrayList<String>();
-				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
-				if(t.isEmpty()){
-					tablero.addItem("No hay tableros para el nivel seleccionado");
-				}
-				Iterator<String> it=t.iterator();
-				String aux=null;
-				while(it.hasNext()){
-					aux=it.next();
-					tablero.addItem(aux);
-				}
-			} catch (ExcepcionConectarBD e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-		}
-		else{
-			niv=""+3;
-			try {
-				ArrayList<String> t=new ArrayList<String>();
-				t=GestorTablero.getGestorTablero().obtenerTableros(niv);
-				if(t.isEmpty()){
-					tablero.addItem("No hay tableros para el nivel seleccionado");
-				}
-				Iterator<String> it=t.iterator();
-				String aux=null;
-				while(it.hasNext()){
-					aux=it.next();
-					tablero.addItem(aux);
-				}
-			} catch (ExcepcionConectarBD e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
 		}
 		return tablero;
 	}

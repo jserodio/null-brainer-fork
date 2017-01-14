@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //import packModelo.Conexion;
 import packCodigo.Usuario;
@@ -109,7 +110,6 @@ public class GestorUsuarios {
 		  if(rs!=null){
 			  while(rs.next()){
 				  Usuario u = new Usuario(""+rs.getInt("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("Pistas"));
-				  System.out.println(u.getNombre());
 				  listaUsuarios.add(u);
 //				  if(!rs.getString("nombre").equals(GestorSesion.getSesion().getUsuario().getNombre())){
 //					  Usuario u = new Usuario(""+rs.getInt("codUsuario"),rs.getString("nombre"),rs.getString("clave"),rs.getString("email"),rs.getInt("numeroPistas"));
@@ -123,6 +123,21 @@ public class GestorUsuarios {
 		  }
 		  GestorBD.getConexionBD().closeResult(rs);
 		  return listaUsuarios;
+	}
+	
+	public String buscarNombre(String pCodUsuario){
+		Usuario u=null;
+		String nombre="";
+		Iterator<Usuario> it=listaUsuarios.iterator();
+		boolean enc=false;
+		while(it.hasNext()&&!enc){
+			u=it.next();
+			if(u.getCodUsuario().equals(pCodUsuario)){
+				enc=true;
+				nombre=u.getNombre();
+			}
+		}
+		return nombre;
 	}
 
 }

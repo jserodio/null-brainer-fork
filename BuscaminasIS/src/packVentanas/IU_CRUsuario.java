@@ -69,7 +69,6 @@ public class IU_CRUsuario extends JFrame{
 			btnAtras.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					IU_ConsultarRanking vCR=new IU_ConsultarRanking();
-					vCR.setVisible(true);
 					frame.setVisible(false);
 				}
 			});
@@ -87,10 +86,13 @@ public class IU_CRUsuario extends JFrame{
 						Iterator<Usuario> it=usuarios.iterator();
 						Usuario u=null;
 						boolean enc=false;
-						while(it.hasNext()||!enc){
+						String codUser="";
+						while(it.hasNext()&&!enc){
 							u=it.next();
 							if(nombre.equals(u.getNombre())){
 								enc=true;
+								codUser=u.getCodUsuario();
+								System.out.println("El codigo del usuario "+u.getNombre()+" es: "+codUser);
 							}
 						}
 						IU_Ranking vCR=new IU_Ranking("codUsuario",u.getCodUsuario(),0);
@@ -132,7 +134,6 @@ public class IU_CRUsuario extends JFrame{
 				while(it.hasNext()){
 					u=it.next();
 					i++;
-					System.out.println(u.getNombre());
 					usuario.addItem(u.getNombre());
 				}
 			}

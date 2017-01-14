@@ -49,6 +49,7 @@ public class IU_ConsultarRanking extends JFrame {
 		contentPane.add(getBtnTableroConcreto(), "cell 4 2,alignx center");
 		contentPane.add(getBtnUsuario(), "cell 4 3,alignx center");
 		contentPane.add(getBtnAtras(), "cell 4 4,alignx center");
+		setVisible(true);
 	}
 
 	private JButton getBtnNivel() {
@@ -57,7 +58,6 @@ public class IU_ConsultarRanking extends JFrame {
 			btnNivel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					IU_CRNivel vN=new IU_CRNivel();
-					vN.setVisible(true);
 					setVisible(false);
 				}
 			});
@@ -70,7 +70,6 @@ public class IU_ConsultarRanking extends JFrame {
 			btnTableroConcreto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRTablero vT=new IU_CRTablero();
-					vT.setVisible(true);
 					setVisible(false);
 				}
 			});
@@ -83,7 +82,6 @@ public class IU_ConsultarRanking extends JFrame {
 			btnUsuario.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					IU_CRUsuario vU=new IU_CRUsuario();
-					vU.setVisible(true);
 					setVisible(false);
 				}
 			});
