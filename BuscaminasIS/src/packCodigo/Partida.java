@@ -9,7 +9,7 @@ public class Partida {
 	private Usuario jugador;
 	private String nombrePartida;
 	private String codUsuario;
-	public String codTablero;
+	private String codTablero;
 
 	public Partida(int puntuacion, int tiempo, String tipo, boolean acabado, Tablero juego, Usuario jugador, String nombrePartida) {
 		this.puntuacion = puntuacion;
