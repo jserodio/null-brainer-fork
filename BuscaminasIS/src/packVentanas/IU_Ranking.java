@@ -12,7 +12,6 @@ import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 import packCodigo.Partida;
-import packCodigo.Partida1;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorBuscaminas;
