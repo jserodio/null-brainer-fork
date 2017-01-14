@@ -2,6 +2,8 @@ package packCodigo;
 
 import java.util.Observable;
 
+import packVentanas.IU_Jugar;
+
 public class Usuario extends Observable {
 	private String codUsuario;
 	private String nombre;
@@ -31,6 +33,8 @@ public class Usuario extends Observable {
 
 	public void restarPista() {
 		numPistas--;
+		setChanged();
+		notifyObservers(numPistas);
 	}
 
 	public void anadirPistas(int i) {

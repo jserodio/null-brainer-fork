@@ -2,6 +2,7 @@ package packVentanas;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -64,6 +65,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private AudioInputStream ais;
 	private int bomba = 0;
 	private JButton btnPista;
+	private static IU_Jugar ventana;
 
 	/**
 	 * Launch the application.
@@ -178,9 +180,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 					lcasillas[posCas1].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
 					lcasillas[posCas2].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
 					lcasillas[posCasMina].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
-				}else{
-					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
-					JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -441,7 +440,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
-				   //TODO ANADIR PISTAS
 				   GestorBuscaminas.getGestorBuscaminas().anadirPistas();
 //				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
 				   if (JOptionPane.showConfirmDialog(null, "¡Enhorabuena, has terminado la partida correctamente! ¿Quieres compartirla en Twitter?", "Partida finalizada",
@@ -472,8 +470,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				    }
 				}
 			} else if(o instanceof Usuario){
-				int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
+				int numPistas = Integer.parseInt(arg.toString());
 				btnPista.setText("Pistas: " + numPistas);
+				System.out.println(numPistas);
+				if(numPistas == 0){
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
+				}
 			}
 	}
 	
@@ -574,5 +577,12 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			}
 		}
 		clip.start();
+	}
+
+	public static IU_Jugar getVentana() {
+		if(ventana == null){
+			ventana = new IU_Jugar(2);
+		}
+		return ventana;
 	}
 }

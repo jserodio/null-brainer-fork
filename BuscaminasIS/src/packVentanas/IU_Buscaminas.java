@@ -1,17 +1,24 @@
 package packVentanas;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
+import com.sun.javafx.font.Disposer;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
@@ -89,6 +96,13 @@ public class IU_Buscaminas {
 		
 		JButton btnComenzarPartida = new JButton("Comenzar Partida");
 		frmMenuBuscaminas.getContentPane().add(btnComenzarPartida, "2, 5");
+		btnComenzarPartida.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				IU_Jugar.getVentana().setVisible(true);
+			}
+		});
 		
 		JButton btnReanudarPartida = new JButton("Reanudar Partida");
 		frmMenuBuscaminas.getContentPane().add(btnReanudarPartida, "2, 7");
