@@ -281,7 +281,7 @@ public class GestorSesion extends Observable implements Observer {
 	public void gameOver(){
 		timer.cancel();
 		tablero.mostrarTablero();
-		juego = false;
+		this.setJuego(false);
 	}
 
 	public int obtenerNumFilas() {
@@ -311,7 +311,6 @@ public class GestorSesion extends Observable implements Observer {
 	}
 
 	@Override
-
 	public void update(Observable pObservable, Object pObjeto) {
 		if(pObservable instanceof Tablero){
 			String[]p = pObjeto.toString().split(",");
