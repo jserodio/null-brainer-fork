@@ -74,8 +74,4 @@ public class Partida {
 	public void setNombrePartida(String nombrePartida) {
 		this.nombrePartida = nombrePartida;
 	}
-
-	public Tablero getTablero(){
-		return juego;
-	}
 }

@@ -30,6 +30,7 @@ import packGestores.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
+import packCodigo.Usuario;
 
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
@@ -162,12 +163,25 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		}
 		
 		//Situar boton pista
-		btnPista = new JButton("Pista");
+		int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
+		btnPista = new JButton("Pistas: " + numPistas);
 		panel_2.add(btnPista, "cell 7 0");
 		btnPista.setHorizontalAlignment(SwingConstants.CENTER);
 		btnPista.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//Hacer aqui lo relacionado con la pista
+				//Utilizar pista y marcar las casillas correspondientes
+				if(numPistas > 0){
+					int[] casillasYMinaAMarcar = GestorBuscaminas.getGestorBuscaminas().utilizarPista();
+					int posCas1 = calcularPosicion(casillasYMinaAMarcar[0], casillasYMinaAMarcar[1]);
+					int posCas2 = calcularPosicion(casillasYMinaAMarcar[2], casillasYMinaAMarcar[3]);
+					int posCasMina = calcularPosicion(casillasYMinaAMarcar[4], casillasYMinaAMarcar[5]);
+					lcasillas[posCas1].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCas2].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCasMina].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+				}else{
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		
@@ -427,14 +441,16 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
+				   //TODO ANADIR PISTAS
+				   GestorBuscaminas.getGestorBuscaminas().anadirPistas();
 //				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
 				   if (JOptionPane.showConfirmDialog(null, "¡Enhorabuena, has terminado la partida correctamente! ¿Quieres compartirla en Twitter?", "Partida finalizada",
 					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					   //Opción yes, llamar a gestor y comprobar puntos
 					   GestorBuscaminas.getGestorBuscaminas().compartirTwitter();
 					   }
-				   this.dispose();
 				   this.setVisible(false);
+				   this.dispose();
 				   IU_Buscaminas.getVentana().setVisible(true);
 				   }
 			} else if(o instanceof Tablero){
@@ -455,6 +471,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				    	lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaNoMina.png")));
 				    }
 				}
+			} else if(o instanceof Usuario){
+				int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
+				btnPista.setText("Pistas: " + numPistas);
 			}
 	}
 	
