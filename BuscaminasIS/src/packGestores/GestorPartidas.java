@@ -122,16 +122,4 @@ public class GestorPartidas {
 		GestorBD.getConexionBD().closeResult(rs);
 		return rdo;
 	}
-
-
-	public void guardarPartida(Partida pPartida) {
-		String sentencia = "INSERT INTO PARTIDA(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
-				+ pPartida.getPuntuacion() + "," + pPartida.getTipo()  + "," + pPartida.isAcabado() + ",'" + pPartida.getNombrePartida() +"')" ;
-		try {
-			GestorBD.getConexionBD().actualizarBD(sentencia);
-		} catch (ExcepcionConectarBD e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
