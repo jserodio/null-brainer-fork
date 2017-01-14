@@ -781,25 +781,27 @@ public class Tablero extends Observable {
 		int fila1, fila2 = 0;
 		int columna1, columna2 = 0;
 		int[] coordCasillasMarcadas = new int[4];
-		ArrayList<Casilla> listaCasillasSinMina = new ArrayList<Casilla>();
+		ArrayList<Casilla> listaCasillasSinMinaNoDesveladas = new ArrayList<Casilla>();
 		//Obtener las casillas que no tienen mina
 		for(int i=0;i<matriz.length;i++){
 			for(int j=0;j<matriz[i].length;j++){
 				if(matriz[i][j] instanceof CasillaNumero || matriz[i][j] instanceof CasillaVacia){
-					listaCasillasSinMina.add(matriz[i][j]);
+					if(!matriz[i][j].estaDesvelada()){
+						listaCasillasSinMinaNoDesveladas.add(matriz[i][j]);
+					}
 				}
 			}
 		}
 		//Escoger al azar dos numeros para obtener las casillas
-		int random1 = Tablero.randInt(listaCasillasSinMina.size());
-		int	random2 = Tablero.randInt(listaCasillasSinMina.size());
+		int random1 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
+		int	random2 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
 		while(random1 == random2){
-			random2 = Tablero.randInt(listaCasillasSinMina.size());
+			random2 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
 		}
-		Casilla c1 = listaCasillasSinMina.get(random1);
-		Casilla c2 = listaCasillasSinMina.get(random2);
-		String coordCas1 = listaCasillasSinMina.get(random1).obtenerCoordenadas();
-		String coordCas2 = listaCasillasSinMina.get(random2).obtenerCoordenadas();
+		Casilla c1 = listaCasillasSinMinaNoDesveladas.get(random1);
+		Casilla c2 = listaCasillasSinMinaNoDesveladas.get(random2);
+		String coordCas1 = listaCasillasSinMinaNoDesveladas.get(random1).obtenerCoordenadas();
+		String coordCas2 = listaCasillasSinMinaNoDesveladas.get(random2).obtenerCoordenadas();
 		//Poner banderas
 		c1.setBanderaPista(coordCas1);
 		c2.setBanderaPista(coordCas2);
