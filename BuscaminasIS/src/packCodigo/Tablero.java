@@ -10,8 +10,8 @@ import packGestores.GestorSesion;
 
 public class Tablero extends Observable {
 
-	private int codTablero;
-	private int nivel;
+	private String codTablero;
+	private String nivel;
 	private int columnas;
 	private int filas;
 	private ArrayList<String> lMinas = new ArrayList<String>();
@@ -22,7 +22,7 @@ public class Tablero extends Observable {
 	private ArrayList<String> lCasillasBandera = new ArrayList<String>();
 	private int contadorCasillasDescubrir;
 
-	public Tablero(int pNivel, int pFila, int pColumna) {
+	public Tablero(String pNivel, int pFila, int pColumna) {
 		nivel = pNivel;
 		filas = pFila - 1;
 		columnas = pColumna - 1;
@@ -62,7 +62,7 @@ public class Tablero extends Observable {
 	}
 
 	private int calcularMinas() {
-		int sol = nivel * (columnas + 1);
+		int sol = this.getValorNivel() * (columnas + 1);
 		return sol;
 	}
 
@@ -465,9 +465,9 @@ public class Tablero extends Observable {
 	 * lCasillasVacias *
 	 * 
 	 * @param pFila
-	 * *
+	 *            *
 	 * @param pCol
-	 * *
+	 *            *
 	 * @return Casilla o null *
 	 ************************************************************/
 	private String buscarCasillaVacia(int pFila, int pCol) {
@@ -492,11 +492,11 @@ public class Tablero extends Observable {
 	 * Si la fila y columna coinciden devuelve true si no false *
 	 * 
 	 * @param pFila
-	 * *
+	 *            *
 	 * @param pCol
-	 * *
+	 *            *
 	 * @param pCasilla
-	 * *
+	 *            *
 	 * @return esta *
 	 ************************************************************/
 	private boolean estaCasilla(int pFila, int pCol, String pCasilla) {
@@ -652,7 +652,7 @@ public class Tablero extends Observable {
 	 * de Strings -> String[] *
 	 * 
 	 * @param pCasilla
-	 * *
+	 *            *
 	 * @return pCasilla.obtenerCoordenadas().split(" ") *
 	 ****************************************************/
 	private String[] separarCoordenadas(String pCasilla) {
@@ -663,7 +663,7 @@ public class Tablero extends Observable {
 	 * coge la coordenada de la col y lo pasa a int *
 	 * 
 	 * @param pCasilla
-	 * *
+	 *            *
 	 * @return Integer.parseInt(pCasilla[1]) *
 	 ************************************************/
 	private int separarCoordenadasCol(String[] pCasilla) {
@@ -674,7 +674,7 @@ public class Tablero extends Observable {
 	 * coge la coordenada de la fila y lo pasa a int *
 	 * 
 	 * @param pCasilla
-	 * *
+	 *            *
 	 * @return Integer.parseInt(pCasilla[0]) *
 	 ****************************************************/
 	private int separarCoordenadasFil(String[] pCasilla) {
@@ -685,7 +685,7 @@ public class Tablero extends Observable {
 	 * separa un string *
 	 * 
 	 * @param pCasilla
-	 * *
+	 *            *
 	 * @return pCasilla.obtenerCoordenadas().split(" ") *
 	 ****************************************************/
 	private String[] separarCoordenadasString(String pCoord) {
@@ -764,12 +764,24 @@ public class Tablero extends Observable {
 		return cont;
 	}
 
-	public int getCodTablero() {
+	public String getCodTablero() {
 		return codTablero;
 	}
 
-	public void setCodTablero(int codTablero) {
+	public void setCodTablero(String codTablero) {
 		this.codTablero = codTablero;
 	}
 
+	public int getValorNivel() {
+		switch (nivel) {
+		case "F":
+			return 1;
+		case "M":
+			return 2;
+		case "D":
+			return 3;
+		default:
+			return 1;
+		}
+	}
 }

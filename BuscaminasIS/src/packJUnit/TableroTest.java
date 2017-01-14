@@ -14,7 +14,7 @@ import packCodigo.Tablero;
 
 public class TableroTest {
 
-	int n1;
+	String n1;
   	int c;
 	int f;
 /*	int n2;
@@ -29,7 +29,7 @@ public class TableroTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		n1=1;
+		n1="F";
 		c=10;
 		f=7;
 /*		n2=2;

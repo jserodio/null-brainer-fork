@@ -145,4 +145,3 @@ public class IU_CRUsuario extends JFrame{
 		return usuario;
 	}
 }
-

@@ -1,7 +1,6 @@
 package packGestores;
+
 import java.sql.SQLException;
-
-
 import java.util.ArrayList;
 
 import packCodigo.Partida;
@@ -9,17 +8,18 @@ import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorBuscaminas {
-    
-	private static final GestorBuscaminas miGestorBuscaminas = new GestorBuscaminas();
-     
-    private GestorBuscaminas() {}
 
-    public static GestorBuscaminas getGestorBuscaminas() {
-        return miGestorBuscaminas;
-    }
-    
-    /**Iniciamos el juego**/
-	public void inicioJuego(int pNivel){
+	private static final GestorBuscaminas miGestorBuscaminas = new GestorBuscaminas();
+
+	private GestorBuscaminas() {
+	}
+
+	public static GestorBuscaminas getGestorBuscaminas() {
+		return miGestorBuscaminas;
+	}
+
+	/** Iniciamos el juego **/
+	public void inicioJuego(int pNivel) {
 		GestorSesion.getSesion().setNivel(pNivel);
 		GestorSesion.getSesion().setJuego(true);
 		GestorSesion.getSesion().iniciarTablero(pNivel);
@@ -27,12 +27,12 @@ public class GestorBuscaminas {
 		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
 		GestorSesion.getSesion().crono();
 	}
-	
-	/**Iniciamos partica contrarreloj**/
-	public void iniciarPartidaContrarreloj(){
+
+	/** Iniciamos partica contrarreloj **/
+	public void iniciarPartidaContrarreloj() {
 		GestorSesion.getSesion().setNivel(2);
 		GestorSesion.getSesion().setJuego(true);
-		
+
 		// set tipo contrarreloj
 		GestorSesion.getSesion().setTipo("contrarreloj");
 		GestorSesion.getSesion().iniciarTablero(2);
@@ -41,11 +41,11 @@ public class GestorBuscaminas {
 		// iniciarCrono()
 		GestorSesion.getSesion().iniciarCrono();
 	}
-	
-    public boolean identificarse(String user, String password) throws SQLException, ExcepcionConectarBD{
+
+	public boolean identificarse(String user, String password) throws SQLException, ExcepcionConectarBD {
 		return GestorUsuarios.getGestorUsuarios().identificarse(user, password);
 	}
-    
+
     public boolean registrarse(String user, String password, String confirmedPassword, String email) throws SQLException, ExcepcionConectarBD{
     	return GestorUsuarios.getGestorUsuarios().registrarse(user, password, confirmedPassword, email);
     }
@@ -65,6 +65,35 @@ public class GestorBuscaminas {
     public ArrayList<Usuario> obtenerUsuarios() throws SQLException, ExcepcionConectarBD{
     	return GestorUsuarios.getGestorUsuarios().obtenerUsuarios();
     }
+
+	public void guardarPartida(Partida pPartida) {
+		String sentencia = "";
+		try {
+			if (GestorPartidas.getGestorPartidas().comprobarNombrePartida(pPartida)) {
+				// Existe la partida, sobreescribirla
+				sentencia = "UPDATE PARTIDA SET CODTABLERO = '" + pPartida.getJuego().getCodTablero()
+						+ "', PUNTUACION = " + pPartida.getPuntuacion() + ", TIPO = '" + pPartida.getTipo()
+						+ "', ACABADO = " + pPartida.isAcabado() + " WHERE NOMBREPARTIDA = '"
+						+ pPartida.getNombrePartida() + "' AND CODUSUARIO = " + pPartida.getJugador().getCodUsuario();
+			} else {
+				// No existe la partida, añadir nueva
+				sentencia = "INSERT INTO PARTIDA (CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES("
+						+ pPartida.getJugador().getCodUsuario() + ",'" + pPartida.getJuego().getCodTablero() + "',"
+						+ pPartida.getPuntuacion() + ",'" + pPartida.getTipo() + "'," + pPartida.isAcabado() + ",'"
+						+ pPartida.getNombrePartida() + "')";
+			}
+			GestorBD.getConexionBD().actualizarBD(sentencia);
+		} catch (ExcepcionConectarBD e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public void reanudarPartida(Partida pPartida) {
+		// FALTA POR HACER
+		System.out.println(pPartida.toString());
+	}
+
 
 	public ArrayList<String> obtenerTableros(String pNivel) throws ExcepcionConectarBD, SQLException {
 		// TODO Auto-generated method stub

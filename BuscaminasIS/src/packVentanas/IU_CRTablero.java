@@ -184,4 +184,3 @@ public class IU_CRTablero extends JFrame {
 		return tablero;
 	}
 }
-

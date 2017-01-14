@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import packCodigo.Partida;
+import packCodigo.Tablero;
+import packCodigo.Usuario;
+
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorPartidas {
@@ -63,7 +66,7 @@ public class GestorPartidas {
 		GestorBD.getConexionBD().closeResult(rs);
 		return listaPartidas;
 	}
-
+	
 	public ArrayList<Partida> obtenerListaPartidasUsuario(String pCodUsuario)
 			throws SQLException, ExcepcionConectarBD {
 		if (listaPartidas.isEmpty() == false) {
@@ -99,18 +102,27 @@ public class GestorPartidas {
 	}
 
 	// Si la partida existe devuelve true
-	public boolean comprobarNombrePartida(String nombrePartida) throws ExcepcionConectarBD {
+	public boolean comprobarNombrePartida(Partida partida) throws ExcepcionConectarBD {
 		ResultSet rs = null;
 		boolean rdo = false;
-		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + nombrePartida + "' ";
+		String cadena = "SELECT * FROM PARTIDA WHERE nombrepartida ='" + partida.getNombrePartida()
+				+ "' AND CODUSUARIO = " + partida.getJugador().getCodUsuario();
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 		if (rs != null) {
-			rdo = true;
+			try {
+				// Si existe datos es que la partida existe
+				if (rs.next()) {
+					rdo = true;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		GestorBD.getConexionBD().closeResult(rs);
 		return rdo;
-
 	}
+
 
 	public void guardarPartida(Partida pPartida) {
 		String sentencia = "INSERT INTO PARTIDA(CODUSUARIO,CODTABLERO,PUNTUACION,TIPO,ACABADO,NOMBREPARTIDA) VALUES(" + pPartida.getJugador().getCodUsuario() + "," + pPartida.getJuego().getCodTablero() + ","
@@ -121,6 +133,5 @@ public class GestorPartidas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

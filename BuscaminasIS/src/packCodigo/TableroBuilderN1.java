@@ -11,7 +11,7 @@ public class TableroBuilderN1 extends TableroBuilder{
 	
 	
 	public Tablero asignarTablero(){
-		elTablero = new Tablero(1,7,10);
+		elTablero = new Tablero("F",7,10);
 		elTablero.generarMatriz();
 		return elTablero;
 	}
