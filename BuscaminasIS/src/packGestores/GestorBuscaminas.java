@@ -26,6 +26,7 @@ public class GestorBuscaminas {
 	public void inicioJuego(int pNivel) {
 		GestorSesion.getSesion().setNivel(pNivel);
 		GestorSesion.getSesion().setJuego(true);
+		GestorSesion.getSesion().setTipo("partida");
 		GestorSesion.getSesion().iniciarTablero(pNivel);
 		GestorSesion.getSesion().setContMinas();
 		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());

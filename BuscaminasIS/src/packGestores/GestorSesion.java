@@ -219,6 +219,8 @@ public class GestorSesion extends Observable implements Observer {
     }
 	
 	public void crono(){
+		
+		  tiempo = 0;
 
 		  TimerTask  timerTask = new TimerTask() {
 		   @Override

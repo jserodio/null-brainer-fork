@@ -79,9 +79,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	// modo juego normal  
 	public IU_Jugar(int nivel) {
 		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
 		setIconImage(icon);
@@ -155,13 +153,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				if (GestorSesion.getSesion().getTipo()=="partida") {
+//				if (GestorSesion.getSesion().getTipo()=="partida") {
 					GestorSesion.getSesion().setTiempo(0);
 					GestorSesion.getSesion().reset(vBusca);
-				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
-					GestorSesion.getSesion().setTiempo(999);
-					GestorSesion.getSesion().reset(vBusca);
-				}
+//				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
+//					GestorSesion.getSesion().setTiempo(999);
+//					GestorSesion.getSesion().reset(vBusca);
+//				}
 				
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
@@ -210,6 +208,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		anadirCasillas();
 	}
 	
+	// contrarreloj
 	public IU_Jugar() {
 		// contrarreloj, sabemos que el nivel va a ser estático (nunca cambia) y tiene un tiempo límite fijado
 		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
@@ -280,6 +279,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
+				GestorSesion.getSesion().setTiempo(999);
 				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
