@@ -435,11 +435,11 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			   }else if(arg instanceof Boolean){
 				   if(arg.toString().equals("false")){
 					   juego = false;
-					   try {
-						   play(juego);
-					   } catch (NoArchivoAudioException e) {
-						   e.printStackTrace();
-					   }
+//					   try {
+//						   play(juego);
+//					   } catch (NoArchivoAudioException e) {
+//						   e.printStackTrace();
+//					   }
 					   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Perder.png")));
 					   JOptionPane.showMessageDialog(null, "OOOHHHHH QUE PENA, HAS ENCONTRADO UNA MINA!!!");
 					   Ranking.getRanking().guardarLista();
@@ -463,11 +463,11 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 
 			   } else if(arg.equals("FINALIZADO")){
 				   finalizado = true;
-				   try {
-					   play(finalizado);
-				   } catch (NoArchivoAudioException e) {
-					   e.printStackTrace();
-				   }
+//				   try {
+//					   play(finalizado);
+//				   } catch (NoArchivoAudioException e) {
+//					   e.printStackTrace();
+//				   }
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
@@ -588,9 +588,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	
 	private void play(boolean pB) throws NoArchivoAudioException{
 		if (pB==false){
-			if (new File("sources/lose.wav").getAbsoluteFile() != null){
+			if (new File("/lose.wav").getAbsoluteFile() != null){
 				try {
-					ais = AudioSystem.getAudioInputStream(new File("sources/lose.wav").getAbsoluteFile());
+					ais = AudioSystem.getAudioInputStream(new File("/lose.wav"));
 				} catch (UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -612,9 +612,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				throw new NoArchivoAudioException();
 			}
 		}else{
-			if (new File("sources/win.wav").getAbsoluteFile() != null){
+			if (new File("/win.wav").getAbsoluteFile() != null){
 				try {
-					ais = AudioSystem.getAudioInputStream(new File("sources/win.wav").getAbsoluteFile());
+					ais = AudioSystem.getAudioInputStream(new File("/win.wav"));
 				} catch (UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
