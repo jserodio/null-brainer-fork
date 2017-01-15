@@ -97,13 +97,6 @@ public class IU_Buscaminas {
 			}
 		});
 		frmMenuBuscaminas.getContentPane().add(btnComenzarPartida, "2, 5");
-		btnComenzarPartida.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				IU_Jugar.getVentana().setVisible(true);
-			}
-		});
 		
 		JButton btnReanudarPartida = new JButton("Reanudar Partida");
 		btnReanudarPartida.addActionListener(new ActionListener() {

@@ -179,7 +179,7 @@ public class GestorBuscaminas {
 
 	public int obtenerNumPistas(IU_Jugar iU_Jugar) {
 		Usuario u = GestorSesion.getSesion().getUsuario();
-		u.addObserver(iU_Jugar);
+//		u.addObserver(iU_Jugar);
 		int pistas = u.getNumPistas();
 		return pistas;
 	}

@@ -172,7 +172,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			j1.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
 		
-		//Situar boton pista
+//		//Situar boton pista
 		int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
 		btnPista = new JButton("Pistas: " + numPistas);
 		panel_2.add(btnPista, "cell 7 0");
@@ -625,10 +625,10 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		clip.start();
 	}
 
-	public static IU_Jugar getVentana() {
-		if(ventana == null){
-			ventana = new IU_Jugar(2);
-		}
-		return ventana;
-	}
+//	public static IU_Jugar getVentana() {
+//		if(ventana == null){
+//			ventana = new IU_Jugar(2);
+//		}
+//		return ventana;
+//	}
 }
