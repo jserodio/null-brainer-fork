@@ -29,6 +29,15 @@ public class Tablero extends Observable {
 		contadorCasillasDescubrir = pFila * pColumna;
 		matriz = new Casilla[pFila][pColumna];
 	}
+	
+	public Tablero(String pCodTablero, String pNivel, int pFila, int pColumna) {
+		codTablero = pCodTablero;
+		nivel = pNivel;
+		filas = pFila - 1;
+		columnas = pColumna - 1;
+		contadorCasillasDescubrir = pFila * pColumna;
+		matriz = new Casilla[pFila][pColumna];
+	}
 
 	public void generarMatriz() {
 		int minasAColocar = this.calcularMinas();
