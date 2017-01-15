@@ -84,6 +84,10 @@ public class GestorSesion extends Observable implements Observer {
 		this.tiempo = tiempo;
 	}
 	
+	public void setTablero(Tablero pTab){
+		this.tablero = pTab;
+	}	
+	
 	/**SetJuego**/
 	public void setJuego(boolean pJuego){
 		this.juego = pJuego;
@@ -281,7 +285,7 @@ public class GestorSesion extends Observable implements Observer {
 	public void gameOver(){
 		timer.cancel();
 		tablero.mostrarTablero();
-		juego = false;
+		this.setJuego(false);
 	}
 
 	public int obtenerNumFilas() {
@@ -329,6 +333,10 @@ public class GestorSesion extends Observable implements Observer {
 
 	public Partida obtenerPartidaActual() {
 		return new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
+	}
+
+	public String getTipo() {
+		return this.tipo;
 	}
 
 }

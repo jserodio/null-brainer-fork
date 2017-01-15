@@ -149,6 +149,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			public void mouseClicked(MouseEvent e){
 				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
+				if (GestorSesion.getSesion().getTipo()=="partida" || GestorSesion.getSesion().getTipo()=="Reto") {
+ 					GestorSesion.getSesion().setTiempo(0);
+ 					GestorSesion.getSesion().reset(vBusca);
+				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
+ 					GestorSesion.getSesion().setTiempo(999);
+ 					GestorSesion.getSesion().reset(vBusca);
+				} 
 			}
 		});
 		
@@ -424,6 +431,8 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 					   }
 				   this.dispose();
 				   this.setVisible(false);
+				   VRetar vR = new VRetar(false);
+				   vR.setVisible(true);
 				   IU_Buscaminas.getVentana().setVisible(true);
 				   }
 			} else if(o instanceof Tablero){

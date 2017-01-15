@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import packCodigo.Tablero;
 import packExcepciones.ExcepcionConectarBD;
 
 public class GestorTablero {
@@ -32,6 +33,33 @@ public class GestorTablero {
 		  }
 		  GestorBD.getConexionBD().closeResult(rs);
 		  return tablero;
+	}
+	public Tablero getTablero(String pTablero) throws ExcepcionConectarBD, SQLException{
+		ResultSet rs = null;
+		int filas = 0,columnas = 0;
+		String nivel = null;
+		String cadena = "SELECT nivel, filas, columnas FROM TABLERO WHERE codTablero ='"+pTablero+"' ";
+		rs = GestorBD.getConexionBD().consultaBD(cadena);
+		  
+		if(rs!=null){
+			while(rs.next()){
+				  	  nivel = rs.getObject("nivel").toString();
+					  filas = Integer.parseInt((String) rs.getObject("filas").toString());
+					  columnas = Integer.parseInt((String) rs.getObject("columnas").toString());
+			  }
+		  }
+		  else{
+			  System.out.println("No hay Tableros");
+		  }
+		  Tablero tablero = new Tablero(nivel, filas, columnas);
+		  GestorBD.getConexionBD().closeResult(rs);
+		  return tablero;
+	}
+
+	public void guardarTablero() throws ExcepcionConectarBD {
+		Tablero tab = GestorSesion.getSesion().getTablero();
+		String sentencia = "INSERT INTO tablero (CODTABLERO,NIVEL,FILAS,COLUMNAS) VALUES ("+tab.getCodTablero()+","+tab.getValorNivel2()+","+tab.getFilas()+","+tab.getColumnas()+")";
+		GestorBD.getConexionBD().actualizarBD(sentencia);
 	}
 	
 

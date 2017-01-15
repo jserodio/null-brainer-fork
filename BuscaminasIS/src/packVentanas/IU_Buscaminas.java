@@ -13,11 +13,13 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import packCodigo.Ranking;
+import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorSesion;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class IU_Buscaminas {
@@ -108,7 +110,20 @@ public class IU_Buscaminas {
 		JButton btnCrearTablero = new JButton("Crear Tablero");
 		frmMenuBuscaminas.getContentPane().add(btnCrearTablero, "2, 9");
 		
-		JButton btnListaDeRetos = new JButton("Lista de Retos");
+		JButton btnListaDeRetos = new JButton("Lista Retos");
+		btnListaDeRetos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					VLista_Retos.getVentana().setVisible(true);
+					setVisible(false);
+				} catch (ExcepcionConectarBD | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
 		frmMenuBuscaminas.getContentPane().add(btnListaDeRetos, "2, 11");
 		
 		JButton btnConsultarRanking = new JButton("Consultar Ranking");
