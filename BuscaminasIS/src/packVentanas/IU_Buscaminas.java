@@ -13,6 +13,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import com.sun.javafx.font.Disposer;
+
 import packCodigo.Ranking;
 import packExcepciones.ExcepcionConectarBD;
 import java.sql.SQLException;
@@ -97,7 +99,7 @@ public class IU_Buscaminas {
 		btnReanudarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IU_ReanudarPartida();
-				setVisible(false);
+				frmMenuBuscaminas.dispose();
 			}
 		});
 		frmMenuBuscaminas.getContentPane().add(btnReanudarPartida, "2, 7");
@@ -135,12 +137,17 @@ public class IU_Buscaminas {
 			public void actionPerformed(ActionEvent arg0) {
 				IU_Jugar iu_jugar = new IU_Jugar();
 				iu_jugar.setVisible(true);
-				setVisible(false);
+				frmMenuBuscaminas.dispose();
 			}
 		});
 		frmMenuBuscaminas.getContentPane().add(btnJugarContrarreloj, "2, 15");
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		frmMenuBuscaminas.getContentPane().add(btnSalir, "2, 17");
 	}
 	
