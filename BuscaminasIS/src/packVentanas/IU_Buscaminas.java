@@ -4,18 +4,15 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.jgoodies.forms.layout.ColumnSpec;
+import javax.swing.SwingConstants;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-
 import packCodigo.Ranking;
 
 public class IU_Buscaminas {
@@ -100,6 +97,13 @@ public class IU_Buscaminas {
 			}
 		});
 		frmMenuBuscaminas.getContentPane().add(btnComenzarPartida, "2, 5");
+		btnComenzarPartida.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				IU_Jugar.getVentana().setVisible(true);
+			}
+		});
 		
 		JButton btnReanudarPartida = new JButton("Reanudar Partida");
 		btnReanudarPartida.addActionListener(new ActionListener() {

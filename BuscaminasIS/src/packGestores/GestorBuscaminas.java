@@ -1,11 +1,15 @@
 package packGestores;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import packCodigo.Partida;
+import packCodigo.Tablero;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
+import packVentanas.IU_Jugar;
 
 public class GestorBuscaminas {
 
@@ -102,6 +106,144 @@ public class GestorBuscaminas {
 	
 	public String buscarNombre(String pCodUsuario){
 		return GestorUsuarios.getGestorUsuarios().buscarNombre(pCodUsuario);
+	}
+
+	public void compartirTwitter() {
+		Partida p = GestorSesion.getSesion().obtenerPartidaActual();
+		int puntos = p.getPuntuacion();
+		String codJugador = p.getJugador().getCodUsuario();
+		String codTablero = p.getJuego().getCodTablero();
+		int nivel = 0;
+		int maxPuntuacionTablero = 0;
+		int maxPuntuacionNivel = 0;
+		int maxPuntuacionUsuario = 0;
+		try {
+			ResultSet result = GestorBD.getConexionBD().consultaBD("SELECT NIVEL FROM TABLERO WHERE CODTABLERO=" + codTablero + ";");
+			if(result != null){
+				result.next();
+				nivel = result.getInt("NIVEL");
+			}
+			//MaxPuntuacion de un tablero
+			ResultSet result1 = GestorBD.getConexionBD().consultaBD("SELECT MAX(PUNTUACION) FROM PARTIDA WHERE CODTABLERO=" + codTablero + ";");
+			if(result1 != null){
+				result1.next();
+				maxPuntuacionTablero = result.getInt("MAX(PUNTUACION)");
+			}
+			//MaxPuntuacion de un nivel
+			ResultSet result2 = GestorBD.getConexionBD().consultaBD("SELECT MAX(PUNTUACION) FROM PARTIDA NATURAL JOIN TABLERO WHERE Tablero.nivel="+nivel+";");
+			if(result2 != null){
+				result2.next();
+				maxPuntuacionNivel = result.getInt("MAX(PUNTUACION)");
+			}
+			//MaxPuntuacion de usuario
+			ResultSet result3 = GestorBD.getConexionBD().consultaBD("SELECT MAX(PUNTUACION) FROM PARTIDA WHERE CODUSUARIO="+ codJugador +";");
+			if(result3 != null){
+				result3.next();
+				maxPuntuacionUsuario = result.getInt("MAX(PUNTUACION)");
+			}
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String mensaje = "";
+		boolean puntSuperada = false;
+		if(puntos > maxPuntuacionTablero){
+			puntSuperada = true;
+			mensaje += "¡Has superado la puntuación máxima de los tableros! \n\n";
+		}
+		if(puntos > maxPuntuacionNivel){
+			puntSuperada = true;
+			mensaje += "¡Has superado la puntuación máxima de los niveles! \n\n";
+		}
+		if(puntos > maxPuntuacionUsuario){
+			puntSuperada = true;
+			mensaje += "¡Has superado tu puntuación máxima!";
+		}
+		if(!puntSuperada){
+			mensaje = "No has superado ninguna puntuación.";
+		}
+		try {
+			GestorTwitter.getGestorTwitter().compartirTwitter(mensaje);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public int obtenerNumPistas(IU_Jugar iU_Jugar) {
+		Usuario u = GestorSesion.getSesion().getUsuario();
+		u.addObserver(iU_Jugar);
+		int pistas = u.getNumPistas();
+		return pistas;
+	}
+
+	public int[] utilizarPista() {
+		Usuario u = GestorSesion.getSesion().getUsuario();
+		int numPistas = u.getNumPistas();
+		int[] casillasYMinaAMarcar = new int[6];
+		int[] casillasMarcadas = new int[4];
+		int[] minaAMarcar = new int[2];
+		if(numPistas > 0){
+			u.restarPista();
+			for(int i=0;i<4;i++){
+				casillasMarcadas = GestorSesion.getSesion().marcarCasillas();
+				//[0] y [1] fila y columna para la primera casilla a marcar
+				//[2] y [3] fila y columna para la segunda casilla a marcar
+				casillasYMinaAMarcar[i] = casillasMarcadas[i];
+			}
+			minaAMarcar = GestorSesion.getSesion().escogerMina();
+			//[4] y [5] fila y columna para la mina a marcar
+			casillasYMinaAMarcar[4] = minaAMarcar[0];
+			casillasYMinaAMarcar[5] = minaAMarcar[1];
+		}
+		return casillasYMinaAMarcar;
+	}
+
+	public void anadirPistas() {
+		Partida p = GestorSesion.getSesion().obtenerPartidaActual();
+		int puntos = p.getPuntuacion();
+		Usuario u = p.getJugador();
+		String codJugador = u.getCodUsuario();
+		Tablero t = p.getJuego();
+		String codTablero = t.getCodTablero();
+		int maxPuntuacionTablero = 0;
+		if(t.getValorNivel() == 1){
+			u.anadirPistas(1);
+		}else if(t.getValorNivel() == 2){
+			u.anadirPistas(2);
+		}else if(t.getValorNivel() == 3){
+			u.anadirPistas(5);
+		}
+		//MaxPuntuacion de tablero
+		ResultSet result;
+		try {
+			result = GestorBD.getConexionBD().consultaBD("SELECT MAX(PUNTUACION) FROM PARTIDA WHERE CODTABLERO=" + codTablero + ";");
+			if(result != null){
+				result.next();
+				maxPuntuacionTablero = result.getInt("MAX(PUNTUACION)");
+			}
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(puntos > maxPuntuacionTablero){
+			u.anadirPistas(1);
+		}
+		try {
+			GestorBD.getConexionBD().actualizarBD("UPDATE USUARIO SET PISTAS=" +u.getNumPistas()+ " WHERE CODUSUARIO=" + codJugador + ";");
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

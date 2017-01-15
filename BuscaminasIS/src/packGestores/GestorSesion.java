@@ -339,4 +339,17 @@ public class GestorSesion extends Observable implements Observer {
 		return new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
 	}
 
+	/**
+	 * Marca las casillas tras utilizar una pista. 
+	 */
+	public int[] marcarCasillas() {
+		return this.tablero.marcarCasillas();
+	}
+
+	/**
+	 * Escoge la mina de la casilla que se marcará.
+	 */
+	public int[] escogerMina() {
+		return this.tablero.escogerMina();
+	}
 }

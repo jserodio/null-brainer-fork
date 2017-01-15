@@ -12,7 +12,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,14 +22,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import net.miginfocom.swing.MigLayout;
 import packGestores.GestorBuscaminas;
 import packGestores.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
-
+import packCodigo.Usuario;
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -61,7 +60,8 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private AudioInputStream ais;
 	private int bomba = 0;
 	private JMenuItem itemGuardar;
-
+	private JButton btnPista;
+	private static IU_Jugar ventana;
 
 	/**
 	 * Launch the application.
@@ -174,6 +174,28 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			j1.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
 		
+		//Situar boton pista
+		int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
+		btnPista = new JButton("Pistas: " + numPistas);
+		panel_2.add(btnPista, "cell 7 0");
+		btnPista.setHorizontalAlignment(SwingConstants.CENTER);
+		btnPista.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//Utilizar pista y marcar las casillas correspondientes
+				if(numPistas > 0){
+					int[] casillasYMinaAMarcar = GestorBuscaminas.getGestorBuscaminas().utilizarPista();
+					int posCas1 = calcularPosicion(casillasYMinaAMarcar[0], casillasYMinaAMarcar[1]);
+					int posCas2 = calcularPosicion(casillasYMinaAMarcar[2], casillasYMinaAMarcar[3]);
+					int posCasMina = calcularPosicion(casillasYMinaAMarcar[4], casillasYMinaAMarcar[5]);
+					lcasillas[posCas1].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCas2].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCasMina].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+				}else{
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		
 		panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
@@ -439,14 +461,15 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
+				   GestorBuscaminas.getGestorBuscaminas().anadirPistas();
 //				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
 				   if (JOptionPane.showConfirmDialog(null, "¡Enhorabuena, has terminado la partida correctamente! ¿Quieres compartirla en Twitter?", "Partida finalizada",
 					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					   //Opción yes, llamar a gestor y comprobar puntos
-					   
+					   GestorBuscaminas.getGestorBuscaminas().compartirTwitter();
 					   }
-				   this.dispose();
 				   this.setVisible(false);
+				   this.dispose();
 				   IU_Buscaminas.getVentana().setVisible(true);
 				   }
 			} else if(o instanceof Tablero){
@@ -466,6 +489,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				    }else if(Integer.parseInt(p[2])==11){
 				    	lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaNoMina.png")));
 				    }
+				}
+			} else if(o instanceof Usuario){
+				int numPistas = Integer.parseInt(arg.toString());
+				btnPista.setText("Pistas: " + numPistas);
+				if(numPistas == 0){
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
 				}
 			}
 	}
@@ -593,5 +623,12 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			}
 		}
 		clip.start();
+	}
+
+	public static IU_Jugar getVentana() {
+		if(ventana == null){
+			ventana = new IU_Jugar(2);
+		}
+		return ventana;
 	}
 }
