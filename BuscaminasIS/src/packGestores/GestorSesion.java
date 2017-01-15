@@ -103,6 +103,10 @@ public class GestorSesion extends Observable implements Observer {
 		this.tipo = pTipo;
 	}
 	
+	public String getTipo() {
+		return this.tipo;
+	}
+	
 	public void setFinalizado(boolean fin) {
 		this.finalizado = fin;
 		if(finalizado){
@@ -249,12 +253,17 @@ public class GestorSesion extends Observable implements Observer {
 		tablero.addObserver(vBuscaminas);
 		setContMinas();
 		contBanderas = contMinas;
-		tiempo--;
 		timer.cancel();
-		crono();
+		if (tipo.equals("partida")) {
+			crono();
+			tiempo--;
+		} else {
+			iniciarCrono();
+			tiempo++;
+		}
 		tablero.addObserver(this);
-		juego = true;
-		finalizado = false;
+		setJuego(true);
+		setFinalizado(false);
 	}
 	
 	public void ponerBandera(int fila, int col) {
