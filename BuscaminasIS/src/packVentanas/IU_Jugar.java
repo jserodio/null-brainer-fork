@@ -180,6 +180,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 					lcasillas[posCas1].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
 					lcasillas[posCas2].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
 					lcasillas[posCasMina].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+				}else{
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -472,7 +475,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			} else if(o instanceof Usuario){
 				int numPistas = Integer.parseInt(arg.toString());
 				btnPista.setText("Pistas: " + numPistas);
-				System.out.println(numPistas);
 				if(numPistas == 0){
 					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
 					JOptionPane.WARNING_MESSAGE);
