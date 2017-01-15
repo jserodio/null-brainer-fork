@@ -124,10 +124,6 @@ public class GestorSesion extends Observable implements Observer {
 		return puntuacion;
 	}
 	
-	private void establecerPuntuacion(int pPunt){
-		puntuacion = pPunt;
-	}
-	
 	public String obtenerNombreJugador(){
 		return j.obtenerNombre();
 	}
@@ -182,6 +178,8 @@ public class GestorSesion extends Observable implements Observer {
 		} else if (pNivel == 3){
 			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
 		}
+		// Guardamos en BD
+		GestorTablero.getGestorTablero().guardarTablero(tablero);
 	}
 	
 	public void comprobarJuego(){
@@ -219,6 +217,8 @@ public class GestorSesion extends Observable implements Observer {
     }
 	
 	public void crono(){
+		
+		  tiempo = 0;
 
 		  TimerTask  timerTask = new TimerTask() {
 		   @Override
@@ -253,12 +253,17 @@ public class GestorSesion extends Observable implements Observer {
 		tablero.addObserver(vBuscaminas);
 		setContMinas();
 		contBanderas = contMinas;
-		tiempo--;
 		timer.cancel();
-		crono();
+		if (tipo.equals("partida")) {
+			crono();
+			tiempo--;
+		} else {
+			iniciarCrono();
+			tiempo++;
+		}
 		tablero.addObserver(this);
-		juego = true;
-		finalizado = false;
+		setJuego(true);
+		setFinalizado(false);
 	}
 	
 	public void ponerBandera(int fila, int col) {
@@ -296,10 +301,6 @@ public class GestorSesion extends Observable implements Observer {
 		return tablero.obtenerNumColumnas();
 	}
 
-	private void establecerNivel(String selectedItem) {
-		nivel = Integer.parseInt(selectedItem);
-	}
-		
 	public int obtenerBanderas(){
 		return contBanderas;
 	}
@@ -315,7 +316,6 @@ public class GestorSesion extends Observable implements Observer {
 	}
 
 	@Override
-
 	public void update(Observable pObservable, Object pObjeto) {
 		if(pObservable instanceof Tablero){
 			String[]p = pObjeto.toString().split(",");
@@ -337,6 +337,20 @@ public class GestorSesion extends Observable implements Observer {
 
 	public String getTipo() {
 		return this.tipo;
+	}
+
+	/**
+	 * Marca las casillas tras utilizar una pista. 
+	 */
+	public int[] marcarCasillas() {
+		return this.tablero.marcarCasillas();
+	}
+
+	/**
+	 * Escoge la mina de la casilla que se marcará.
+	 */
+	public int[] escogerMina() {
+		return this.tablero.escogerMina();
 	}
 
 }

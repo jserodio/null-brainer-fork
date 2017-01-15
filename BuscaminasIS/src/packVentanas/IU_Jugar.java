@@ -12,7 +12,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,14 +22,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import net.miginfocom.swing.MigLayout;
 import packGestores.GestorBuscaminas;
 import packGestores.GestorSesion;
 import packCodigo.NoArchivoAudioException;
 import packCodigo.Ranking;
 import packCodigo.Tablero;
-
+import packCodigo.Usuario;
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -60,7 +59,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private Clip clip;
 	private AudioInputStream ais;
 	private int bomba = 0;
-
+	private JMenuItem itemGuardar;
+	private JButton btnPista;
+	private static IU_Jugar ventana;
 
 	/**
 	 * Launch the application.
@@ -78,9 +79,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	// modo juego normal  
 	public IU_Jugar(int nivel) {
 		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
 		setIconImage(icon);
@@ -116,6 +115,13 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3.addActionListener(this);
 		menu1.add(item3);
 		
+		itemGuardar = new JMenuItem("Guardar Partida");
+		itemGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IU_GuardarPartida();
+			}
+		});
+		menu1.add(itemGuardar);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -147,7 +153,14 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				GestorSesion.getSesion().reset(vBusca);
+//				if (GestorSesion.getSesion().getTipo()=="partida") {
+					GestorSesion.getSesion().setTiempo(0);
+					GestorSesion.getSesion().reset(vBusca);
+//				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
+//					GestorSesion.getSesion().setTiempo(999);
+//					GestorSesion.getSesion().reset(vBusca);
+//				}
+				
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 				if (GestorSesion.getSesion().getTipo()=="partida" || GestorSesion.getSesion().getTipo()=="Reto") {
  					GestorSesion.getSesion().setTiempo(0);
@@ -166,6 +179,28 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 			j1.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
 		
+//		//Situar boton pista
+		int numPistas = GestorBuscaminas.getGestorBuscaminas().obtenerNumPistas(this);
+		btnPista = new JButton("Pistas: " + numPistas);
+		panel_2.add(btnPista, "cell 7 0");
+		btnPista.setHorizontalAlignment(SwingConstants.CENTER);
+		btnPista.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//Utilizar pista y marcar las casillas correspondientes
+				if(numPistas > 0){
+					int[] casillasYMinaAMarcar = GestorBuscaminas.getGestorBuscaminas().utilizarPista();
+					int posCas1 = calcularPosicion(casillasYMinaAMarcar[0], casillasYMinaAMarcar[1]);
+					int posCas2 = calcularPosicion(casillasYMinaAMarcar[2], casillasYMinaAMarcar[3]);
+					int posCasMina = calcularPosicion(casillasYMinaAMarcar[4], casillasYMinaAMarcar[5]);
+					lcasillas[posCas1].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCas2].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+					lcasillas[posCasMina].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaBanderaPista.png")));
+				}else{
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		
 		panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
@@ -180,6 +215,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		anadirCasillas();
 	}
 	
+	// contrarreloj
 	public IU_Jugar() {
 		// contrarreloj, sabemos que el nivel va a ser estático (nunca cambia) y tiene un tiempo límite fijado
 		Image icon = new ImageIcon(getClass().getResource("/icono.png")).getImage();
@@ -213,6 +249,14 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3.addActionListener(this);
 		menu1.add(item3);
 		
+		itemGuardar = new JMenuItem("Guardar Partida");
+		itemGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IU_GuardarPartida();
+			}
+		});
+		menu1.add(itemGuardar);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -242,6 +286,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
+				GestorSesion.getSesion().setTiempo(999);
 				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
 			}
@@ -398,6 +443,9 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 					   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Perder.png")));
 					   JOptionPane.showMessageDialog(null, "OOOHHHHH QUE PENA, HAS ENCONTRADO UNA MINA!!!");
 					   Ranking.getRanking().guardarLista();
+					   IU_Buscaminas menu = new IU_Buscaminas();
+					   menu.setVisible(true);
+					   this.dispose();
 				   }
 				   else {
 					   juego = true;
@@ -423,17 +471,20 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				   lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Victoria.png"))); 
 				   mostrarRanking();
 				   Ranking.getRanking().guardarLista();
+				   GestorBuscaminas.getGestorBuscaminas().anadirPistas();
 //				   JOptionPane.showMessageDialog(null, "HAS RESUELTO CORRECTAMENTE!!!");
 				   if (JOptionPane.showConfirmDialog(null, "¡Enhorabuena, has terminado la partida correctamente! ¿Quieres compartirla en Twitter?", "Partida finalizada",
 					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					   //Opción yes, llamar a gestor y comprobar puntos
-					   
+					   GestorBuscaminas.getGestorBuscaminas().compartirTwitter();
 					   }
-				   this.dispose();
 				   this.setVisible(false);
 				   VRetar vR = new VRetar(false);
 				   vR.setVisible(true);
-				   IU_Buscaminas.getVentana().setVisible(true);
+				   this.dispose();
+				   IU_Buscaminas menu = new IU_Buscaminas();
+				   menu.setVisible(true);
+				   this.dispose();
 				   }
 			} else if(o instanceof Tablero){
 				if (p.length == 3){
@@ -453,13 +504,46 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 				    	lcasillas[pos].setIcon(new ImageIcon(IU_Jugar.class.getResource("/CasillaNoMina.png")));
 				    }
 				}
+			} else if(o instanceof Usuario){
+				int numPistas = Integer.parseInt(arg.toString());
+				btnPista.setText("Pistas: " + numPistas);
+				if(numPistas == 0){
+					JOptionPane.showMessageDialog(null, "No te quedan pistas.", "Sin pistas", 
+					JOptionPane.WARNING_MESSAGE);
+				}
 			}
 	}
 	
 
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource()==item1) {
-        	GestorSesion.getSesion().reset(vBusca);
+        	//GestorSesion.getSesion().reset(vBusca);
+        	if (GestorSesion.getSesion().getTipo()=="partida") {
+//        		GestorSesion.getSesion().setContMinas();
+//        		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+//        		GestorSesion.getSesion().setTiempo(0);
+//        		GestorSesion.getSesion().getTimer().cancel();
+//        		juego = true;
+//        		finalizado = false;
+//        		GestorSesion.getSesion().setJuego(true);
+//        		GestorSesion.getSesion().setJuego(false);
+        		GestorSesion.getSesion().setTiempo(0);
+        		GestorSesion.getSesion().reset(this);
+        		
+//				IU_Jugar iu_jugar = new IU_Jugar(3);
+//				iu_jugar.setVisible(true);
+//				setVisible(false);
+//				this.dispose();
+        	} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
+        		//GestorSesion.getSesion().getTimer().cancel();
+//        		GestorSesion.getSesion().reset(this);
+//				IU_Jugar iu_jugar = new IU_Jugar();
+//				iu_jugar.setVisible(true);
+//				setVisible(false);
+//				this.dispose();
+        		GestorSesion.getSesion().setTiempo(999);
+        		GestorSesion.getSesion().reset(this);
+        	}
         } else if (e.getSource() == item2){
         	VAyuda vA = new VAyuda();
 			vA.setVisible(true);
@@ -554,4 +638,11 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		}
 		clip.start();
 	}
+
+//	public static IU_Jugar getVentana() {
+//		if(ventana == null){
+//			ventana = new IU_Jugar(2);
+//		}
+//		return ventana;
+//	}
 }

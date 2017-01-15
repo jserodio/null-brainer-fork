@@ -9,6 +9,7 @@ public abstract class Casilla {
 	private String coordenada;
 	private boolean desvelada=false;
 	private ArrayList<String> lVecinas = new ArrayList<String>();
+	private boolean banderaPista = false;
 	
 	public Casilla(){
 		
@@ -61,6 +62,16 @@ public abstract class Casilla {
 
 	public void imprimirInfo() {
 		
+	}
+	
+	public boolean getBanderaPista(){
+		return this.banderaPista;
+	}
+	
+	public void setBanderaPista(String pCoord){
+		if(coordenada.equals(pCoord)){
+			banderaPista = true;
+		}
 	}
 }
 

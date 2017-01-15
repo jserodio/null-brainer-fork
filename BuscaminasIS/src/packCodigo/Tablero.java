@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import packGestores.GestorSesion;
+import packGestores.GestorTablero;
 
 public class Tablero extends Observable {
 
@@ -23,6 +24,16 @@ public class Tablero extends Observable {
 	private int contadorCasillasDescubrir;
 
 	public Tablero(String pNivel, int pFila, int pColumna) {
+		nivel = pNivel;
+		filas = pFila - 1;
+		columnas = pColumna - 1;
+		contadorCasillasDescubrir = pFila * pColumna;
+		matriz = new Casilla[pFila][pColumna];
+		codTablero = this.generarCodTablero(pNivel);
+	}
+	
+	public Tablero(String codTablero, String pNivel, int pFila, int pColumna) {
+		this.codTablero = codTablero;
 		nivel = pNivel;
 		filas = pFila - 1;
 		columnas = pColumna - 1;
@@ -775,6 +786,10 @@ public class Tablero extends Observable {
 	public void setCodTablero(String codTablero) {
 		this.codTablero = codTablero;
 	}
+	
+	public String getNivel(){
+		return this.nivel;
+	}
 
 	public int getValorNivel() {
 		switch (nivel) {
@@ -788,14 +803,100 @@ public class Tablero extends Observable {
 			return 1;
 		}
 	}
-	public String getValorNivel2() {
-		return this.nivel;
+
+	/**
+	 * Marca las casillas normales tras utilizar una pista.
+	 * @return coordCasillasMarcadas -> Array con las coordenadas
+	 * de las casillas que se vayan a marcar.
+	 */
+	public int[] marcarCasillas() {
+		int fila1, fila2 = 0;
+		int columna1, columna2 = 0;
+		int[] coordCasillasMarcadas = new int[4];
+		ArrayList<Casilla> listaCasillasSinMinaNoDesveladas = new ArrayList<Casilla>();
+		//Obtener las casillas que no tienen mina
+		for(int i=0;i<matriz.length;i++){
+			for(int j=0;j<matriz[i].length;j++){
+				if(matriz[i][j] instanceof CasillaNumero || matriz[i][j] instanceof CasillaVacia){
+					if(!matriz[i][j].estaDesvelada()){
+						listaCasillasSinMinaNoDesveladas.add(matriz[i][j]);
+					}
+				}
+			}
+		}
+		//Escoger al azar dos numeros para obtener las casillas
+		int random1 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
+		int	random2 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
+		while(random1 == random2){
+			random2 = Tablero.randInt(listaCasillasSinMinaNoDesveladas.size());
+		}
+		Casilla c1 = listaCasillasSinMinaNoDesveladas.get(random1);
+		Casilla c2 = listaCasillasSinMinaNoDesveladas.get(random2);
+		String coordCas1 = listaCasillasSinMinaNoDesveladas.get(random1).obtenerCoordenadas();
+		String coordCas2 = listaCasillasSinMinaNoDesveladas.get(random2).obtenerCoordenadas();
+		//Poner banderas
+		c1.setBanderaPista(coordCas1);
+		c2.setBanderaPista(coordCas2);
+		//Coger las coordenadas
+		String[] coordC1 = separarCoordenadas(coordCas1);
+		String[] coordC2 = separarCoordenadas(coordCas2);
+		fila1 = separarCoordenadasFil(coordC1);
+		columna1 = separarCoordenadasCol(coordC1);
+		fila2 = separarCoordenadasFil(coordC2);
+		columna2 = separarCoordenadasCol(coordC2);
+		//Meter las coordenadas en el array
+		coordCasillasMarcadas[0] = fila1;
+		coordCasillasMarcadas[1] = columna1;
+		coordCasillasMarcadas[2] = fila2;
+		coordCasillasMarcadas[3] = columna2;
+		return coordCasillasMarcadas;
 	}
-	public int getColumnas() {
-		return this.columnas;
+
+	/**
+	 * Escoge la mina de la casilla que se marcará
+	 * @return coordMinaMarcada -> Array con las coordenadas de la mina a marcar.
+	 */
+	public int[] escogerMina() {
+		//lMinas tiene el arrayList de los string que representan las coordenadas de las casillas
+		int[] coordMinaMarcada = new int[2];
+		int random = Tablero.randInt(lMinas.size());
+		String coordCas = lMinas.get(random);
+		String[] coordC = separarCoordenadas(coordCas);
+		int fila = separarCoordenadasFil(coordC);
+		int columna = separarCoordenadasCol(coordC);
+		Casilla c = buscarCasilla(fila, columna);
+		c.setBanderaPista(coordCas);
+		coordMinaMarcada[0] = fila;
+		coordMinaMarcada[1] = columna;
+		return coordMinaMarcada;
 	}
 	
-	public int getFilas(){
-		return this.filas;
+	private String generarCodTablero(String nivel) {
+		return GestorTablero.getGestorTablero().obtenerCodTablero(nivel);
 	}
+
+	public ArrayList<String> getlMinas() {
+		return lMinas;
+	}
+
+	public void setlMinas(ArrayList<String> lMinas) {
+		this.lMinas = lMinas;
+	}
+
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void setColumnas(int columnas) {
+		this.columnas = columnas;
+	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
+
 }

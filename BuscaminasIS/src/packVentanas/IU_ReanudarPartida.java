@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -19,6 +21,7 @@ import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
 import packGestores.GestorBuscaminas;
 import packGestores.GestorPartidas;
+import packGestores.GestorSesion;
 
 public class IU_ReanudarPartida {
 
@@ -45,6 +48,7 @@ public class IU_ReanudarPartida {
 	 */
 	public IU_ReanudarPartida() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -66,14 +70,16 @@ public class IU_ReanudarPartida {
 		listaPartidas.setBounds(45, 69, 341, 140);
 		frame.getContentPane().add(listaPartidas);
 
-		JButton btnCargar = new JButton("Cancelar");
-		btnCargar.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				IU_Buscaminas window = new IU_Buscaminas();
+				window.setVisible(true);
+				frame.setVisible(false);
 			}
 		});
-		btnCargar.setBounds(297, 227, 89, 23);
-		frame.getContentPane().add(btnCargar);
+		btnCancelar.setBounds(297, 227, 89, 23);
+		frame.getContentPane().add(btnCancelar);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -85,22 +91,29 @@ public class IU_ReanudarPartida {
 		btnAceptar.setBounds(198, 227, 89, 23);
 		frame.getContentPane().add(btnAceptar);
 		cargarLista(listaPartidas);
+		
+		
+		this.frame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+            	IU_Buscaminas window = new IU_Buscaminas();
+				window.setVisible(true);
+				frame.setVisible(false);
+            }
+        });
 	}
 
 	private void cargarLista(JList<Partida> listaPartidas) {
 		try {
-			// PRUEBAS
-			// Usuario jugador = GestorSesion.getSesion().getUsuario();
-			Usuario jugador = new Usuario("2", "Galder", "grevilla", "grevilla002@ikasle.ehu.eus", 10);
-			// FIN PRUEBAS
-
+			Usuario jugador = GestorSesion.getSesion().getUsuario();
 			ArrayList<Partida> partidas = GestorPartidas.getGestorPartidas()
 					.obtenerListaPartidasUsuario(jugador.getCodUsuario());
 			if (partidas.isEmpty()) {
 				// Si el usuario no tiene Partidas error y fuera
 				JOptionPane.showMessageDialog(null, "No existen partidas guardadas", "Reanudar Partida",
 						JOptionPane.INFORMATION_MESSAGE);
-				System.exit(0);
+				IU_Buscaminas window = new IU_Buscaminas();
+				window.setVisible(true);
+				frame.setVisible(false);
 			} else {
 				DefaultListModel<Partida> modelo = new DefaultListModel<Partida>();
 				for (Partida partida : partidas) {
@@ -110,10 +123,8 @@ public class IU_ReanudarPartida {
 				listaPartidas.setSelectedIndex(0);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExcepcionConectarBD e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,11 +1,15 @@
 package packCodigo;
 
-public class Usuario {
+import java.util.Observable;
+
+import packVentanas.IU_Jugar;
+
+public class Usuario extends Observable {
 	private String codUsuario;
 	private String nombre;
 	private String clave;
 	private String email;
-	private int numPistas;//
+	private int numPistas;
 	
 	public Usuario(String pCu,String pNom,String pClav,String pEmail,int pNp){
 		this.codUsuario=pCu;
@@ -23,4 +27,18 @@ public class Usuario {
 		return this.codUsuario;
 	}
 
+	public int getNumPistas(){
+		return this.numPistas;
+	}
+
+	public void restarPista() {
+		numPistas--;
+		setChanged();
+		notifyObservers(numPistas);
+	}
+
+	public void anadirPistas(int i) {
+		numPistas = numPistas + i;
+	}
+	
 }
