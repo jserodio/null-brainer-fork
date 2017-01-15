@@ -178,6 +178,8 @@ public class GestorSesion extends Observable implements Observer {
 		} else if (pNivel == 3){
 			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
 		}
+		// Guardamos en BD
+		GestorTablero.getGestorTablero().guardarTablero(tablero);
 	}
 	
 	public void comprobarJuego(){

@@ -34,7 +34,7 @@ public class GestorPartidas {
 			while (rs.next()) {
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"),rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"),rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"),rs.getString("NOMBRE"),rs.getString("CLAVE"),rs.getString("EMAIL"),rs.getInt("PISTAS")), rs.getString("NOMBREPARTIDA"));
 				listaPartidas.add(p);
@@ -59,7 +59,7 @@ public class GestorPartidas {
 			while (rs.next()) {
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),
@@ -86,7 +86,7 @@ public class GestorPartidas {
 			while (rs.next()) {
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),
