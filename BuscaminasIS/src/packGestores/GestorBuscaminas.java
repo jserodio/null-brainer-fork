@@ -150,8 +150,14 @@ public class GestorBuscaminas {
 	}
 
 	public void reanudarPartida(Partida pPartida) {
-		// FALTA POR HACER
-		System.out.println(pPartida.toString());
+		GestorSesion.getSesion().setNivel(pPartida.getTablero().getValorNivel());
+		GestorSesion.getSesion().setJuego(true);
+		GestorSesion.getSesion().setTipo(pPartida.getTipo());
+		GestorSesion.getSesion().iniciarTableroGuardado(pPartida.getTablero().getValorNivel());
+		GestorSesion.getSesion().setContMinas();
+		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+		GestorSesion.getSesion().crono();
+
 	}
 
 

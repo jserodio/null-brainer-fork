@@ -85,7 +85,7 @@ public class IU_ReanudarPartida {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GestorBuscaminas.getGestorBuscaminas().reanudarPartida(listaPartidas.getSelectedValue());
-				System.exit(0);
+				frame.setVisible(false);
 			}
 		});
 		btnAceptar.setBounds(198, 227, 89, 23);
