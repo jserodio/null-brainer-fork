@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import packGestores.GestorSesion;
+import packGestores.GestorTablero;
 
 public class Tablero extends Observable {
 
@@ -28,10 +29,11 @@ public class Tablero extends Observable {
 		columnas = pColumna - 1;
 		contadorCasillasDescubrir = pFila * pColumna;
 		matriz = new Casilla[pFila][pColumna];
+		codTablero = this.generarCodTablero(pNivel);
 	}
 	
-	public Tablero(String pCodTablero, String pNivel, int pFila, int pColumna) {
-		codTablero = pCodTablero;
+	public Tablero(String codTablero, String pNivel, int pFila, int pColumna) {
+		this.codTablero = codTablero;
 		nivel = pNivel;
 		filas = pFila - 1;
 		columnas = pColumna - 1;
@@ -780,6 +782,10 @@ public class Tablero extends Observable {
 	public void setCodTablero(String codTablero) {
 		this.codTablero = codTablero;
 	}
+	
+	public String getNivel(){
+		return this.nivel;
+	}
 
 	public int getValorNivel() {
 		switch (nivel) {
@@ -861,4 +867,32 @@ public class Tablero extends Observable {
 		return coordMinaMarcada;
 	}
 	
+	private String generarCodTablero(String nivel) {
+		return GestorTablero.getGestorTablero().obtenerCodTablero(nivel);
+	}
+
+	public ArrayList<String> getlMinas() {
+		return lMinas;
+	}
+
+	public void setlMinas(ArrayList<String> lMinas) {
+		this.lMinas = lMinas;
+	}
+
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void setColumnas(int columnas) {
+		this.columnas = columnas;
+	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
+
 }

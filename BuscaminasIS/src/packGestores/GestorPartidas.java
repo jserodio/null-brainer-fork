@@ -61,7 +61,7 @@ public class GestorPartidas {
 //				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),
@@ -86,10 +86,13 @@ public class GestorPartidas {
 		System.out.println("ESTOY AQUI");
 		if (rs != null) {
 			while (rs.next()) {
-//				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
-				Tablero t = new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS"));
-				System.out.println(t.getCodTablero());
-				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"), t,
+////				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
+//				Tablero t = new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS"));
+//				System.out.println(t.getCodTablero());
+//				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"), t,
+				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
+						// OBtener el tablero
+						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),
