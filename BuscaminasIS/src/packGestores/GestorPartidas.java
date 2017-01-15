@@ -27,17 +27,21 @@ public class GestorPartidas {
 		}
 		ResultSet rs = null;
 		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND TABLERO.NIVEL = '"
-				+ pNivel + "'AND PARTIDA.ACABADO = 1 ORDER BY PUNTUACION DESC";
+				+ pNivel + "' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
 		if (rs != null) {
 			while (rs.next()) {
-//				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
+				// Partida p = new
+				// Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"),rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"),
+								rs.getInt("COLUMNAS")),
 						// Obtener el jugador
-						new Usuario(rs.getString("CODUSUARIO"),rs.getString("NOMBRE"),rs.getString("CLAVE"),rs.getString("EMAIL"),rs.getInt("PISTAS")), rs.getString("NOMBREPARTIDA"));
+						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
+								rs.getString("EMAIL"), rs.getInt("PISTAS")),
+						rs.getString("NOMBREPARTIDA"));
 				listaPartidas.add(p);
 			}
 		} else {
@@ -53,15 +57,17 @@ public class GestorPartidas {
 		}
 		ResultSet rs = null;
 		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND TABLERO.CODTABLERO = '"
-				+ pCodTablero + "' AND PARTIDA.ACABADO = 1 ORDER BY PUNTUACION DESC";
+				+ pCodTablero + "' ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 
 		if (rs != null) {
 			while (rs.next()) {
-//				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
+				// Partida p = new
+				// Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"),
+								rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),
@@ -81,18 +87,15 @@ public class GestorPartidas {
 		}
 		ResultSet rs = null;
 		String cadena = "SELECT PUNTUACION, TIPO, ACABADO, PARTIDA.CODTABLERO, USUARIO.CODUSUARIO, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.EMAIL, PISTAS, NOMBREPARTIDA, TABLERO.CODTABLERO, TABLERO.NIVEL, TABLERO.CONTADORMINAS, TABLERO.CASILLAS, TABLERO.COLUMNAS, TABLERO.FILAS, TABLERO.CREADOR FROM PARTIDA, USUARIO, TABLERO WHERE PARTIDA.CODUSUARIO = USUARIO.CODUSUARIO AND PARTIDA.CODTABLERO=TABLERO.CODTABLERO AND USUARIO.CODUSUARIO = "
-				+ pCodUsuario + " AND PARTIDA.ACABADO = 1 ORDER BY PUNTUACION DESC";
+				+ pCodUsuario + " ORDER BY PUNTUACION DESC";
 		rs = GestorBD.getConexionBD().consultaBD(cadena);
 		System.out.println("ESTOY AQUI");
 		if (rs != null) {
 			while (rs.next()) {
-////				Partida p = new Partida(rs.getInt("PUNTUACION"),rs.getString("TIPO"),""+rs.getInt("CODUSUARIO"),""+rs.getString("CODTABLERO"));
-//				Tablero t = new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS"));
-//				System.out.println(t.getCodTablero());
-//				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"), t,
 				Partida p = new Partida(rs.getInt("PUNTUACION"), 0, rs.getString("TIPO"), rs.getBoolean("ACABADO"),
 						// OBtener el tablero
-						new Tablero(rs.getString("CODTABLERO"),rs.getString("NIVEL"), rs.getInt("FILAS"), rs.getInt("COLUMNAS")),
+						new Tablero(rs.getString("CODTABLERO"), rs.getString("NIVEL"), rs.getInt("FILAS"),
+								rs.getInt("COLUMNAS")),
 						// Obtener el jugador
 						new Usuario(rs.getString("CODUSUARIO"), rs.getString("NOMBRE"), rs.getString("CLAVE"),
 								rs.getString("EMAIL"), rs.getInt("PISTAS")),

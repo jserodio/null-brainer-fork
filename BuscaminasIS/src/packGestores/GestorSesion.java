@@ -186,6 +186,17 @@ public class GestorSesion extends Observable implements Observer {
 		GestorTablero.getGestorTablero().guardarTablero(tablero);
 	}
 	
+	public void iniciarTableroGuardado(int pNivel){
+		if(pNivel == 1){
+			tablero = TableroBuilderN1.getTableroBuilderN1().asignarTablero();
+		} else if (pNivel == 2){
+			tablero = TableroBuilderN2.getTableroBuilderN2().asignarTablero();
+			
+		} else if (pNivel == 3){
+			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
+		}
+	}
+	
 	public void comprobarJuego(){
 		if(tablero.getContadorCasillasDescubrir() == contMinas){
 			boolean fin = tablero.comprobarJuego();

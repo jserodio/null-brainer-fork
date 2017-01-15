@@ -82,7 +82,7 @@ public class IU_GuardarPartida {
 					// Añadir Partida
 					GestorBuscaminas.getGestorBuscaminas().guardarPartida(partidaActual);
 					// Tras añadir cerramos
-					System.exit(0);
+					frmGuardarPartida.setVisible(false);
 				}
 			}
 		});
