@@ -131,9 +131,10 @@ public class IU_Ranking extends JFrame{
 					int i=1;
 					while(it.hasNext()&&i<=10){
 						p=it.next();
-						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						nombre=p.getJugador().getNombre();
+						System.out.println(i+" "+nombre);
 						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
-						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						this.getTextArea().append(i+"\t"+p.getJuego().getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
 						i++;
 					}
 			   }
@@ -153,9 +154,9 @@ public class IU_Ranking extends JFrame{
 					int i=1;
 					while(it.hasNext()&&i<=10){
 						p=it.next();
-						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						nombre=p.getUsuario().getNombre();
 						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
-						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						this.getTextArea().append(i+"\t"+p.getJuego().getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
 						i++;
 					}
 			   }
@@ -174,9 +175,9 @@ public class IU_Ranking extends JFrame{
 					int i=1;
 					while(it.hasNext()&&i<=10){
 						p=it.next();
-						nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+						nombre=p.getJugador().getNombre();
 						this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
-						this.getTextArea().append(i+"\t"+p.getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
+						this.getTextArea().append(i+"\t"+p.getJuego().getCodTablero()+"\t"+nombre+"\t"+p.getPuntuacion()+"\n");
 						i++;
 					}
 			   }
@@ -199,18 +200,19 @@ public class IU_Ranking extends JFrame{
 				int i=1;
 				while(it.hasNext()&&i<=10){
 					p=it.next();
-					nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
-					char nivel=p.getCodTablero().charAt(0);
-					if(p.getCodTablero().length()>2){
+					nombre=p.getJugador().getNombre();
+					System.out.println("CodTablero:"+p.getJuego().getCodTablero());
+					char nivel=p.getJuego().getCodTablero().charAt(0);
+					if(p.getJuego().getCodTablero().length()>2){
 						String tablero="";
 						i=1;
-						while(i<=p.getCodTablero().length()){
-							tablero=tablero+p.getCodTablero().charAt(i);
+						while(i<=p.getJuego().getCodTablero().length()){
+							tablero=tablero+p.getJuego().getCodTablero().charAt(i);
 						}
 						this.getTextArea().append(i+"\t"+nombre+"\t"+nivel+"\t"+tablero+"\t"+p.getPuntuacion()+"\n");
 					}
 					else{
-						char tab=p.getCodTablero().charAt(1);
+						char tab=p.getJuego().getCodTablero().charAt(1);
 						this.getTextArea().append(i+"\t"+nombre+"\t"+nivel+"\t"+tab+"\t"+p.getPuntuacion()+"\n");
 					}
 					i++;
@@ -232,7 +234,7 @@ public class IU_Ranking extends JFrame{
 				int i=1;
 				while(it.hasNext()&&i<=10){
 					p=it.next();
-					nombre=GestorBuscaminas.getGestorBuscaminas().buscarNombre(p.getCodUsuario());
+					nombre=p.getUsuario().getNombre();
 					this.getTextArea().setFont(new Font("Arial",Font.PLAIN, 15));
 					this.getTextArea().append(i+"\t\t"+nombre+"\t\t"+p.getPuntuacion()+"\n");
 					i++;

@@ -27,6 +27,14 @@ public class Partida {
 		this.codUsuario=pCu;
 		this.codTablero=pCt;
 	}
+	
+	public Usuario getUsuario(){
+		return this.jugador;
+	}
+	
+	public Tablero getTablero(){
+		return this.juego;
+	}
 
 	public int getPuntuacion() {
 		return puntuacion;
