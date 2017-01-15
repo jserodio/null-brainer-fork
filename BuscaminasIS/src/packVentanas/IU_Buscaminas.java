@@ -1,22 +1,26 @@
 package packVentanas;
 
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.jgoodies.forms.layout.ColumnSpec;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import packCodigo.Ranking;
+import packExcepciones.ExcepcionConectarBD;
+import packGestores.GestorSesion;
+
+import com.jgoodies.forms.layout.FormSpecs;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class IU_Buscaminas {
 
@@ -61,7 +65,6 @@ public class IU_Buscaminas {
 		frmMenuBuscaminas.setTitle("Menu Buscaminas (IU_Buscaminas)");
 		frmMenuBuscaminas.setBounds(100, 100, 450, 300);
 		frmMenuBuscaminas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMenuBuscaminas.setLocationRelativeTo(null);;
 		frmMenuBuscaminas.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),
 				ColumnSpec.decode("default:grow"),
@@ -102,18 +105,25 @@ public class IU_Buscaminas {
 		frmMenuBuscaminas.getContentPane().add(btnComenzarPartida, "2, 5");
 		
 		JButton btnReanudarPartida = new JButton("Reanudar Partida");
-		btnReanudarPartida.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new IU_ReanudarPartida();
-				setVisible(false);
-			}
-		});
 		frmMenuBuscaminas.getContentPane().add(btnReanudarPartida, "2, 7");
 		
 		JButton btnCrearTablero = new JButton("Crear Tablero");
 		frmMenuBuscaminas.getContentPane().add(btnCrearTablero, "2, 9");
 		
-		JButton btnListaDeRetos = new JButton("Lista de Retos");
+		JButton btnListaDeRetos = new JButton("Lista Retos");
+		btnListaDeRetos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					VLista_Retos.getVentana().setVisible(true);
+					setVisible(false);
+				} catch (ExcepcionConectarBD | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
 		frmMenuBuscaminas.getContentPane().add(btnListaDeRetos, "2, 11");
 		
 		JButton btnConsultarRanking = new JButton("Consultar Ranking");

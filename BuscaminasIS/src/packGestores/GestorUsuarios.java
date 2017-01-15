@@ -81,6 +81,21 @@ public class GestorUsuarios {
 		return false;
 	}
 	
+	public String getUsuario(String nombreUsuario) throws SQLException, ExcepcionConectarBD{
+		ResultSet rs = null;
+		String resultado = null;
+		String cadena = "SELECT * FROM USUARIO WHERE NOMBRE='"+nombreUsuario+"';";
+		rs = GestorBD.getConexionBD().consultaBD(cadena);
+		
+		if (rs != null){
+			rs.next();
+			resultado = rs.getObject("CODUSUARIO").toString();		
+		}
+
+		  GestorBD.getConexionBD().closeResult(rs);
+		
+		return resultado;
+	}
 	public boolean registrarse(String user,String password,String confirmedPassword,String email) throws SQLException, ExcepcionConectarBD{
 		if(password.equals(confirmedPassword)){
 			  if(!this.existeUser(user)){
@@ -139,5 +154,21 @@ public class GestorUsuarios {
 		}
 		return nombre;
 	}
+	public String getNombreUsuario(String nombreUsuario) throws SQLException, ExcepcionConectarBD{
+		ResultSet rs = null;
+		String resultado = null;
+		String cadena = "SELECT * FROM USUARIO WHERE CODUSUARIO='"+nombreUsuario+"';";
+		rs = GestorBD.getConexionBD().consultaBD(cadena);
+		
+		if (rs != null){
+			rs.next();
+			resultado = rs.getObject("NOMBRE").toString();		
+		}
+
+		  GestorBD.getConexionBD().closeResult(rs);
+		
+		return resultado;
+	}
+	
 
 }

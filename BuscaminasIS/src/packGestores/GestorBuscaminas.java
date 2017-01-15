@@ -4,8 +4,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import packCodigo.Partida;
+import packCodigo.Reto;
+import packCodigo.Tablero;
 import packCodigo.Usuario;
 import packExcepciones.ExcepcionConectarBD;
+import packVentanas.IU_Buscaminas;
+import packVentanas.IU_Jugar;
+import packVentanas.VRetar;
 
 public class GestorBuscaminas {
 
@@ -40,6 +45,56 @@ public class GestorBuscaminas {
 		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
 		// iniciarCrono()
 		GestorSesion.getSesion().iniciarCrono();
+	}
+
+	
+	public void retar(String nombreUsuario) throws ExcepcionConectarBD, SQLException{
+		String usuRetado = GestorUsuarios.getGestorUsuarios().getUsuario(nombreUsuario);			
+		if (usuRetado==null){
+			VRetar vR = new VRetar(true);
+		}else{
+			Tablero tab = GestorSesion.getSesion().getTablero();
+			int punt = GestorSesion.getSesion().obtenerPuntuacion();
+			String usuRetador = GestorSesion.getSesion().getUsuario().getCodUsuario();
+			float tiempo = GestorSesion.getSesion().getTiempo();
+			String codTablero = tab.getCodTablero();
+			GestorRetos gestorR = GestorRetos.getGestorRetos();
+			GestorTablero.getGestorTablero().guardarTablero();
+			gestorR.nuevoReto(punt,codTablero,usuRetado,usuRetador);
+			IU_Buscaminas.getVentana().setVisible(true);
+		}
+	}
+	
+	@SuppressWarnings("null")
+	public ArrayList<Reto> getListaRetos() throws ExcepcionConectarBD, SQLException{
+		return GestorRetos.getGestorRetos().getListaRetos();
+		
+	}
+	
+	public void iniciarPartidaReto(String codReto) throws ExcepcionConectarBD, SQLException{
+		Reto pReto = GestorRetos.getGestorRetos().getReto(codReto);
+		String codTablero = pReto.getCodTablero();
+		Tablero pTab = GestorTablero.getGestorTablero().getTablero(codTablero);
+		GestorSesion.getSesion().setNivel(pTab.getValorNivel());
+		GestorSesion.getSesion().setJuego(true);		
+		// set tipo Reto
+		GestorSesion.getSesion().setTipo("Reto");
+		GestorSesion.getSesion().setTablero(pTab);
+		GestorSesion.getSesion().setContMinas();
+		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+		IU_Jugar iu_jugar = new IU_Jugar(pTab.getValorNivel());
+		iu_jugar.setVisible(true);
+//		pReto.setPuntuacionRetado(this.obtenerPuntuacion());
+//		gestorR.guardarRetoTerminado(codReto,this.obtenerPuntuacion());
+	}
+	
+	public void removeReto(String codReto) throws ExcepcionConectarBD{
+		GestorRetos gestorR = GestorRetos.getGestorRetos();
+		gestorR.eliminarReto(codReto);
+	}
+	private void getIU_RepitaRetar() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public boolean identificarse(String user, String password) throws SQLException, ExcepcionConectarBD {
@@ -103,5 +158,7 @@ public class GestorBuscaminas {
 	public String buscarNombre(String pCodUsuario){
 		return GestorUsuarios.getGestorUsuarios().buscarNombre(pCodUsuario);
 	}
+
+	
 
 }

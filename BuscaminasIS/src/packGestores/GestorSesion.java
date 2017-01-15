@@ -84,6 +84,10 @@ public class GestorSesion extends Observable implements Observer {
 		this.tiempo = tiempo;
 	}
 	
+	public void setTablero(Tablero pTab){
+		this.tablero = pTab;
+	}	
+	
 	/**SetJuego**/
 	public void setJuego(boolean pJuego){
 		this.juego = pJuego;
@@ -101,10 +105,6 @@ public class GestorSesion extends Observable implements Observer {
 	
 	public void setTipo(String pTipo) {
 		this.tipo = pTipo;
-	}
-	
-	public String getTipo() {
-		return this.tipo;
 	}
 	
 	public void setFinalizado(boolean fin) {
@@ -253,17 +253,12 @@ public class GestorSesion extends Observable implements Observer {
 		tablero.addObserver(vBuscaminas);
 		setContMinas();
 		contBanderas = contMinas;
+		tiempo--;
 		timer.cancel();
-		if (tipo.equals("partida")) {
-			crono();
-			tiempo--;
-		} else {
-			iniciarCrono();
-			tiempo++;
-		}
+		crono();
 		tablero.addObserver(this);
-		setJuego(true);
-		setFinalizado(false);
+		juego = true;
+		finalizado = false;
 	}
 	
 	public void ponerBandera(int fila, int col) {
@@ -320,6 +315,7 @@ public class GestorSesion extends Observable implements Observer {
 	}
 
 	@Override
+
 	public void update(Observable pObservable, Object pObjeto) {
 		if(pObservable instanceof Tablero){
 			String[]p = pObjeto.toString().split(",");
@@ -337,6 +333,10 @@ public class GestorSesion extends Observable implements Observer {
 
 	public Partida obtenerPartidaActual() {
 		return new Partida(puntuacion, tiempo, tipo, finalizado, tablero, usuario, "");
+	}
+
+	public String getTipo() {
+		return this.tipo;
 	}
 
 }

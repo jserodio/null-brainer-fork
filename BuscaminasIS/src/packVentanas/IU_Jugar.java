@@ -60,7 +60,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 	private Clip clip;
 	private AudioInputStream ais;
 	private int bomba = 0;
-	private JMenuItem itemGuardar;
 
 
 	/**
@@ -117,13 +116,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3.addActionListener(this);
 		menu1.add(item3);
 		
-		itemGuardar = new JMenuItem("Guardar Partida");
-		itemGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new IU_GuardarPartida();
-			}
-		});
-		menu1.add(itemGuardar);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -155,15 +147,15 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				if (GestorSesion.getSesion().getTipo()=="partida") {
-					GestorSesion.getSesion().setTiempo(0);
-					GestorSesion.getSesion().reset(vBusca);
-				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
-					GestorSesion.getSesion().setTiempo(999);
-					GestorSesion.getSesion().reset(vBusca);
-				}
-				
+				GestorSesion.getSesion().reset(vBusca);
 				lblNewLabel.setIcon(new ImageIcon(IU_Jugar.class.getResource("/Reset.png")));
+				if (GestorSesion.getSesion().getTipo()=="partida" || GestorSesion.getSesion().getTipo()=="Reto") {
+ 					GestorSesion.getSesion().setTiempo(0);
+ 					GestorSesion.getSesion().reset(vBusca);
+				} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
+ 					GestorSesion.getSesion().setTiempo(999);
+ 					GestorSesion.getSesion().reset(vBusca);
+				} 
 			}
 		});
 		
@@ -220,14 +212,6 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 		item3 = new JMenuItem("Ranking");
 		item3.addActionListener(this);
 		menu1.add(item3);
-		
-		itemGuardar = new JMenuItem("Guardar Partida");
-		itemGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new IU_GuardarPartida();
-			}
-		});
-		menu1.add(itemGuardar);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -447,6 +431,8 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 					   }
 				   this.dispose();
 				   this.setVisible(false);
+				   VRetar vR = new VRetar(false);
+				   vR.setVisible(true);
 				   IU_Buscaminas.getVentana().setVisible(true);
 				   }
 			} else if(o instanceof Tablero){
@@ -473,33 +459,7 @@ public class IU_Jugar extends JFrame implements ActionListener, Observer{
 
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource()==item1) {
-        	//GestorSesion.getSesion().reset(vBusca);
-        	if (GestorSesion.getSesion().getTipo()=="partida") {
-//        		GestorSesion.getSesion().setContMinas();
-//        		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
-//        		GestorSesion.getSesion().setTiempo(0);
-//        		GestorSesion.getSesion().getTimer().cancel();
-//        		juego = true;
-//        		finalizado = false;
-//        		GestorSesion.getSesion().setJuego(true);
-//        		GestorSesion.getSesion().setJuego(false);
-        		GestorSesion.getSesion().setTiempo(0);
-        		GestorSesion.getSesion().reset(this);
-        		
-//				IU_Jugar iu_jugar = new IU_Jugar(3);
-//				iu_jugar.setVisible(true);
-//				setVisible(false);
-//				this.dispose();
-        	} else if (GestorSesion.getSesion().getTipo()=="contrarreloj") {
-        		//GestorSesion.getSesion().getTimer().cancel();
-//        		GestorSesion.getSesion().reset(this);
-//				IU_Jugar iu_jugar = new IU_Jugar();
-//				iu_jugar.setVisible(true);
-//				setVisible(false);
-//				this.dispose();
-        		GestorSesion.getSesion().setTiempo(999);
-        		GestorSesion.getSesion().reset(this);
-        	}
+        	GestorSesion.getSesion().reset(vBusca);
         } else if (e.getSource() == item2){
         	VAyuda vA = new VAyuda();
 			vA.setVisible(true);

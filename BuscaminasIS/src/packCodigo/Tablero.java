@@ -549,7 +549,11 @@ public class Tablero extends Observable {
 			setChanged();
 			notifyObservers(pFila + "," + pCol + "," + 10);
 			if (GestorSesion.getSesion().getJuego()) {
-				GestorSesion.getSesion().gameOver();
+//				if(GestorSesion.getTipo()=="Reto"){
+//					IU_ComparacionRetos
+//				}else{
+					GestorSesion.getSesion().gameOver();
+//				}
 			}
 		} else if (casilla instanceof CasillaNumero && !casilla.estaDesvelada() && !casilla.tieneBandera()) {
 			int num = ((CasillaNumero) casilla).obtenerNumero();
@@ -783,5 +787,15 @@ public class Tablero extends Observable {
 		default:
 			return 1;
 		}
+	}
+	public String getValorNivel2() {
+		return this.nivel;
+	}
+	public int getColumnas() {
+		return this.columnas;
+	}
+	
+	public int getFilas(){
+		return this.filas;
 	}
 }
