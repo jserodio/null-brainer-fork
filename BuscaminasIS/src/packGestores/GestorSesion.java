@@ -1,4 +1,5 @@
 package packGestores;
+import java.sql.SQLException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
@@ -12,6 +13,7 @@ import packCodigo.TableroBuilderN1;
 import packCodigo.TableroBuilderN2;
 import packCodigo.TableroBuilderN3;
 import packCodigo.Usuario;
+import packExcepciones.ExcepcionConectarBD;
 import packVentanas.IU_Jugar;
 
 public class GestorSesion extends Observable implements Observer {
@@ -178,18 +180,18 @@ public class GestorSesion extends Observable implements Observer {
 		} else if (pNivel == 3){
 			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
 		}
-		// Guardamos en BD
-		GestorTablero.getGestorTablero().guardarTablero(tablero);
 	}
 	
-	public void iniciarTableroGuardado(int pNivel){
-		if(pNivel == 1){
-			tablero = TableroBuilderN1.getTableroBuilderN1().asignarTablero();
-		} else if (pNivel == 2){
-			tablero = TableroBuilderN2.getTableroBuilderN2().asignarTablero();
-			
-		} else if (pNivel == 3){
-			tablero = TableroBuilderN3.getTableroBuilderN3().asignarTablero();
+	public void iniciarTableroGuardado(Tablero pTablero) {
+		try {
+			tablero = GestorTablero.getGestorTablero().getTablero(pTablero);
+			tablero.generarMatrizPersonalizada();
+		} catch (ExcepcionConectarBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

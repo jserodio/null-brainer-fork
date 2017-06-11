@@ -72,6 +72,27 @@ public class Tablero extends Observable {
 		lCasillasVacias = vacias();
 	}
 
+	public void generarMatrizPersonalizada() {
+		// Introducir lMinas
+		for (int i=0;i<lMinas.size();i++){
+			int posComa = lMinas.get(i).indexOf(",");
+			int fila = Integer.parseInt(lMinas.get(i).substring(0,posComa));
+			int columna = Integer.parseInt(lMinas.get(i).substring(posComa+1));
+			matriz[fila][columna] = CasillaFactory.getMiFactoria().generarCasilla("Mina");
+		}
+		// Introducir lCasillasVacias
+//		for (int i=0;i<lCasillasVacias.size();i++){
+//			int posComa = lCasillasVacias.get(i).indexOf(",");
+//			int fila = Integer.parseInt(lCasillasVacias.get(i).substring(0,posComa));
+//			int columna = Integer.parseInt(lCasillasVacias.get(i).substring(posComa+1));
+//			matriz[fila][columna] = CasillaFactory.getMiFactoria().generarCasilla("Vacia");
+//		}
+		// IntroducirCasillasVisitadas
+		
+		// IntroducirlCasillasBandera
+	}
+	
+	
 	private int calcularMinas() {
 		int sol = this.getValorNivel() * (columnas + 1);
 		return sol;
@@ -897,6 +918,38 @@ public class Tablero extends Observable {
 
 	public void setFilas(int filas) {
 		this.filas = filas;
+	}
+
+	public ArrayList<String> getlCasillasBandera() {
+		return lCasillasBandera;
+	}
+
+	public ArrayList<String> getlCasillasVacias() {
+		return lCasillasVacias;
+	}
+
+	public void setlCasillasVacias(ArrayList<String> lCasillasVacias) {
+		this.lCasillasVacias = lCasillasVacias;
+	}
+
+	public ArrayList<String> getlCasillasVisitadas() {
+		return lCasillasVisitadas;
+	}
+
+	public void setlCasillasVisitadas(ArrayList<String> lCasillasVisitadas) {
+		this.lCasillasVisitadas = lCasillasVisitadas;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+	public void setCasillasPorVisitar(Stack<String> casillasPorVisitar) {
+		this.casillasPorVisitar = casillasPorVisitar;
+	}
+
+	public void setlCasillasBandera(ArrayList<String> lCasillasBandera) {
+		this.lCasillasBandera = lCasillasBandera;
 	}
 
 }

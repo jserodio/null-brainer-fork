@@ -15,5 +15,4 @@ public class TableroBuilderN1 extends TableroBuilder{
 		elTablero.generarMatriz();
 		return elTablero;
 	}
-	
 }
