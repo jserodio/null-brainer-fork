@@ -169,8 +169,8 @@ public class GestorBuscaminas {
 		GestorSesion.getSesion().setJuego(true);
 		GestorSesion.getSesion().setTipo(pPartida.getTipo());
 		GestorSesion.getSesion().iniciarTableroGuardado(pPartida.getTablero());
-//		GestorSesion.getSesion().setContMinas(); // Error
-//		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
+		GestorSesion.getSesion().setContMinas(); 
+		GestorSesion.getSesion().setContBanderas(GestorSesion.getSesion().getContMinas());
 		GestorSesion.getSesion().crono();
 
 	}
